@@ -7,25 +7,25 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{EFDCB134-03C
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{6591D004-C767-4752-954A-95984BA2D9B8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fitweb.Domain", "src\Fitweb.Domain\Fitweb.Domain.csproj", "{8221F6F1-C074-49B0-8131-D68E41E00752}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Fitweb.Domain", "src\Fitweb.Domain\Fitweb.Domain.csproj", "{8221F6F1-C074-49B0-8131-D68E41E00752}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Domain", "Domain", "{55C0AC7A-4EE7-4E7B-ACFB-40E1425A74F5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fitweb.API", "src\Fitweb.API\Fitweb.API.csproj", "{DF54437E-C753-4B85-9142-FB02418FD14C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Fitweb.API", "src\Fitweb.API\Fitweb.API.csproj", "{DF54437E-C753-4B85-9142-FB02418FD14C}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "API", "API", "{33E8536A-B385-4A58-A34A-C4FAC8E08F27}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fitweb.Application", "src\Fitweb.Application\Fitweb.Application.csproj", "{504F91FD-1D03-42DF-9204-D545FBC6F337}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Fitweb.Application", "src\Fitweb.Application\Fitweb.Application.csproj", "{504F91FD-1D03-42DF-9204-D545FBC6F337}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Application", "Application", "{3D269858-10E6-4D5F-8DBF-E8441C6EFD40}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fitweb.Infrastructure", "src\Fitweb.Infrastructure\Fitweb.Infrastructure.csproj", "{C5EE7FD4-392A-4387-9CAD-5B529FBC0C63}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Fitweb.Infrastructure", "src\Fitweb.Infrastructure\Fitweb.Infrastructure.csproj", "{C5EE7FD4-392A-4387-9CAD-5B529FBC0C63}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infrastructure", "Infrastructure", "{5D057ED8-A33C-4DF9-B6AA-15582D916BC1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fitweb.Domain.UnitTests", "tests\Fitweb.Domain.UnitTests\Fitweb.Domain.UnitTests.csproj", "{5165E196-6C37-4F34-81DD-9E348BA6AD18}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Fitweb.Domain.UnitTests", "tests\Fitweb.Domain.UnitTests\Fitweb.Domain.UnitTests.csproj", "{5165E196-6C37-4F34-81DD-9E348BA6AD18}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fitweb.Application.UnitTests", "tests\Fitweb.Application.UnitTests\Fitweb.Application.UnitTests.csproj", "{6488C4C6-C498-4D87-A57A-305F3174680C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Fitweb.Application.UnitTests", "tests\Fitweb.Application.UnitTests\Fitweb.Application.UnitTests.csproj", "{6488C4C6-C498-4D87-A57A-305F3174680C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
