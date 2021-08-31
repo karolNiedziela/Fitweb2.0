@@ -31,7 +31,7 @@ namespace Fitweb.Infrastructure.Persistence.Configurations
             builder.HasData(admin);
         }
 
-        private string GeneratePassword(User user)
+        private static string GeneratePassword(User user)
         {
             var passwordHasher = new PasswordHasher<User>();
 

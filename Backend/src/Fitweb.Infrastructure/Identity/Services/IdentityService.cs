@@ -7,10 +7,12 @@ using Fitweb.Infrastructure.Identity.Constants;
 using Fitweb.Infrastructure.Identity.Entities;
 using Fitweb.Infrastructure.Identity.Exceptions;
 using Fitweb.Infrastructure.Identity.Extensions;
+using Fitweb.Infrastructure.Identity.External.Facebook.Services;
 using Fitweb.Infrastructure.Identity.Factories;
 using Fitweb.Infrastructure.Persistence.Repositories;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.WebUtilities;
+using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Text.Encodings.Web;
@@ -26,9 +28,10 @@ namespace Fitweb.Infrastructure.Identity.Services
         private readonly IRefreshTokenRepository _refreshTokenRepository;
         private readonly GeneralSettings _generalSettings;
         private readonly IEmailSender _emailSender;
-
+        private readonly IFacebookAuthService _facebookAuthService;
         public IdentityService(UserManager<User> userManager, IJwtHandler jwtHandler, IRefreshTokenFactory refreshTokenFactory,
-            IRefreshTokenRepository refreshTokenRepository, GeneralSettings generalSettings, IEmailSender emailSender)
+            IRefreshTokenRepository refreshTokenRepository, GeneralSettings generalSettings, IEmailSender emailSender, 
+            IFacebookAuthService facebookAuthService)
         {
             _userManager = userManager;
             _jwtHandler = jwtHandler;
@@ -36,6 +39,7 @@ namespace Fitweb.Infrastructure.Identity.Services
             _refreshTokenRepository = refreshTokenRepository;
             _generalSettings = generalSettings;
             _emailSender = emailSender;
+            _facebookAuthService = facebookAuthService;
         }
 
         public async Task CreateUserAsync(string username, string email, string password)
@@ -155,12 +159,74 @@ namespace Fitweb.Infrastructure.Identity.Services
             }
         }
 
+        public async Task<AuthDto> FacebookLoginAsync(string accessToken)
+        {
+            var validatedTokenResult = await _facebookAuthService.ValidateAccessTokenAsync(accessToken);
+
+            if (!validatedTokenResult.FacebookTokenValidationData.IsValid)
+            {
+                // TODO: Throw proper exception
+                throw new Exception();
+            }
+
+            var userInformation = await _facebookAuthService.GetUserInformationAsync(accessToken);
+
+            var token = await ExternalLoginAsync("Facebook", userInformation.Id, userInformation.Email);
+
+            return token;
+        }
+
         private string CreateLink(string destinationUrlPart, string email, string code)
         {
             // TODO: Change link when added client
             var link = string.Format(_generalSettings.AppDomain + destinationUrlPart, email, code);
 
             return link;
+        }
+
+        private async Task<AuthDto> ExternalLoginAsync(string loginProvider, string providerKey, string email)
+        {
+            var user = await _userManager.FindByEmailAsync(email);
+
+            if (user is null)
+            {
+                var newUser = new User
+                {
+                    UserName = email,
+                    Email = email,
+                    EmailConfirmed = true
+                };
+
+
+                var result = await _userManager.CreateAsync(newUser);
+                if (!result.Succeeded)
+                {
+                    throw new IdentityException(result);
+                }
+
+                await _userManager.AddToRoleAsync(newUser, Roles.Athlete);
+
+                var loginInfo = new UserLoginInfo(loginProvider, providerKey, email);
+
+                var addLoginResult = await _userManager.AddLoginAsync(newUser, loginInfo);
+                if (!addLoginResult.Succeeded)
+                {
+                    throw new IdentityException(addLoginResult);
+                }
+
+                user = newUser;
+            }
+
+            var userRoles = await _userManager.GetRolesAsync(user);
+
+            var token = _jwtHandler.Create(user.Id, email, userRoles);
+
+            var refreshToken = _refreshTokenFactory.Create(email);
+            token.RefreshToken = refreshToken.Token;
+
+            await _refreshTokenRepository.AddAsync(refreshToken);
+
+            return token;
         }
 
         private static string Encode(string token)

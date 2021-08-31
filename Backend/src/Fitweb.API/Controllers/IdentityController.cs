@@ -1,5 +1,6 @@
 ﻿using Fitweb.Application.Users.Commands.ConfirmEmail;
 using Fitweb.Application.Users.Commands.CreateUser;
+using Fitweb.Application.Users.Commands.FacebookLogin;
 using Fitweb.Application.Users.Commands.ForgotPassword;
 using Fitweb.Application.Users.Commands.Login;
 using Fitweb.Application.Users.Commands.ResendConfirmationEmail;
@@ -85,5 +86,14 @@ namespace Fitweb.API.Controllers
 
             return Ok();
         }
+
+        [HttpPost]
+        [Route("facebook")]
+        public async Task<IActionResult> FacebookLogin([FromBody]FacebookLoginCommand command)
+        {
+            var token = await Mediator.Send(command);
+
+            return Ok(token);
+        } 
     }
 }

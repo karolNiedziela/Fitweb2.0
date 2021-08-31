@@ -71,7 +71,7 @@ namespace Fitweb.API
                                 Id = "Bearer"
                             }
                         },
-                        new string[] {}
+                        Array.Empty<string>()
                     }
                 });
             });
@@ -80,6 +80,8 @@ namespace Fitweb.API
             {
                 options.LowercaseUrls = true;
             });
+
+            services.AddHttpClient();
 
             services.AddApplication();
             services.AddInfrastructure();

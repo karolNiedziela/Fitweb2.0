@@ -40,7 +40,6 @@ namespace Fitweb.Infrastructure.Identity.Services
             }
 
             var user = await _userManager.FindByNameAsync(token.Username);
-            var role = await _userManager.GetRolesAsync(user);
 
             if (user is null)
             {

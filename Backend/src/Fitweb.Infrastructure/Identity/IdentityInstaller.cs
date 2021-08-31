@@ -1,5 +1,7 @@
 ﻿using Fitweb.Application.Interfaces.Identity;
 using Fitweb.Infrastructure.Identity.Entities;
+using Fitweb.Infrastructure.Identity.External.Facebook.Services;
+using Fitweb.Infrastructure.Identity.External.Facebook.Settings;
 using Fitweb.Infrastructure.Identity.Factories;
 using Fitweb.Infrastructure.Identity.Services;
 using Fitweb.Infrastructure.Identity.Settings;
@@ -50,6 +52,7 @@ namespace Fitweb.Infrastructure.Identity
             configuration.GetSection(JwtSettings.Jwt).Bind(jwtSettings);
             services.AddSingleton(jwtSettings);
 
+
             var keyBytes = Encoding.UTF8.GetBytes(jwtSettings.Secret);
             var tokenValidationParameters = new TokenValidationParameters
             {
@@ -66,6 +69,10 @@ namespace Fitweb.Infrastructure.Identity
 
             services.AddSingleton(tokenValidationParameters);
 
+            var facebookSettings = new FacebookSettings();
+            configuration.GetSection(FacebookSettings.Facebook).Bind(facebookSettings);
+            services.AddSingleton(facebookSettings);
+
             services.AddAuthentication(options =>
             {
                 options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -77,6 +84,13 @@ namespace Fitweb.Infrastructure.Identity
                 options.SaveToken = true;
 
                 options.TokenValidationParameters = tokenValidationParameters;
+            })
+            .AddFacebook(options =>
+            {
+                options.AppId = facebookSettings.AppId;
+                options.AppSecret = facebookSettings.AppSecret;
+
+                options.SignInScheme = IdentityConstants.ExternalScheme;
             });
 
 
@@ -85,6 +99,7 @@ namespace Fitweb.Infrastructure.Identity
             services.AddSingleton<IRng, Rng>();
             services.AddScoped<IRefreshTokenService, RefreshTokenService>();
             services.AddScoped<IIdentityService, IdentityService>();
+            services.AddScoped<IFacebookAuthService, FacebookAuthService>();
 
             return services;
         } 

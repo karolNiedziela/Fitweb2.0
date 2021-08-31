@@ -8,9 +8,9 @@ namespace Fitweb.Infrastructure.Identity.Constants
 {
     public static class Roles
     {
-        public static string Administrator = "Administrator";
+        public const string Administrator = "Administrator";
 
-        public static string Athlete = "Athlete";
+        public const string Athlete = "Athlete";
 
     }
 }

@@ -20,5 +20,7 @@ namespace Fitweb.Application.Interfaces.Identity
         Task SendForgotPasswordEmailAsync(string email);
 
         Task ResetPasswordAsync(string email, string code, string newPassword);
+
+        Task<AuthDto> FacebookLoginAsync(string accessToken);
     }
 }

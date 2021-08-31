@@ -9,5 +9,6 @@ namespace Fitweb.Infrastructure.Identity.Entities
 {
     public class User : IdentityUser
     {
+
     }
 }
