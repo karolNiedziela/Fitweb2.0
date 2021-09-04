@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Fitweb.Infrastructure.Email
+namespace Fitweb.Application.Models
 {
     public class EmailMessage
     {

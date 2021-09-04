@@ -9,6 +9,7 @@ using Fitweb.Infrastructure.Persistence.Repositories;
 using Microsoft.AspNetCore.Identity;
 using System.Linq;
 using System.Threading.Tasks;
+using Fitweb.Infrastructure.Identity.Extensions;
 
 namespace Fitweb.Infrastructure.Identity.Services
 {
@@ -39,12 +40,7 @@ namespace Fitweb.Infrastructure.Identity.Services
                 throw new InvalidRefreshTokenException();
             }
 
-            var user = await _userManager.FindByNameAsync(token.Username);
-
-            if (user is null)
-            {
-                throw new NotFoundException(user.GetType().Name, token.Username);
-            }
+            var user = await _userManager.FindByNameOrFailAsync(token.Username);
 
             token.Use(_dateTimeProvider.Now);
             var userRoles = await _userManager.GetRolesAsync(user);
@@ -68,7 +64,7 @@ namespace Fitweb.Infrastructure.Identity.Services
                 throw new InvalidRefreshTokenException();
             }
 
-            token.RevokedAt = _dateTimeProvider.Now;
+            token.Use(_dateTimeProvider.Now);
             await _refreshTokenRepository.UpdateAsync(token);
         }
 

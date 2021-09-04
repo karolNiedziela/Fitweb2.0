@@ -1,6 +1,8 @@
 ﻿using Fitweb.Application.DTO;
 using Fitweb.Application.Exceptions;
+using Fitweb.Application.Interfaces.Email;
 using Fitweb.Application.Interfaces.Identity;
+using Fitweb.Application.Models;
 using Fitweb.Application.Settings;
 using Fitweb.Infrastructure.Email;
 using Fitweb.Infrastructure.Identity.Constants;

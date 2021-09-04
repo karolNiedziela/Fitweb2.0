@@ -1,11 +1,11 @@
-﻿using Fitweb.Infrastructure.Identity.External.Facebook.Models;
+﻿using Fitweb.Application.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Fitweb.Infrastructure.Identity.External.Facebook.Services
+namespace Fitweb.Application.Interfaces.Identity
 {
     public interface IFacebookAuthService
     {

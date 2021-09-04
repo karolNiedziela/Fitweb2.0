@@ -49,15 +49,5 @@ namespace Fitweb.Infrastructure.Identity.Entities
 
             RevokedAt = usedAt;
         }
-
-        public void Revoke(DateTime revokedAt)
-        {
-            if (IsRevoked)
-            {
-                throw new RevokedRefreshTokenException();
-            }
-
-            RevokedAt = revokedAt;
-        }
     }
 }

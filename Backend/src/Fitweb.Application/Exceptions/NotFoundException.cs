@@ -12,21 +12,30 @@ namespace Fitweb.Application.Exceptions
 
         public string ErrorCode => string.IsNullOrEmpty(Entity) 
             ? "not_found"
-            : $"{Entity}_not_found";
+            : $"{Entity.ToLower()}_not_found";
 
-        public NotFoundException(object entity, int key) : base($"{entity.GetType().Name} with id: '{key}' was not found.")
+        public NotFoundException(string entity, int key) : base($"{entity} with id: '{key}' was not found.")
         {
-            Entity = entity.GetType().Name;
+            Entity = entity;
         }
 
-        public NotFoundException(object entity, Guid key) : base($"{entity.GetType().Name} with id: '{key}' was not found.")
-        {
-            Entity = entity.GetType().Name;
+        public NotFoundException(string entity, string key, KeyType keyType = KeyType.Id) : base(GetMessage(entity, key, keyType))
+        {                        
+            Entity = entity;
         }
 
-        public NotFoundException(object entity, string key) : base($"{entity.GetType().Name} with id: '{key}' was not found.")
-        {
-            Entity = entity.GetType().Name;
-        }
+        private static string GetMessage(string entity, string key, KeyType keyType) =>
+            keyType switch
+            {
+                KeyType.Id => $"{entity} with id: '{key}' was not found.",
+
+                KeyType.Name => $"{entity} with name: '{key}' was not found.",
+
+                KeyType.Username => $"{entity} with username: '{key}' was not found.",
+
+                KeyType.Email => $"{entity} with email: '{key}' was not found.",
+
+                _ => $"There was an error."
+            };
     }
 }

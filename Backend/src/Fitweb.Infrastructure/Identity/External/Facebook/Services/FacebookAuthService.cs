@@ -1,12 +1,9 @@
-﻿using Fitweb.Infrastructure.Identity.External.Facebook.Models;
+﻿using Fitweb.Application.Interfaces.Identity;
+using Fitweb.Application.Models;
 using Fitweb.Infrastructure.Identity.External.Facebook.Settings;
-using Fitweb.Infrastructure.Identity.Settings;
 using Newtonsoft.Json;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net.Http;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Fitweb.Infrastructure.Identity.External.Facebook.Services

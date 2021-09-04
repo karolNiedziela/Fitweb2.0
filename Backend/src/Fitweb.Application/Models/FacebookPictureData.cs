@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Fitweb.Infrastructure.Identity.External.Facebook.Models
+namespace Fitweb.Application.Models
 {
     public class FacebookPictureData
     {

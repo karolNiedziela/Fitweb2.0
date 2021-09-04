@@ -1,10 +1,11 @@
-﻿using System;
+﻿using Fitweb.Application.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Fitweb.Infrastructure.Email
+namespace Fitweb.Application.Interfaces.Email
 {
     public interface IEmailSender
     {

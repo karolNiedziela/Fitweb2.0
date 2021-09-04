@@ -17,7 +17,7 @@ namespace Fitweb.Infrastructure.Identity.Extensions
             if (user is null)
             {
                 // TODO: Probably should be invalid credentials
-                throw new NotFoundException(user, username);
+                throw new NotFoundException(nameof(User), username, KeyType.Username);
             }
 
             return user;
@@ -29,7 +29,7 @@ namespace Fitweb.Infrastructure.Identity.Extensions
             if (user is null)
             {
                 // TODO: Probably should be invalid credentials
-                throw new NotFoundException(user, email);
+                throw new NotFoundException(nameof(User), email);
             }
 
             return user;

@@ -6,6 +6,8 @@ using System.Linq;
 using System.Text;
 using MailKit.Net.Smtp;
 using System.Threading.Tasks;
+using Fitweb.Application.Interfaces.Email;
+using Fitweb.Application.Models;
 
 namespace Fitweb.Infrastructure.Email
 {

@@ -9,7 +9,7 @@ namespace Fitweb.Infrastructure.Identity.Exceptions
 {
     public class RevokedRefreshTokenException : AppException
     {
-        public override string ErrorCode => throw new NotImplementedException();
+        public override string ErrorCode => "revoked_refresh_token";
 
         public RevokedRefreshTokenException() : base("Refresh token has been revoked.")
         {

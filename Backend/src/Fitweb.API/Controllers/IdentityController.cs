@@ -1,4 +1,5 @@
-﻿using Fitweb.Application.Users.Commands.ConfirmEmail;
+﻿using Fitweb.Application.Interfaces.Identity;
+using Fitweb.Application.Users.Commands.ConfirmEmail;
 using Fitweb.Application.Users.Commands.CreateUser;
 using Fitweb.Application.Users.Commands.FacebookLogin;
 using Fitweb.Application.Users.Commands.ForgotPassword;

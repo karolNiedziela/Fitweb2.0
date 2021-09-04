@@ -86,6 +86,16 @@ namespace Fitweb.API
             services.AddApplication();
             services.AddInfrastructure();
 
+            services.AddCors(options =>
+            {
+                options.AddPolicy("FitwebOrigin", builder =>
+                {
+                    builder.AllowAnyOrigin()
+                    .AllowAnyMethod()
+                    .AllowAnyHeader();
+                });
+            });
+
             services.AddTransient<GlobalErrorHandlerMiddleware>();
         }
 
@@ -98,6 +108,8 @@ namespace Fitweb.API
                 app.UseSwagger();
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Fitweb.API v1"));
             }
+
+            app.UseCors("FitwebOrigin");
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();

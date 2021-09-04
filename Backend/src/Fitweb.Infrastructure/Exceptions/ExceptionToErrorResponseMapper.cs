@@ -19,6 +19,7 @@ namespace Fitweb.Infrastructure.Exceptions
                 AppException ex => new ErrorResponse(ex.ErrorCode, HttpStatusCode.BadRequest, ex.Message),
 
                 IdentityException ex => IdentityErrorToErrorResponseMapper.Map(ex.Error)
+
             };
     }
 }
