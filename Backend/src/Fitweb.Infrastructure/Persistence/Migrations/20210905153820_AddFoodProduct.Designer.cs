@@ -3,14 +3,16 @@ using System;
 using Fitweb.Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Fitweb.Infrastructure.Persistence.Migrations
 {
     [DbContext(typeof(FitwebDbContext))]
-    partial class FitwebDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210905153820_AddFoodProduct")]
+    partial class AddFoodProduct
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -26,7 +28,7 @@ namespace Fitweb.Infrastructure.Persistence.Migrations
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime(6)");
 
-                    b.Property<int?>("Group")
+                    b.Property<int>("Group")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("ModifiedDate")
@@ -128,15 +130,15 @@ namespace Fitweb.Infrastructure.Persistence.Migrations
                         {
                             Id = "ff48a62e-0e06-47a2-aacb-c88af07993ed",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "bb8d88c2-9c97-49ed-98da-ce1340a8f84c",
+                            ConcurrencyStamp = "28812734-1f71-4021-9443-cfab32efd2b7",
                             Email = "admin@admin.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@ADMIN.COM",
                             NormalizedUserName = "ADMINISTRATOR",
-                            PasswordHash = "AQAAAAEAACcQAAAAEG5uQ1YQlUEymYbxTozV+9e2OxNvhFU7T5HDRIYTlBDQfz1vQQj2wXhlFzdcAX2wMQ==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEKDi6DF9sUB3kaajiyyOCRhrkqRYeWp2o0fEuIf7cy887nbhnLmkV9wnWXmG1ULRMA==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "ccfb4cd3-47c8-4773-8fcd-d59b26bc8679",
+                            SecurityStamp = "51d84866-80c7-4984-89b4-da3e1b1a4f21",
                             TwoFactorEnabled = false,
                             UserName = "administrator"
                         });
@@ -171,14 +173,14 @@ namespace Fitweb.Infrastructure.Persistence.Migrations
                         new
                         {
                             Id = "a792b6cb-8230-4a37-9353-1a05d642ffe2",
-                            ConcurrencyStamp = "7a2aba99-d4e9-4a3b-a6b3-d68c2f3b0e9d",
+                            ConcurrencyStamp = "a3050c40-83cc-4b5c-9811-b9504b9474e7",
                             Name = "Administrator",
                             NormalizedName = "ADMINISTRATOR"
                         },
                         new
                         {
                             Id = "9dd36f65-1fc5-4383-b7af-626d5bd60728",
-                            ConcurrencyStamp = "c93ea7f7-a58c-47c7-a8ee-9a5e2bdc5b15",
+                            ConcurrencyStamp = "327e3158-488d-48a8-9f2e-2c6e3c0404d5",
                             Name = "Athlete",
                             NormalizedName = "ATHLETE"
                         });

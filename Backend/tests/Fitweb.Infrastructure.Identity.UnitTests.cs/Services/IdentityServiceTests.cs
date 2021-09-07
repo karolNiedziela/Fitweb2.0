@@ -1,7 +1,7 @@
 ﻿using Fitweb.Application.DTO;
 using Fitweb.Application.Exceptions;
-using Fitweb.Application.Interfaces.Email;
 using Fitweb.Application.Interfaces.Identity;
+using Fitweb.Application.Interfaces.Utilities.Email;
 using Fitweb.Application.Models;
 using Fitweb.Application.Settings;
 using Fitweb.Application.UnitTests.Fakes;
@@ -28,7 +28,7 @@ namespace Fitweb.Infrastructure.Identity.UnitTests.cs.Services
 {
     public class IdentityServiceTests
     {
-        private FakeUserManager _fakeUserManager;
+        private readonly FakeUserManager _fakeUserManager;
         private readonly IIdentityService _sut;
         private readonly IJwtHandler _jwtHandler;
         private readonly IRefreshTokenFactory _refreshTokenFactory;

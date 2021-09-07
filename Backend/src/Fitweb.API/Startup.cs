@@ -1,24 +1,16 @@
 using Fitweb.API.Middlewares;
 using Fitweb.Application;
 using Fitweb.Infrastructure;
-using Fitweb.Infrastructure.Identity;
-using Fitweb.Infrastructure.Persistence;
-using Microsoft.AspNetCore.Authentication.Cookies;
+using Fitweb.Infrastructure.Persistence.Initializers;
+using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
+using Newtonsoft.Json.Serialization;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace Fitweb.API
 {
@@ -40,10 +32,24 @@ namespace Fitweb.API
             })
             .AddNewtonsoftJson(options =>
             {
-                options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
                 options.SerializerSettings.Formatting = Newtonsoft.Json.Formatting.Indented;
                 options.SerializerSettings.Converters.Add(new Newtonsoft.Json.Converters.StringEnumConverter());
-            });
+                options.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
+
+            })
+            // To catch FluentValidaiton.ValidationException, it is necessary to set SuppressModelStateInvalidFilter,
+            // because default behavior is enabled without setting this flag to true
+            // Information: Validation errors automatically trigger an HTTP 400 response.
+            // Link: https://docs.microsoft.com/en-us/aspnet/core/web-api/?view=aspnetcore-2.1#automatic-http-400-responses
+            .ConfigureApiBehaviorOptions(options =>
+            {
+                options.SuppressModelStateInvalidFilter = true;
+            })
+            .AddFluentValidation(configuration => 
+                configuration.RegisterValidatorsFromAssembly(typeof(ApplicationInstaller).Assembly));
+            
+
+
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Fitweb.API", Version = "v1" });
@@ -122,6 +128,12 @@ namespace Fitweb.API
             app.UseAuthorization();
 
             app.UseMiddleware<GlobalErrorHandlerMiddleware>();
+
+            var scope = app.ApplicationServices.CreateScope();
+
+            //TODO: Rethink if some flag is needed
+            var seedData = scope.ServiceProvider.GetRequiredService<ISeedData>();
+            seedData.SeedAsync();
 
             app.UseEndpoints(endpoints =>
             {

@@ -1,4 +1,4 @@
-﻿using Fitweb.Application.Interfaces.Email;
+﻿using Fitweb.Application.Interfaces.Utilities.Email;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System;
@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Fitweb.Infrastructure.Email
+namespace Fitweb.Infrastructure.Utilities.Email
 {
     public static class EmailInstaller
     {

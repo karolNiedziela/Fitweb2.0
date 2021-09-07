@@ -1,18 +1,50 @@
-﻿using Fitweb.Infrastructure.Identity.Entities;
+﻿using Fitweb.Application.Interfaces;
+using Fitweb.Domain.Common;
+using Fitweb.Domain.FoodProducts;
+using Fitweb.Infrastructure.Identity.Entities;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
 using System.Reflection;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace Fitweb.Infrastructure.Persistence
 {
     public class FitwebDbContext : IdentityDbContext<User>
     {
+        private readonly IDateTimeProvider _dateTimeProvider;
+
         public DbSet<RefreshToken> RefreshTokens { get; set; }
 
-        public FitwebDbContext(DbContextOptions<FitwebDbContext> options) : base(options)
-        {
+        public DbSet<FoodProduct> FoodProducts { get; set; }
 
+        public FitwebDbContext(DbContextOptions<FitwebDbContext> options, IDateTimeProvider dateTimeProvider) 
+            : base(options)
+        {
+            _dateTimeProvider = dateTimeProvider;
+        }
+
+        public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
+        {
+            foreach (EntityEntry<Entity> entry in ChangeTracker.Entries<Entity>())
+            {
+                switch (entry.State)
+                {
+                    case EntityState.Added:
+                        entry.Entity.CreatedDate = _dateTimeProvider.Now;
+                        break;
+
+                    case EntityState.Modified:
+                        entry.Entity.ModifiedDate = _dateTimeProvider.Now;
+                        break;
+                }
+            }
+
+            var result = await base.SaveChangesAsync(cancellationToken);
+
+            return result;
         }
 
         protected override void OnModelCreating(ModelBuilder builder)

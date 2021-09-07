@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Fitweb.Infrastructure.Email
+namespace Fitweb.Infrastructure.Utilities.Email
 {
     public class EmailSettings
     {

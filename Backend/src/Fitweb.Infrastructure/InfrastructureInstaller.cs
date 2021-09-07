@@ -1,10 +1,13 @@
 ﻿using Fitweb.Application.Interfaces;
-using Fitweb.Infrastructure.Email;
+using Fitweb.Infrastructure.Utilities.Email;
 using Fitweb.Infrastructure.Exceptions;
 using Fitweb.Infrastructure.Identity;
 using Fitweb.Infrastructure.Persistence;
 using Fitweb.Infrastructure.Shared;
 using Microsoft.Extensions.DependencyInjection;
+using Fitweb.Application.Interfaces.Utilities.Csv;
+using Fitweb.Infrastructure.Utilities.Csv;
+using Fitweb.Infrastructure.Persistence.Initializers;
 
 namespace Fitweb.Infrastructure
 {
@@ -19,6 +22,8 @@ namespace Fitweb.Infrastructure
 
             services.AddSingleton<IDateTimeProvider, DateTimeProvider>();
             services.AddScoped<IExceptionToErrorResponseMapper, ExceptionToErrorResponseMapper>();
+
+            services.AddScoped(typeof(ICsvService<,>), typeof(CsvService<,>));
 
             return services;
         }

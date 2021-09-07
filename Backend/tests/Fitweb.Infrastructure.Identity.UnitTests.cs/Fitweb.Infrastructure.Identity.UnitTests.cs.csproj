@@ -23,7 +23,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\src\Fitweb.Infrastructure\Fitweb.Infrastructure.csproj" />
+    <ProjectReference Include="..\..\src\Fitweb.Infrastructure\Fitweb.Infrastructure.csproj" />
   </ItemGroup>
-
 </Project>

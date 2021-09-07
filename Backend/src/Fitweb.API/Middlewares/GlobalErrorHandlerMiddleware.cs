@@ -44,7 +44,9 @@ namespace Fitweb.API.Middlewares
 
             context.Response.ContentType = "application/json";
 
-            var payload = JsonConvert.SerializeObject(new { code = errorResponse.Code, errors = new List<string>(errorResponse.Errors) });
+            //TODO: Probably status code is to remove
+            var payload = JsonConvert.SerializeObject(new { code = errorResponse.Code, statusCode = context.Response.StatusCode,
+                errors = new List<string>(errorResponse.Errors) });
 
             await context.Response.WriteAsync(payload);
         }

@@ -1,4 +1,7 @@
-﻿using Fitweb.Infrastructure.Persistence.Repositories;
+﻿using Fitweb.Domain.Common;
+using Fitweb.Domain.FoodProducts.Repositories;
+using Fitweb.Infrastructure.Persistence.Initializers;
+using Fitweb.Infrastructure.Persistence.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -23,11 +26,15 @@ namespace Fitweb.Infrastructure.Persistence
             services.AddDbContext<FitwebDbContext>(options =>
             {
                 options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString));
-                options.EnableSensitiveDataLogging(); // PRODUCTION: TO REMOVE
-                options.EnableDetailedErrors(); // PRODUCTION: TO REMOVE
+                options.EnableSensitiveDataLogging(); // TODO: PRODUCTION: TO REMOVE
+                options.EnableDetailedErrors(); // TODO: PRODUCTION: TO REMOVE
             });
 
             services.AddScoped<IRefreshTokenRepository, RefreshTokenRepository>();
+            services.AddScoped(typeof(IBaseRepository<>), typeof(BaseRepository<>));
+            services.AddScoped<IFoodProductRepository, FoodProductRepository>();
+            services.AddScoped<IDataInitializer, FoodProductInitializer>();
+            services.AddScoped<ISeedData, SeedData>();
 
             return services;
         }

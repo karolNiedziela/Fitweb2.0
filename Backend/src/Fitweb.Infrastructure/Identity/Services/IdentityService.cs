@@ -1,15 +1,12 @@
 ﻿using Fitweb.Application.DTO;
-using Fitweb.Application.Exceptions;
-using Fitweb.Application.Interfaces.Email;
+using Fitweb.Application.Interfaces.Utilities.Email;
 using Fitweb.Application.Interfaces.Identity;
 using Fitweb.Application.Models;
 using Fitweb.Application.Settings;
-using Fitweb.Infrastructure.Email;
 using Fitweb.Infrastructure.Identity.Constants;
 using Fitweb.Infrastructure.Identity.Entities;
 using Fitweb.Infrastructure.Identity.Exceptions;
 using Fitweb.Infrastructure.Identity.Extensions;
-using Fitweb.Infrastructure.Identity.External.Facebook.Services;
 using Fitweb.Infrastructure.Identity.Factories;
 using Fitweb.Infrastructure.Persistence.Repositories;
 using Microsoft.AspNetCore.Identity;
@@ -17,7 +14,6 @@ using Microsoft.AspNetCore.WebUtilities;
 using System;
 using System.Collections.Generic;
 using System.Text;
-using System.Text.Encodings.Web;
 using System.Threading.Tasks;
 
 namespace Fitweb.Infrastructure.Identity.Services

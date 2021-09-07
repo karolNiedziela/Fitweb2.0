@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Fitweb.Application.Interfaces.Email
+namespace Fitweb.Application.Interfaces.Utilities.Email
 {
     public interface IEmailSender
     {

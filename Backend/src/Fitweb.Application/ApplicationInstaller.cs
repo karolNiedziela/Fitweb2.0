@@ -1,4 +1,6 @@
-﻿using Fitweb.Application.Settings;
+﻿using Fitweb.Application.PipelineBehaviours;
+using Fitweb.Application.Settings;
+using FluentValidation.AspNetCore;
 using MediatR;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -20,11 +22,14 @@ namespace Fitweb.Application
             using var serviceProvider = services.BuildServiceProvider();
             configuration = serviceProvider.GetService<IConfiguration>();
 
-            services.AddMediatR(Assembly.GetExecutingAssembly());
-
             var generalSettings = new GeneralSettings();
             configuration.GetSection(GeneralSettings.General).Bind(generalSettings);
             services.AddSingleton(generalSettings);
+
+            services.AddMediatR(Assembly.GetExecutingAssembly());
+
+            services.AddAutoMapper(Assembly.GetExecutingAssembly());
+            services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehavior<,>));
 
             return services;
         }
