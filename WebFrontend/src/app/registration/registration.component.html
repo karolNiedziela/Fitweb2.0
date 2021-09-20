@@ -1,6 +1,6 @@
 <div fxLayoutAlign="center center" fxFlexFill>
     <mat-card fxFlex="25">
-        <mat-toolbar>Register now</mat-toolbar>
+        <mat-toolbar>Register now <button fxLayoutAlign="center center" [routerLink]="['/login']"> ↩</button></mat-toolbar>
         <form fxLayout="column">
             <mat-form-field>
                 <input matInput placeholder="Username">
@@ -20,5 +20,6 @@
             <p></p>
             <button class="btn_register" mat-raised-button type="submit" fxLayoutAlign="center center">Register</button>
         </form>
+
     </mat-card>
 </div>
