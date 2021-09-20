@@ -31,7 +31,7 @@ namespace Fitweb.Infrastructure.Identity
             services.AddIdentity<User, IdentityRole>(options =>
             {
                 options.SignIn.RequireConfirmedAccount = false;
-                options.SignIn.RequireConfirmedEmail = true; //TODO: Change to true
+                options.SignIn.RequireConfirmedEmail = true;
                 options.SignIn.RequireConfirmedPhoneNumber = false;
 
                 options.Password.RequireDigit = true;

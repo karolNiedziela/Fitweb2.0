@@ -1,5 +1,9 @@
+using Fitweb.API.Filters;
 using Fitweb.API.Middlewares;
+using Fitweb.API.Services;
 using Fitweb.Application;
+using Fitweb.Application.Interfaces;
+using Fitweb.Application.Settings;
 using Fitweb.Infrastructure;
 using Fitweb.Infrastructure.Persistence.Initializers;
 using FluentValidation.AspNetCore;
@@ -80,7 +84,11 @@ namespace Fitweb.API
                         Array.Empty<string>()
                     }
                 });
+
+                c.SchemaFilter<DefaultValueSchemaFilter>();
             });
+
+            services.AddSwaggerGenNewtonsoftSupport();
 
             services.AddRouting(options =>
             {
@@ -88,6 +96,8 @@ namespace Fitweb.API
             });
 
             services.AddHttpClient();
+            services.AddHttpContextAccessor();
+            services.AddScoped<ICurrentUser, CurrentUser>();
 
             services.AddApplication();
             services.AddInfrastructure();
@@ -131,9 +141,12 @@ namespace Fitweb.API
 
             var scope = app.ApplicationServices.CreateScope();
 
-            //TODO: Rethink if some flag is needed
-            var seedData = scope.ServiceProvider.GetRequiredService<ISeedData>();
-            seedData.SeedAsync();
+            var generalSettings = scope.ServiceProvider.GetRequiredService<GeneralSettings>();
+            if (generalSettings.SeedData)
+            {
+                var seedData = scope.ServiceProvider.GetRequiredService<ISeedData>();
+                seedData.SeedAsync();
+            }
 
             app.UseEndpoints(endpoints =>
             {

@@ -1,6 +1,9 @@
 ﻿using Fitweb.Application.Interfaces;
+using Fitweb.Domain.Athletes;
 using Fitweb.Domain.Common;
+using Fitweb.Domain.Exercises;
 using Fitweb.Domain.FoodProducts;
+using Fitweb.Domain.Trainings;
 using Fitweb.Infrastructure.Identity.Entities;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
@@ -19,6 +22,16 @@ namespace Fitweb.Infrastructure.Persistence
         public DbSet<RefreshToken> RefreshTokens { get; set; }
 
         public DbSet<FoodProduct> FoodProducts { get; set; }
+
+        public DbSet<Athlete> Athletes { get; set; }
+
+        public DbSet<Training> Trainings { get; set; }
+
+        public DbSet<TrainingExercise> TrainingExercises { get; set; }
+
+        public DbSet<Set> Sets { get; set; }
+
+        public DbSet<Exercise> Exercises { get; set; }
 
         public FitwebDbContext(DbContextOptions<FitwebDbContext> options, IDateTimeProvider dateTimeProvider) 
             : base(options)

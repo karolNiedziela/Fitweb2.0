@@ -1,6 +1,4 @@
 ﻿using Fitweb.Domain.Common;
-using Fitweb.Domain.Filters;
-using Fitweb.Infrastructure.Persistence.Extensions;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -20,45 +18,26 @@ namespace Fitweb.Infrastructure.Persistence.Repositories
         }
 
         public async Task<T> GetByIdAsync(int id)
-         => await _context
-                    .Set<T>()
-                    .AsNoTracking()
-                    .SingleOrDefaultAsync(x => x.Id == id);
+            => await _context.Set<T>().AsNoTracking().SingleOrDefaultAsync(x => x.Id == id);
 
-        public async Task<IEnumerable<T>> GetAllAsync()
-            => await _context.Set<T>().AsNoTracking().ToListAsync();
-
-        public async Task<(IEnumerable<T>, int TotalItems)> GetAllAsync(PaginationFilter pagination, string columName = null)
+        public async Task AddAsync(T entity)
         {
-            var queryable = _context.Set<T>().AsNoTracking();
+            await _context.Set<T>().AddAsync(entity);
 
-            if (string.IsNullOrEmpty(columName))
-                queryable = queryable.OrderBy(columName);
-
-
-            var totalItems = await queryable.CountAsync();
-
-            var data = await queryable
-                        .Skip((pagination.PageNumber - 1) * pagination.PageSize)
-                        .Take(pagination.PageSize)
-                        .ToListAsync();
-
-             return (data, totalItems);
+            await _context.SaveChangesAsync();
         }
 
-        public Task AddAsync(T entity)
+        public async Task RemoveAsync(T entity)
         {
-            throw new NotImplementedException();
+            _context.Set<T>().Remove(entity);
+            await _context.SaveChangesAsync();
         }
 
-        public Task DeleteAsync(T entity)
+        public async Task UpdateAsync(T entity)
         {
-            throw new NotImplementedException();
-        }
+            _context.Set<T>().Update(entity);
 
-        public Task UpdateAsync(T entity)
-        {
-            throw new NotImplementedException();
+            await _context.SaveChangesAsync();
         }
     }
 }

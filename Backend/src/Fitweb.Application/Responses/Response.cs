@@ -10,14 +10,17 @@ namespace Fitweb.Application.Responses
     {
         public T Data { get; set; }
 
+        public string Message { get; set; }
+
         public Response()
         {
 
         }
 
-        public Response(T response)
+        public Response(T response, string message = null)
         {
             Data = response;
+            Message = message;
         }
     }
 }

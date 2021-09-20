@@ -1,5 +1,5 @@
-﻿using Fitweb.Application.Interfaces.Identity;
-using Fitweb.Application.Users.Commands.CreateUser;
+﻿using Fitweb.Application.Commands.Users.CreateUser;
+using Fitweb.Application.Interfaces.Identity;
 using MediatR;
 using NSubstitute;
 using Shouldly;

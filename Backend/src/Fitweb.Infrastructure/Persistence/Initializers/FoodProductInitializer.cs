@@ -2,7 +2,6 @@
 using Fitweb.Domain.FoodProducts;
 using Fitweb.Domain.FoodProducts.Repositories;
 using Fitweb.Infrastructure.Utilities.Csv.Maps;
-using Fitweb.Infrastructure.Utilities.Csv.Models;
 using System;
 using System.Collections.Generic;
 using System.IO;

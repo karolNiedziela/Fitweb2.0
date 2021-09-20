@@ -20,11 +20,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Users\Queries\" />
+    <ProjectReference Include="..\Fitweb.Domain\Fitweb.Domain.csproj" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Fitweb.Domain\Fitweb.Domain.csproj" />
+    <Folder Include="Queries\Sets\" />
   </ItemGroup>
 
 </Project>

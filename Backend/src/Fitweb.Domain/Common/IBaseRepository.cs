@@ -1,5 +1,4 @@
-﻿using Fitweb.Domain.Filters;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -11,13 +10,9 @@ namespace Fitweb.Domain.Common
     {
         Task<T> GetByIdAsync(int id);
 
-        Task<IEnumerable<T>> GetAllAsync();
-
-        Task<(IEnumerable<T>, int TotalItems)> GetAllAsync(PaginationFilter pagination, string columName = null);
-
         Task AddAsync(T entity);
 
-        Task DeleteAsync(T entity);
+        Task RemoveAsync(T entity);
 
         Task UpdateAsync(T entity);
     }

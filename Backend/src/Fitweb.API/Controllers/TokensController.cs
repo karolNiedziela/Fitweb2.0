@@ -1,5 +1,5 @@
-﻿using Fitweb.Application.Tokens.Commands.RevokeToken;
-using Fitweb.Application.Tokens.Commands.UseToken;
+﻿using Fitweb.Application.Commands.RefreshTokens.RevokeToken;
+using Fitweb.Application.Commands.RefreshTokens.UseToken;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;

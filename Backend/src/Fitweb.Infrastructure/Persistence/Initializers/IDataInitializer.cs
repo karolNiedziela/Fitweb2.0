@@ -6,8 +6,6 @@ using System.Threading.Tasks;
 
 namespace Fitweb.Infrastructure.Persistence.Initializers
 {
-    public delegate IDataInitializer ServiceResolver(string key);
-
     public interface IDataInitializer
     {
         Task SeedAsync();

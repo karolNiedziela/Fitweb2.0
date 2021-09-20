@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Fitweb.Domain.Exceptions
 {
-    public class NegativeNumberException : DomainException
+    public class NegativeNumberException : AppException
     {
         public override string ErrorCode => "negative_number";
 

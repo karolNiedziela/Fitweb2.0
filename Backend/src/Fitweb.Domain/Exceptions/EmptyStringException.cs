@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Fitweb.Domain.Exceptions
 {
-    public class EmptyStringException : DomainException
+    public class EmptyStringException : AppException
     {
         public override string ErrorCode => "empty_string";
 

@@ -1,8 +1,7 @@
-﻿using Fitweb.Application.Exceptions;
+﻿using Fitweb.Domain.Exceptions;
 using Fitweb.Application.Responses;
-using Fitweb.Domain.Exceptions;
 using Fitweb.Infrastructure.Identity.Exceptions;
-using Fitweb.Infrastructure.Identity.Helpers;
+using Fitweb.Infrastructure.Exceptions;
 using FluentValidation;
 using System;
 using System.Collections.Generic;
@@ -18,8 +17,6 @@ namespace Fitweb.Infrastructure.Exceptions
         public ErrorResponse Map(Exception exception)
             => exception switch
             {
-                DomainException ex => new ErrorResponse(ex.ErrorCode, HttpStatusCode.BadRequest, ex.Message),
-
                 AppException ex => new ErrorResponse(ex.ErrorCode, HttpStatusCode.BadRequest, ex.Message),
 
                 NotFoundException ex => new ErrorResponse(ex.ErrorCode, HttpStatusCode.NotFound, ex.Message),

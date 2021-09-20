@@ -21,7 +21,7 @@ namespace Fitweb.Domain.Common
 
         public static void AgainstNegativeNumber(double value, string name = "Value")
         {
-            if (value > 0)
+            if (value >= 0)
             {
                 return;
             }
@@ -29,6 +29,39 @@ namespace Fitweb.Domain.Common
             throw new NegativeNumberException($"{name} cannot be negative.");
         }
 
+        public static void AgainstNegativeNumber(double? value, string name = "Value")
+        {
+            if (!value.HasValue)
+            {
+                return;
+            }
 
+            if (value >= 0)
+            {
+                return;
+            }
+
+            throw new NegativeNumberException($"{name} cannot be negative.");
+        }
+
+        public static void AgainstNegativeAndZeroNumber(double value, string name = "Value")
+        {
+            if (value > 0)
+            {
+                return;
+            }
+
+            throw new NegativeOrZeroNumberException($"{name} cannot be negative or zero.");
+        }
+
+        public static void AgainstNegativeAndZeroNumber(double? value, string name = "Value")
+        {
+            if (value > 0)
+            {
+                return;
+            }
+
+            throw new NegativeOrZeroNumberException($"{name} cannot be negative or zero.");
+        }
     }
 }

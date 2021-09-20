@@ -8,6 +8,7 @@ using MailKit.Net.Smtp;
 using System.Threading.Tasks;
 using Fitweb.Application.Interfaces.Utilities.Email;
 using Fitweb.Application.Models;
+using Fitweb.Application.Exceptions;
 
 namespace Fitweb.Infrastructure.Utilities.Email
 {
@@ -70,10 +71,9 @@ namespace Fitweb.Infrastructure.Utilities.Email
 
                 await smtp.SendAsync(mailMessage);
             }
-            catch
+            catch(Exception ex)
             {
-                //TODO: throw proper exception
-                throw;
+                throw new EmailSendingException(ex.Message);
             }
             finally
             {

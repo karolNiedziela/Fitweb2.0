@@ -22,7 +22,7 @@ namespace Fitweb.Application.Mapping
 
             CreateMap<double, Calories>().ConvertUsing(src => Calories.Create(src));
 
-            CreateMap<Calories, double>().ConvertUsing(x => x.Value);
+            CreateMap<Calories, double>().ConvertUsing(calories => calories.Value);
         }
     }
 }

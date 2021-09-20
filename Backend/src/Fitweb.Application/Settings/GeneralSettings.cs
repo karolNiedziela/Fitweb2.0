@@ -19,5 +19,7 @@ namespace Fitweb.Application.Settings
         public string ClientAppUrl { get; set; }
 
         public string ForgotPassword { get; set; }
+
+        public bool SeedData { get; set; }
     }
 }

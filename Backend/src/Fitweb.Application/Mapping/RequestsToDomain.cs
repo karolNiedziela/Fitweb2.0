@@ -14,6 +14,7 @@ namespace Fitweb.Application.Mapping
         public RequestsToDomain()
         {
             CreateMap<PaginationQuery, PaginationFilter>();
+            CreateMap<OrderQuery, OrderFilter>();
         }
     }
 }

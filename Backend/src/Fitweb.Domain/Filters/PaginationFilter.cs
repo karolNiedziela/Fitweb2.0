@@ -25,7 +25,11 @@ namespace Fitweb.Domain.Filters
         public PaginationFilter(int pageNumber, int pageSize)
         {
             PageNumber = pageNumber < 1 ? pageNumber : pageNumber;
-            PageSize = pageSize > MaxPageSize ? MaxPageSize : pageSize;
+            PageSize = pageSize > MaxPageSize 
+                ? MaxPageSize 
+                : pageSize < DefaultPageSize 
+                    ? DefaultPageSize
+                    : pageSize;
         }
 
     }

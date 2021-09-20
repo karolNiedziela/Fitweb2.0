@@ -1,6 +1,7 @@
-﻿using Fitweb.Application.FoodProducts.Commands;
-using Fitweb.Application.FoodProducts.Queries.GetFoodProductsList;
-using Fitweb.Application.FoodProducts.Queries.GetProduct;
+﻿using Fitweb.Application.Commands.FoodProducts.Add;
+using Fitweb.Application.Commands.FoodProducts.Delete;
+using Fitweb.Application.Queries.FoodProduts.Get;
+using Fitweb.Application.Queries.FoodProduts.GetList;
 using Fitweb.Application.Requests;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -14,7 +15,7 @@ namespace Fitweb.API.Controllers
     {
 
         [HttpGet("{id}")]
-        public async Task<IActionResult> Get(int id)
+        public async Task<IActionResult> Details(int id)
         {
             var response = await Mediator.Send(new GetFoodProductQuery
             {
@@ -25,22 +26,31 @@ namespace Fitweb.API.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetAll([FromQuery]PaginationQuery pagination)
+        public async Task<IActionResult> FoodProducts([FromQuery] PaginationQuery pagination, [FromQuery] OrderQuery order)
         {
             var response = await Mediator.Send(new GetFoodProductListQuery
             {
-                Pagination = pagination
+                Pagination = pagination,
+                Order = order
             });
 
             return Ok(response);
         }
 
         [HttpPost]
-        public async Task<IActionResult> Post([FromBody]AddFoodProductCommand command)
+        public async Task<IActionResult> Create([FromBody] AddFoodProductCommand command)
         {
             await Mediator.Send(command);
 
             return Ok();
+        }
+
+        [HttpDelete]
+        public async Task<IActionResult> Delete([FromBody] DeleteFoodProductCommand command)
+        {
+            await Mediator.Send(command);
+
+            return NoContent();
         }
     }
 }

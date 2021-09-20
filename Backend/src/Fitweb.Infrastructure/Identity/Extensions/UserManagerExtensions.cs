@@ -1,5 +1,6 @@
-﻿using Fitweb.Application.Exceptions;
+﻿using Fitweb.Domain.Exceptions;
 using Fitweb.Infrastructure.Identity.Entities;
+using Fitweb.Infrastructure.Identity.Exceptions;
 using Microsoft.AspNetCore.Identity;
 using System;
 using System.Collections.Generic;
@@ -16,8 +17,7 @@ namespace Fitweb.Infrastructure.Identity.Extensions
             var user = await userManager.FindByNameAsync(username);
             if (user is null)
             {
-                // TODO: Probably should be invalid credentials
-                throw new NotFoundException(nameof(User), username, KeyType.Username);
+                throw new InvalidCredentialsException();
             }
 
             return user;
@@ -28,8 +28,7 @@ namespace Fitweb.Infrastructure.Identity.Extensions
             var user = await userManager.FindByEmailAsync(email);
             if (user is null)
             {
-                // TODO: Probably should be invalid credentials
-                throw new NotFoundException(nameof(User), email);
+                throw new InvalidCredentialsException();
             }
 
             return user;

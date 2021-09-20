@@ -1,4 +1,8 @@
-﻿using Fitweb.Application.PipelineBehaviours;
+﻿using AutoMapper;
+using Fitweb.Application.Interfaces;
+using Fitweb.Application.Mapping;
+using Fitweb.Application.PipelineBehaviors;
+using Fitweb.Application.PipelineBehaviours;
 using Fitweb.Application.Settings;
 using FluentValidation.AspNetCore;
 using MediatR;
@@ -29,7 +33,8 @@ namespace Fitweb.Application
             services.AddMediatR(Assembly.GetExecutingAssembly());
 
             services.AddAutoMapper(Assembly.GetExecutingAssembly());
-            services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehavior<,>));
+            services.AddTransient(typeof(IPipelineBehavior<,>), typeof(UserIdPipelineBehavior<,>));
+            services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationPipelineBehavior<,>));
 
             return services;
         }
