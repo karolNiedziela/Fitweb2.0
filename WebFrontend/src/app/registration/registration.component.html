@@ -1,24 +1,42 @@
-<div fxLayoutAlign="center center" fxFlexFill>
-    <mat-card fxFlex="25">
-        <mat-toolbar>Register now</mat-toolbar>
-        <form fxLayout="column">
-            <mat-form-field>
-                <input matInput placeholder="Username">
-            </mat-form-field>
-            <mat-form-field>
-                <input matInput placeholder="Email address">
-            </mat-form-field>
-            <mat-form-field>
-                <input type="password" matInput placeholder="Password">
-            </mat-form-field>
-            <mat-form-field>
-                <input type="password" matInput placeholder="Confirm password">
-            </mat-form-field>
-            <mat-checkbox class="checkbox" layout-align="left left">
-                I accept the <a>Terms of Use & Privacy Policy</a>
-            </mat-checkbox>
-            <p></p>
-            <button class="btn_register" mat-raised-button type="submit" fxLayoutAlign="center center">Register</button>
-        </form>
-    </mat-card>
+<div class="registration" fxLayoutAlign="center center" fxFlexFill>
+  <mat-card fxFlex="25">
+    <mat-toolbar class="registration_header">
+      <mat-toolbar-row>
+        <span>Register now</span>
+        <span class="example-spacer"></span>
+        <mat-icon
+          class="example-icon"
+          aria-hidden="false"
+          aria-label="Example delete icon"
+          >undo</mat-icon
+        >
+      </mat-toolbar-row>
+    </mat-toolbar>
+    <form fxLayout="column">
+      <mat-form-field>
+        <input matInput placeholder="Username" />
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput placeholder="Email address" />
+      </mat-form-field>
+      <mat-form-field>
+        <input type="password" matInput placeholder="Password" />
+      </mat-form-field>
+      <mat-form-field>
+        <input type="password" matInput placeholder="Confirm password" />
+      </mat-form-field>
+      <mat-checkbox class="checkbox" layout-align="left left">
+        I accept the <a>Terms of Use & Privacy Policy</a>
+      </mat-checkbox>
+      <p></p>
+      <button
+        class="btn_register"
+        mat-raised-button
+        type="submit"
+        fxLayoutAlign="center center"
+      >
+        Register
+      </button>
+    </form>
+  </mat-card>
 </div>
