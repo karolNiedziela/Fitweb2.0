@@ -31,25 +31,13 @@ namespace Fitweb.Domain.ValueObjects
         private Nutrient(double protein, double carbohydrate, double fat, double? saturatedFat = null,
             double? sugar = null, double? fiber = null, double? salt = null)
         {
-            DomainValidator.AgainstNegativeNumber(protein, "Protein");
-            DomainValidator.AgainstNegativeNumber(carbohydrate, "Carbohydrate");
-            DomainValidator.AgainstNegativeNumber(fat, "Fat");
-            if (saturatedFat.HasValue) 
-                DomainValidator.AgainstNegativeNumber(saturatedFat.Value, "Saturated fat");
-            if (sugar.HasValue)
-                DomainValidator.AgainstNegativeNumber(sugar.Value, "Sugar");
-            if (fiber.HasValue)
-                DomainValidator.AgainstNegativeNumber(fiber.Value, "Fiber");
-            if (salt.HasValue)
-                DomainValidator.AgainstNegativeNumber(salt.Value, "Salt");
-
-            Protein = protein;
-            Carbohydrate = carbohydrate;
-            Sugar = sugar;
-            Fat = fat;
-            SaturatedFat = saturatedFat;
-            Fiber = fiber;
-            Salt = salt;
+            Protein = DomainValidator.AgainstNegativeNumber(protein, "Protein");
+            Carbohydrate = DomainValidator.AgainstNegativeNumber(carbohydrate, "Carbohydrate");
+            Fat = DomainValidator.AgainstNegativeNumber(fat, "Fat");
+            SaturatedFat = DomainValidator.AgainstNegativeNumber(saturatedFat, "Saturated fat");
+            Sugar = DomainValidator.AgainstNegativeNumber(sugar, "Sugar");
+            Fiber = DomainValidator.AgainstNegativeNumber(fiber, "Fiber");
+            Salt = DomainValidator.AgainstNegativeNumber(salt, "Salt");
         }
 
         public static Nutrient Create(double protein, double carbohydrate, double fat, double? saturatedFat = null,

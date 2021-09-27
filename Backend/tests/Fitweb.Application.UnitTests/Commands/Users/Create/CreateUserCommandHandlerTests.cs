@@ -1,17 +1,13 @@
-﻿using Fitweb.Application.Commands.Users.CreateUser;
+﻿using Fitweb.Application.Commands.Users.Create;
 using Fitweb.Application.Interfaces.Identity;
 using MediatR;
 using NSubstitute;
 using Shouldly;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Xunit;
 
-namespace Fitweb.Application.UnitTests.Users.Commands.CreateUser
+namespace Fitweb.Application.UnitTests.Commands.Users.Create
 {
     public class CreateUserCommandHandlerTests
     {

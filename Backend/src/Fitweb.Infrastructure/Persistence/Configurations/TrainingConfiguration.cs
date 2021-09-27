@@ -14,6 +14,12 @@ namespace Fitweb.Infrastructure.Persistence.Configurations
                    .WithOne(x => x.Training)
                    .HasForeignKey(x => x.TrainingId);
 
+            builder.OwnsOne(x => x.Information, navigation =>
+            {
+                navigation.Property(x => x.Name).HasColumnName("Name");
+
+                navigation.Property(x => x.Description).HasColumnName("Description");
+            });
         }
     }
 }

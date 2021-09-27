@@ -46,6 +46,76 @@ namespace Fitweb.Infrastructure.Persistence.Migrations
                     b.ToTable("Athletes");
                 });
 
+            modelBuilder.Entity("Fitweb.Domain.Athletes.AthleteFoodProduct", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<int>("AthleteId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<int>("FoodProductId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("ModifiedDate")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<double>("Weight")
+                        .HasColumnType("double");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("FoodProductId");
+
+                    b.HasIndex("AthleteId", "FoodProductId");
+
+                    b.ToTable("AthleteFoodProducts");
+                });
+
+            modelBuilder.Entity("Fitweb.Domain.Athletes.DietInformation", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<int>("AthleteId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<DateTime?>("EndDate")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<DateTime>("ModifiedDate")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<DateTime?>("StartDate")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<double>("TotalCalories")
+                        .HasColumnType("double");
+
+                    b.Property<double>("TotalCarbohydrates")
+                        .HasColumnType("double");
+
+                    b.Property<double>("TotalFats")
+                        .HasColumnType("double");
+
+                    b.Property<double>("TotalProteins")
+                        .HasColumnType("double");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AthleteId");
+
+                    b.ToTable("DietInformations");
+                });
+
             modelBuilder.Entity("Fitweb.Domain.Exercises.Exercise", b =>
                 {
                     b.Property<int>("Id")
@@ -80,6 +150,9 @@ namespace Fitweb.Infrastructure.Persistence.Migrations
 
                     b.Property<DateTime>("ModifiedDate")
                         .HasColumnType("datetime(6)");
+
+                    b.Property<string>("UserId")
+                        .HasColumnType("longtext");
 
                     b.HasKey("Id");
 
@@ -135,14 +208,8 @@ namespace Fitweb.Infrastructure.Persistence.Migrations
                     b.Property<int>("Day")
                         .HasColumnType("int");
 
-                    b.Property<string>("Description")
-                        .HasColumnType("longtext");
-
                     b.Property<DateTime>("ModifiedDate")
                         .HasColumnType("datetime(6)");
-
-                    b.Property<string>("Name")
-                        .HasColumnType("longtext");
 
                     b.HasKey("Id");
 
@@ -257,15 +324,15 @@ namespace Fitweb.Infrastructure.Persistence.Migrations
                         {
                             Id = "ff48a62e-0e06-47a2-aacb-c88af07993ed",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "762098ae-fd30-4999-8a02-95e6e44fcf60",
+                            ConcurrencyStamp = "65d6d0e9-1f8f-4d34-98f7-890a5d2ab2d8",
                             Email = "admin@admin.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@ADMIN.COM",
                             NormalizedUserName = "ADMINISTRATOR",
-                            PasswordHash = "AQAAAAEAACcQAAAAEF6KRXGbVSzm74+ROfigp6qZnFQaFfOPrNlujagbenPSeQ6hEUdAcYKpWlzvnHXfUg==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEMu5R+bTs43elzo4+Te2Bfydc4Bpurrxp5Tk/c1Bq38YPf8jN7AurIRKhZJeECoW9Q==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "f792d64a-a420-4174-9876-251722d645aa",
+                            SecurityStamp = "19ae77ac-ca60-4c79-a454-528d49a83b44",
                             TwoFactorEnabled = false,
                             UserName = "administrator"
                         });
@@ -300,14 +367,14 @@ namespace Fitweb.Infrastructure.Persistence.Migrations
                         new
                         {
                             Id = "a792b6cb-8230-4a37-9353-1a05d642ffe2",
-                            ConcurrencyStamp = "1bab57cd-17af-4b52-9e6b-07ede309cb05",
+                            ConcurrencyStamp = "c8b41a5f-3329-4095-ad32-c98389a2634d",
                             Name = "Administrator",
                             NormalizedName = "ADMINISTRATOR"
                         },
                         new
                         {
                             Id = "9dd36f65-1fc5-4383-b7af-626d5bd60728",
-                            ConcurrencyStamp = "5c7623ec-33c1-401d-97bd-86fe5db0135a",
+                            ConcurrencyStamp = "790b1318-eb76-42c2-a411-edf812261e16",
                             Name = "Athlete",
                             NormalizedName = "ATHLETE"
                         });
@@ -420,6 +487,36 @@ namespace Fitweb.Infrastructure.Persistence.Migrations
                     b.HasKey("UserId", "LoginProvider", "Name");
 
                     b.ToTable("UserTokens");
+                });
+
+            modelBuilder.Entity("Fitweb.Domain.Athletes.AthleteFoodProduct", b =>
+                {
+                    b.HasOne("Fitweb.Domain.Athletes.Athlete", "Athlete")
+                        .WithMany("FoodProducts")
+                        .HasForeignKey("AthleteId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Fitweb.Domain.FoodProducts.FoodProduct", "FoodProduct")
+                        .WithMany()
+                        .HasForeignKey("FoodProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Athlete");
+
+                    b.Navigation("FoodProduct");
+                });
+
+            modelBuilder.Entity("Fitweb.Domain.Athletes.DietInformation", b =>
+                {
+                    b.HasOne("Fitweb.Domain.Athletes.Athlete", "Athlete")
+                        .WithMany("DietInformations")
+                        .HasForeignKey("AthleteId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Athlete");
                 });
 
             modelBuilder.Entity("Fitweb.Domain.Exercises.Exercise", b =>
@@ -555,7 +652,30 @@ namespace Fitweb.Infrastructure.Persistence.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.OwnsOne("Fitweb.Domain.ValueObjects.Information", "Information", b1 =>
+                        {
+                            b1.Property<int>("TrainingId")
+                                .HasColumnType("int");
+
+                            b1.Property<string>("Description")
+                                .HasColumnType("longtext")
+                                .HasColumnName("Description");
+
+                            b1.Property<string>("Name")
+                                .HasColumnType("longtext")
+                                .HasColumnName("Name");
+
+                            b1.HasKey("TrainingId");
+
+                            b1.ToTable("Trainings");
+
+                            b1.WithOwner()
+                                .HasForeignKey("TrainingId");
+                        });
+
                     b.Navigation("Athlete");
+
+                    b.Navigation("Information");
                 });
 
             modelBuilder.Entity("Fitweb.Domain.Trainings.TrainingExercise", b =>
@@ -630,6 +750,10 @@ namespace Fitweb.Infrastructure.Persistence.Migrations
 
             modelBuilder.Entity("Fitweb.Domain.Athletes.Athlete", b =>
                 {
+                    b.Navigation("DietInformations");
+
+                    b.Navigation("FoodProducts");
+
                     b.Navigation("Trainings");
                 });
 

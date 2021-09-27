@@ -13,13 +13,6 @@ namespace Fitweb.Application.Mapping
     {
         public ValueObjectProfile()
         {
-            CreateMap<InformationDto, Information>().ConvertUsing(src =>
-                Information.Create(src.Name, src.Description));
-
-            CreateMap<NutrientDto, Nutrient>().ConvertUsing(src =>
-                Nutrient.Create(src.Protein, src.Carbohydrate, src.Fat, src.SaturatedFat, src.Sugar, src.Fiber,
-                    src.Salt));
-
             CreateMap<double, Calories>().ConvertUsing(src => Calories.Create(src));
 
             CreateMap<Calories, double>().ConvertUsing(calories => calories.Value);

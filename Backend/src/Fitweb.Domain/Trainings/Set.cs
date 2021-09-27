@@ -26,12 +26,9 @@ namespace Fitweb.Domain.Trainings
 
         public Set(double weight, int numberOfReps, int numberOfSets = 1)
         {
-            DomainValidator.AgainstNegativeAndZeroNumber(weight, nameof(Weight));
-            DomainValidator.AgainstNegativeAndZeroNumber(numberOfSets, nameof(NumberOfSets));
-            DomainValidator.AgainstNegativeAndZeroNumber(numberOfReps, nameof(NumberOfReps));
-            Weight = weight;
-            NumberOfReps = numberOfReps;
-            NumberOfSets = numberOfSets;
+            Weight = DomainValidator.AgainstNegativeAndZeroNumber(weight, nameof(Weight));
+            NumberOfReps = DomainValidator.AgainstNegativeAndZeroNumber(numberOfReps, "Number of reps");
+            NumberOfSets = DomainValidator.AgainstNegativeAndZeroNumber(numberOfSets, "Number of sets");
         }
 
         public void SetWeight(double weight)
@@ -41,18 +38,18 @@ namespace Fitweb.Domain.Trainings
             Weight = weight;
         }
 
-        public void SetNumberOfSets(int numberOfSets)
-        {
-            DomainValidator.AgainstNegativeAndZeroNumber(numberOfSets, nameof(NumberOfSets));
-
-            NumberOfSets = numberOfSets;
-        }
-
         public void SetNumberOfReps(int numberOfReps)
         {
-            DomainValidator.AgainstNegativeAndZeroNumber(numberOfReps, nameof(NumberOfReps));
+            DomainValidator.AgainstNegativeAndZeroNumber(numberOfReps, "Number of reps");
 
             NumberOfReps = numberOfReps;
+        }
+
+        public void SetNumberOfSets(int numberOfSets)
+        {
+            DomainValidator.AgainstNegativeAndZeroNumber(numberOfSets, "Number of sets");
+
+            NumberOfSets = numberOfSets;
         }
     }
 }

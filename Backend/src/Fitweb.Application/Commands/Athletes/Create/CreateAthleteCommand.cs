@@ -1,4 +1,5 @@
 ﻿using Fitweb.Application.Interfaces;
+using Fitweb.Application.Requests;
 using MediatR;
 using Newtonsoft.Json;
 using System;
@@ -9,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Fitweb.Application.Commands.Athletes.Create
 {
-    public class CreateAthleteCommand : IRequest
+    public class CreateAthleteCommand : AuthorizeRequest, IRequest
     {
         public int? Weight { get; set; }
 

@@ -23,6 +23,8 @@ namespace Fitweb.Domain.DietStatistics
 
     //    public double TotalFiber { get; private set; }
 
+    //    public int AthleteId { get; private set; }
+
     //    protected DailyStatistics()
     //    {
 

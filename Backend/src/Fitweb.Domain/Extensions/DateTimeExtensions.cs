@@ -12,5 +12,15 @@ namespace Fitweb.Domain.Extensions
         {
             return dateToCheck >= startDate && dateToCheck < endDate;
         }
+
+        public static bool IsInRange(this DateTime dateToCheck, DateTime? startDate, DateTime? endDate)
+        {
+            if (startDate.HasValue && !endDate.HasValue)
+            {
+                return true;
+            }
+
+            return dateToCheck.IsInRange(startDate.Value, endDate.Value);
+        }
     }
 }

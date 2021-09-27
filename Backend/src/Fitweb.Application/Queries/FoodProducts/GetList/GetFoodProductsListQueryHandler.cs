@@ -32,7 +32,7 @@ namespace Fitweb.Application.Queries.FoodProduts.GetList
             var paginationFilter = _mapper.Map<PaginationFilter>(request.Pagination);
             var orderFilter = _mapper.Map<OrderFilter>(request.Order);
 
-            var (foodProducts, totalItems) = await _foodProductRepository.GetAllAsync(paginationFilter, orderFilter);
+            var (foodProducts, totalItems) = await _foodProductRepository.GetAllAsync(paginationFilter, orderFilter, request.UserId);
             var foodProductDto = _mapper.Map<List<FoodProductDto>>(foodProducts);
 
             return PaginationHelper.CreatePagedResponse(foodProductDto, paginationFilter, totalItems);

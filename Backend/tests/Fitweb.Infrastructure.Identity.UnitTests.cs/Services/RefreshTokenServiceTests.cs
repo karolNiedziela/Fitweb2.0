@@ -1,5 +1,5 @@
 ﻿using Fitweb.Application.DTO;
-using Fitweb.Application.Exceptions;
+using Fitweb.Domain.Exceptions;
 using Fitweb.Application.Interfaces;
 using Fitweb.Application.Interfaces.Identity;
 using Fitweb.Application.UnitTests.Fakes;

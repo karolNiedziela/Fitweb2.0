@@ -2,6 +2,7 @@
 using Fitweb.Domain.Common;
 using Fitweb.Domain.Exceptions;
 using Fitweb.Domain.Exercises;
+using Fitweb.Domain.ValueObjects;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,9 +17,7 @@ namespace Fitweb.Domain.Trainings
 
         public Athlete Athlete { get; private set; }
 
-        public string Name { get; private set; }
-
-        public string Description { get; private set; }
+        public Information Information { get; private set; }
 
         public Day Day { get; private set; }
 
@@ -29,10 +28,9 @@ namespace Fitweb.Domain.Trainings
 
         }
    
-        public Training(string name, string description, Day day)
+        public Training(Information information, Day day)
         {
-            Name = name;
-            Description = description;
+            Information = information;
             Day = day;
         }
 
@@ -60,7 +58,8 @@ namespace Fitweb.Domain.Trainings
             return existingExercise;
         }
 
-        public void AddSet(int exerciseId, double weight, int numberOfReps, int numberOfSets = 1)
+        //TODO: Maybe object instead of properties
+        public void AddSet(int exerciseId, Set set)
         {
             var exercise = Exercises.SingleOrDefault(x => x.ExerciseId == exerciseId);
             if (exercise is null)
@@ -68,7 +67,7 @@ namespace Fitweb.Domain.Trainings
                 throw new NotFoundException(nameof(Exercise), exerciseId);
             }
 
-            exercise.Sets.Add(new Set(weight, numberOfReps, numberOfSets));
+            exercise.Sets.Add(set);
         }
 
         public Set RemoveSet(int exerciseId, int setId)

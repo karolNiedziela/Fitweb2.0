@@ -15,8 +15,14 @@ namespace Fitweb.Domain.Athletes.Repositories
 
         Task<Athlete> GetByUserId(string userId);
 
-        Task<Athlete> GetTrainings(int athleteId);
+        Task<Athlete> GetTrainings(string userId);
 
-        Task<(IEnumerable<Training>, int TotalItems)> GetPagedTrainings(int athleteId, PaginationFilter pagination);
+        Task<Athlete> GetDietInformations(string userId);
+
+        Task<Athlete> GetFoodProducts(string userId);
+
+        Task<(IEnumerable<Training>, int TotalItems)> GetPagedTrainings(string userId, PaginationFilter pagination);
+
+        Task RemoveDietInformation(DietInformation dietInformation);
     }
 }

@@ -12,7 +12,7 @@ namespace Fitweb.Domain.FoodProducts.Repositories
     {
         Task<FoodProduct> GetByNameAsync(string name);
 
-        Task<(IEnumerable<FoodProduct>, int TotalItems)> GetAllAsync(PaginationFilter pagination, OrderFilter order);
+        Task<(IEnumerable<FoodProduct>, int TotalItems)> GetAllAsync(PaginationFilter pagination, OrderFilter order, string userId = null);
 
         Task AddRangeAsync(List<FoodProduct> foodProducts);
 

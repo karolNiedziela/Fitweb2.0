@@ -17,6 +17,13 @@ namespace Fitweb.Domain.Extensions
                 return null;
             }
 
+            if (@enum.GetType()
+                .GetMember(@enum.ToString())
+                .First().GetCustomAttribute<DisplayAttribute>() is null)
+            {
+                return @enum.ToString();
+            }
+
             return @enum.GetType()
                         .GetMember(@enum.ToString())
                         .First()

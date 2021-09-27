@@ -14,7 +14,7 @@ using System.Threading.Tasks;
 
 namespace Fitweb.Application.Commands.Athletes.Create
 {
-    public class CreateAthleteCommandHandler : AuthorizeRequest, IRequestHandler<CreateAthleteCommand>
+    public class CreateAthleteCommandHandler : IRequestHandler<CreateAthleteCommand>
     {
         private readonly IAthleteRepository _athleteRepository;
 
@@ -25,13 +25,13 @@ namespace Fitweb.Application.Commands.Athletes.Create
 
         public async Task<Unit> Handle(CreateAthleteCommand request, CancellationToken cancellationToken)
         {
-            var athlete = await _athleteRepository.GetByUserId(UserId);
+            var athlete = await _athleteRepository.GetByUserId(request.UserId);
             if (athlete is not null)
             {
-                throw new AlreadyExistsException(nameof(Athlete), UserId);
+                throw new AlreadyExistsException(nameof(Athlete), request.UserId);
             }
 
-            athlete = new Athlete(UserId, request.Height, request.Weight, request.NumberOfTrainings);
+            athlete = new Athlete(request.UserId, request.Height, request.Weight, request.NumberOfTrainings);
 
             await _athleteRepository.AddAsync(athlete);
 

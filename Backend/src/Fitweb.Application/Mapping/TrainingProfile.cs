@@ -1,8 +1,11 @@
 ﻿using AutoMapper;
 using Fitweb.Application.Commands.Trainings.Add;
 using Fitweb.Application.DTO;
+using Fitweb.Application.Mapping.Converters;
+using Fitweb.Application.Mapping.Resolvers;
 using Fitweb.Domain.Extensions;
 using Fitweb.Domain.Trainings;
+using Fitweb.Domain.ValueObjects;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,7 +18,10 @@ namespace Fitweb.Application.Mapping
     {
         public TrainingProfile()
         {
-            CreateMap<AddTrainingCommand, Training>();
+            CreateMap<AddTrainingCommand, Training>()
+                .ForMember(dest => dest.Information, 
+                opt => opt.MapFrom<InformationResolver<AddTrainingCommand, Training>>())
+                .ForMember(dest => dest.Day, opt => opt.MapFrom(source => Enum.GetName(typeof(Day), source.DayId)));
 
             CreateMap<Training, TrainingDto>()
                 .ForMember(dest => dest.Day, opt => opt.MapFrom(src => src.Day.GetDisplayName()));

@@ -1,4 +1,4 @@
-﻿using Fitweb.Application.Exceptions;
+﻿using Fitweb.Domain.Exceptions;
 using Fitweb.Infrastructure.Identity.Entities;
 using Fitweb.Infrastructure.Identity.Exceptions;
 using FluentAssertions;

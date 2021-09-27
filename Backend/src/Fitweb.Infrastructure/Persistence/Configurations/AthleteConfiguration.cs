@@ -19,6 +19,10 @@ namespace Fitweb.Infrastructure.Persistence.Configurations
                    .WithOne(x => x.Athlete)
                    .HasForeignKey(x => x.AthleteId)
                    .OnDelete(DeleteBehavior.Cascade);
+
+            builder.HasMany(x => x.DietInformations)
+                   .WithOne(x => x.Athlete)
+                   .HasForeignKey(x => x.AthleteId);
         }
     }
 }

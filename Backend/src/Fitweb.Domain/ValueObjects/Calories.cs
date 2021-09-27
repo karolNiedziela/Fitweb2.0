@@ -18,9 +18,7 @@ namespace Fitweb.Domain.ValueObjects
 
         private Calories(double value)
         {
-            DomainValidator.AgainstNegativeNumber(value, "Calories");
-
-            Value = value;
+            Value = DomainValidator.AgainstNegativeNumber(value, "Calories");
         }
 
         public static Calories Create(double value)

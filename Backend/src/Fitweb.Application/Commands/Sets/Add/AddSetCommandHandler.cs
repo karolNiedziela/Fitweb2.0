@@ -1,4 +1,5 @@
-﻿using Fitweb.Domain.Trainings.Repositories;
+﻿using Fitweb.Domain.Trainings;
+using Fitweb.Domain.Trainings.Repositories;
 using MediatR;
 using System;
 using System.Collections.Generic;
@@ -23,7 +24,7 @@ namespace Fitweb.Application.Commands.Sets.Add
             var trainingWithSets = await _trainingRepository
                 .GetExerciseWithSets(request.UserId, request.TrainingId, request.ExerciseId);
 
-            trainingWithSets.AddSet(request.ExerciseId, request.Weight, request.NumberOfReps, request.NumberOfSets);
+            trainingWithSets.AddSet(request.ExerciseId, new Set(request.Weight, request.NumberOfReps, request.NumberOfSets));
 
             await _trainingRepository.UpdateAsync(trainingWithSets);
 

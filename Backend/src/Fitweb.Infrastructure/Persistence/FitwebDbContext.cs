@@ -33,6 +33,10 @@ namespace Fitweb.Infrastructure.Persistence
 
         public DbSet<Exercise> Exercises { get; set; }
 
+        public DbSet<DietInformation> DietInformations { get; set; }
+
+        public DbSet<AthleteFoodProduct> AthleteFoodProducts { get; set; }
+
         public FitwebDbContext(DbContextOptions<FitwebDbContext> options, IDateTimeProvider dateTimeProvider) 
             : base(options)
         {

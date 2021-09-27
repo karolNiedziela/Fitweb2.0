@@ -27,10 +27,9 @@ namespace Fitweb.Application.Queries.Trainings.GetList
 
         public async Task<PagedResponse<TrainingDto>> Handle(GetTrainingsListQuery request, CancellationToken cancellationToken)
         {
-            var athleteId = await _athleteRepository.GetAthleteId(request.UserId);
             var paginationFilter = _mapper.Map<PaginationFilter>(request.Pagination);
 
-            var (trainings, totalItems) = await _athleteRepository.GetPagedTrainings(athleteId, paginationFilter);
+            var (trainings, totalItems) = await _athleteRepository.GetPagedTrainings(request.UserId, paginationFilter);
 
             var trainingsDto = _mapper.Map<List<TrainingDto>>(trainings);
 

@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Fitweb.Application.Queries.FoodProduts.GetList
 {
-    public class GetFoodProductListQuery : IRequest<PagedResponse<FoodProductDto>>
+    public class GetFoodProductListQuery : AuthorizeRequest, IRequest<PagedResponse<FoodProductDto>>
     {
         public PaginationQuery Pagination { get; set; }
 

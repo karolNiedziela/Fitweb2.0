@@ -11,11 +11,7 @@ namespace Fitweb.Application.Commands.Trainings.Add
     {
         public AddTrainingValidator()
         {
-            RuleFor(x => x.Name)
-                .NotEmpty()
-                .WithMessage("Name is required.");
-
-            RuleFor(x => x.Day)
+            RuleFor(x => x.DayId)
                 .NotNull()
                 .WithMessage("Day is required");
         }

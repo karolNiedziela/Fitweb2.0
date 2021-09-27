@@ -9,6 +9,7 @@ using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 using Fitweb.Infrastructure.Identity.Settings;
+using Fitweb.Domain.Athletes.Repositories;
 
 namespace Fitweb.Infrastructure.Identity.Services
 {

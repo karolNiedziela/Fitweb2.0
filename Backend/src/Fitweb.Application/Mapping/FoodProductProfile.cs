@@ -1,14 +1,10 @@
 ﻿using AutoMapper;
 using Fitweb.Application.Commands.FoodProducts.Add;
 using Fitweb.Application.DTO;
+using Fitweb.Application.Mapping.Resolvers;
 using Fitweb.Domain.Extensions;
 using Fitweb.Domain.FoodProducts;
-using Fitweb.Domain.ValueObjects;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Fitweb.Application.Mapping
 {
@@ -16,7 +12,12 @@ namespace Fitweb.Application.Mapping
     { 
         public FoodProductProfile()
         {
-            CreateMap<AddFoodProductCommand, FoodProduct>();
+            CreateMap<AddFoodProductCommand, FoodProduct>()
+                .ForMember(dest => dest.Information,
+                opt => opt.MapFrom<InformationResolver<AddFoodProductCommand, FoodProduct>>())
+                .ForMember(dest => dest.Nutrient, opt => opt.MapFrom<NutrientResolver>())
+                .ForMember(dest => dest.Group, opt => opt.MapFrom(src => Enum.GetName(typeof(FoodGroup), src.FoodGroupId)))
+                .ForMember(dest => dest.UserId, opt => opt.MapFrom(src => src.UserId));
 
             CreateMap<FoodProduct, FoodProductDto>()
                 .ForMember(dest => dest.Calories, opt => opt.MapFrom(src => src.Calories.Value))
@@ -33,7 +34,6 @@ namespace Fitweb.Application.Mapping
                 .ForMember(dest => dest.SaturatedFat, opt => opt.MapFrom(src => src.Nutrient.SaturatedFat))
                 .ForMember(dest => dest.Description, opt => opt.MapFrom(src => src.Information.Description))
                .IncludeBase<FoodProduct, FoodProductDto>();
-
         }
     }
 }

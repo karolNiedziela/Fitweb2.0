@@ -20,8 +20,7 @@ namespace Fitweb.Application.Commands.Trainings.Delete
 
         public async Task<Unit> Handle(DeleteTrainingCommand request, CancellationToken cancellationToken)
         {
-            var athleteId = await _athleteRepository.GetAthleteId(request.UserId);
-            var athlete = await _athleteRepository.GetTrainings(athleteId);
+            var athlete = await _athleteRepository.GetTrainings(request.UserId);
 
             var toRemove = athlete.RemoveTraining(request.TrainingId);
 

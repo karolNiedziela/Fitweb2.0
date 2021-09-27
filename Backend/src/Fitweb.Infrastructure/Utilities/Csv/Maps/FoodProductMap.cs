@@ -26,6 +26,7 @@ namespace Fitweb.Infrastructure.Utilities.Csv.Maps
             Map(p => p.Nutrient.Salt).Ignore();
             Map(p => p.Nutrient.SaturatedFat).Ignore();
             Map(p => p.Nutrient.Sugar).Ignore();
+            Map(p => p.UserId).Ignore();
         }
     }
 }

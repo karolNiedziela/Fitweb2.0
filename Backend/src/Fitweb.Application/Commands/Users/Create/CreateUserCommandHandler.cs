@@ -7,7 +7,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Fitweb.Application.Commands.Users.CreateUser
+namespace Fitweb.Application.Commands.Users.Create
 {
     public class CreateUserCommandHandler : IRequestHandler<CreateUserCommand>
     {

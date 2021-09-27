@@ -19,14 +19,12 @@ namespace Fitweb.Infrastructure.Persistence.Repositories
         public async Task<FoodProduct> GetByNameAsync(string name)
             => await _context.FoodProducts.SingleOrDefaultAsync(x => x.Information.Name == name);
 
-        public async Task<(IEnumerable<FoodProduct>, int TotalItems)> GetAllAsync(PaginationFilter pagination, OrderFilter order)
+        public async Task<(IEnumerable<FoodProduct>, int TotalItems)> GetAllAsync(PaginationFilter pagination, OrderFilter order, string userId = null)
         {
-            var queryable = _context.FoodProducts.AsNoTracking();
+            var queryable = _context.FoodProducts.Where(x => x.UserId == null || x.UserId == userId)
+                .AsNoTracking();
 
-            if (!string.IsNullOrEmpty(order.ColumnName))
-            {
-                queryable = queryable.ApplyOrderBy(MapColumnName(order.ColumnName), order.IsAscending);
-            }
+            queryable = queryable.ApplyOrderBy(MapColumnName(order.ColumnName), order.IsAscending);
 
             var totalItems = await queryable.CountAsync();
 

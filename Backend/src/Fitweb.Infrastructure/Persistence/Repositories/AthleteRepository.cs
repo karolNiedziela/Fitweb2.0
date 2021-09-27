@@ -24,27 +24,48 @@ namespace Fitweb.Infrastructure.Persistence.Repositories
         public async Task<Athlete> GetByUserId(string userId)
             => await _context.Athletes.SingleOrDefaultAsync(x => x.UserId == userId);
 
-        public async Task<Athlete> GetTrainings(int athleteId)
+        public async Task<Athlete> GetTrainings(string userId)
             => await _context.Athletes
                 .Include(x => x.Trainings)
                     .ThenInclude(x => x.Exercises)
                     .ThenInclude(x => x.Sets)
                 .AsNoTracking()
-                .SingleOrDefaultAsync(x => x.Id == athleteId);
+                .SingleOrDefaultAsync(x => x.UserId == userId);
 
-        public async Task<(IEnumerable<Training>, int TotalItems)> GetPagedTrainings(int athleteId,
+        public async Task<Athlete> GetDietInformations(string userId)
+            => await _context.Athletes
+                .Include(x => x.DietInformations)
+                .AsNoTracking()
+                .SingleOrDefaultAsync(x => x.UserId == userId);
+
+        public async Task<Athlete> GetFoodProducts(string userId)
+            => await _context.Athletes
+                .Include(x => x.FoodProducts)
+                .AsNoTracking()
+                .SingleOrDefaultAsync(x => x.UserId == userId);
+
+        public async Task<(IEnumerable<Training>, int TotalItems)> GetPagedTrainings(string userId,
             PaginationFilter pagination)
         {
-            var queryable = _context.Trainings.Where(x => x.AthleteId == athleteId).AsNoTracking();
+            var queryable = _context.Trainings
+                .Include(x => x.Athlete)
+                .Where(x => x.Athlete.UserId == userId)
+                .AsNoTracking();
 
             queryable = queryable.ApplyOrderBy("Day", true);
-
 
             var totalItems = await queryable.CountAsync();
 
             var data = await queryable.ApplyPaging(pagination.PageSize, pagination.PageNumber);
 
             return (data, totalItems);
+        }
+
+        public async Task RemoveDietInformation(DietInformation dietInformation)
+        {
+            _context.DietInformations.Remove(dietInformation);
+
+            await _context.SaveChangesAsync();
         }
     }
 }

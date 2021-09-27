@@ -5,6 +5,7 @@ using Fitweb.Application.Interfaces.Utilities.Email;
 using Fitweb.Application.Models;
 using Fitweb.Application.Settings;
 using Fitweb.Application.UnitTests.Fakes;
+using Fitweb.Domain.Exceptions;
 using Fitweb.Infrastructure.Identity.Constants;
 using Fitweb.Infrastructure.Identity.Entities;
 using Fitweb.Infrastructure.Identity.Exceptions;
@@ -234,9 +235,9 @@ namespace Fitweb.Infrastructure.Identity.UnitTests.cs.Services
 
             var exception = await Record.ExceptionAsync(() => _sut.LoginAsync(userName, password));
 
-            exception.Should().BeOfType<NotFoundException>();
-            exception.Message.Should().Be($"User with username: '{userName}' was not found.");
-            ((NotFoundException)exception).ErrorCode.Should().Be("user_not_found");
+            exception.Should().BeOfType<InvalidCredentialsException>();
+            exception.Message.Should().Be("Invalid credentials.");
+            ((AppException)exception).ErrorCode.Should().Be("invalid_credentials");
         }
 
         [Fact]

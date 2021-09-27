@@ -15,6 +15,10 @@ namespace Fitweb.Domain.Exceptions
 
         public string Entity { get; set; }
 
+        public AlreadyExistsException(string message) : base(message)
+        {
+
+        }
 
         public AlreadyExistsException(string entity, string name) : base($"{entity} with name: '{name}' already exists.")
         {

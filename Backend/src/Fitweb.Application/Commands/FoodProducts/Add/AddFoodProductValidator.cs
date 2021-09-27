@@ -11,33 +11,35 @@ namespace Fitweb.Application.Commands.FoodProducts.Add
     {
         public AddFoodProductValidator()
         {
-            RuleFor(x => x.Information.Name)
-                .NotEmpty()
-                .WithMessage($"Name is required.");
 
-            RuleFor(x => x.Calories)
-                .NotNull()
-                .WithMessage("Carbohydrate is required.")
-                .NotEmpty()
-                .WithMessage($"Calorie is required.");
+            //TODO: Add validation
+            //RuleFor(x => x.Information.Name)
+            //    .NotEmpty()
+            //    .WithMessage($"Name is required.");
 
-            RuleFor(x => x.Nutrient.Protein)
-                .NotNull()
-                .WithMessage("Carbohydrate is required.")
-                .NotEmpty()
-                .WithMessage("Protein is required.");
+            //RuleFor(x => x.Calories)
+            //    .NotNull()
+            //    .WithMessage("Carbohydrate is required.")
+            //    .NotEmpty()
+            //    .WithMessage($"Calorie is required.");
 
-            RuleFor(x => x.Nutrient.Carbohydrate)
-                .NotNull()
-                .WithMessage("Carbohydrate is required.")
-                .NotEmpty()
-                .WithMessage("Carbohydrate is required.");
+            //RuleFor(x => x.Nutrient.Protein)
+            //    .NotNull()
+            //    .WithMessage("Carbohydrate is required.")
+            //    .NotEmpty()
+            //    .WithMessage("Protein is required.");
 
-            RuleFor(x => x.Nutrient.Fat)
-                .NotNull()
-                .WithMessage("Carbohydrate is required.")
-                .NotEmpty()
-                .WithMessage("Fat is required.");
+            //RuleFor(x => x.Nutrient.Carbohydrate)
+            //    .NotNull()
+            //    .WithMessage("Carbohydrate is required.")
+            //    .NotEmpty()
+            //    .WithMessage("Carbohydrate is required.");
+
+            //RuleFor(x => x.Nutrient.Fat)
+            //    .NotNull()
+            //    .WithMessage("Carbohydrate is required.")
+            //    .NotEmpty()
+            //    .WithMessage("Fat is required.");
         }
     }
 }

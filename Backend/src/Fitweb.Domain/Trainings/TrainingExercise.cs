@@ -24,7 +24,9 @@ namespace Fitweb.Domain.Trainings
         public TrainingExercise(Exercise exercise, Training training)
         {
             Exercise = exercise;
+            ExerciseId = exercise.Id;
             Training = training;
+            TrainingId = training.Id;
         }
     }
 }

@@ -16,6 +16,6 @@ namespace Fitweb.Application.Commands.Trainings.Add
 
         public string Description { get; set; }
 
-        public Day Day { get; set; } = Day.Monday;
+        public int DayId = 1;
     }
 }

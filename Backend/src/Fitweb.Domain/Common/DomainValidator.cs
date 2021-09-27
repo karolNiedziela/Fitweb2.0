@@ -9,59 +9,108 @@ namespace Fitweb.Domain.Common
 {
     public static class DomainValidator
     {
-        public static void AgainstEmptyString(string value, string name = "Value")
+        public static string AgainstEmptyString(string value, string name = "Value")
         {
             if (!string.IsNullOrEmpty(value))
             {
-                return;
+                return value;
             }
 
-            throw new EmptyStringException($"{name} cannnot be null or empty.");
+            throw new EmptyStringException($"{name} cannot be null or empty.");
         }
 
-        public static void AgainstNegativeNumber(double value, string name = "Value")
+        public static double AgainstNegativeNumber(double value, string name = "Value")
         {
             if (value >= 0)
             {
-                return;
+                return value;
             }
 
             throw new NegativeNumberException($"{name} cannot be negative.");
         }
 
-        public static void AgainstNegativeNumber(double? value, string name = "Value")
+
+        public static double? AgainstNegativeNumber(double? value, string name = "Value")
         {
             if (!value.HasValue)
             {
-                return;
+                return null;
             }
 
             if (value >= 0)
             {
-                return;
+                return value.Value;
             }
 
             throw new NegativeNumberException($"{name} cannot be negative.");
         }
 
-        public static void AgainstNegativeAndZeroNumber(double value, string name = "Value")
+        public static int? AgainstNegativeNumber(int? value, string name = "Value")
+        {
+            if (!value.HasValue)
+            {
+                return null;
+            }
+
+            if (value >= 0)
+            {
+                return value.Value;
+            }
+
+            throw new NegativeNumberException($"{name} cannot be negative.");
+        }
+
+        public static int AgainstNegativeAndZeroNumber(int value, string name = "Value")
         {
             if (value > 0)
             {
-                return;
+                return value;
             }
 
             throw new NegativeOrZeroNumberException($"{name} cannot be negative or zero.");
         }
 
-        public static void AgainstNegativeAndZeroNumber(double? value, string name = "Value")
+        public static double AgainstNegativeAndZeroNumber(double value, string name = "Value")
         {
             if (value > 0)
+            {
+                return value;
+            }
+
+            throw new NegativeOrZeroNumberException($"{name} cannot be negative or zero.");
+        }
+
+        public static double AgainstNegativeAndZeroNumber(double? value, string name = "Value")
+        {
+            if (value > 0)
+            {
+                return value.Value;
+            }
+
+            throw new NegativeOrZeroNumberException($"{name} cannot be negative or zero.");
+        }      
+
+        public static void AgainstImproperPeriod(DateTime? startDate, DateTime? endDate)
+        {
+            // Both do not have value
+            if (!startDate.HasValue && !endDate.HasValue)
             {
                 return;
             }
 
-            throw new NegativeOrZeroNumberException($"{name} cannot be negative or zero.");
+            // Start date is defined and end date not
+            if (startDate.HasValue && !endDate.HasValue)
+            {
+                return;
+            }
+
+            // Start date and end date are defined and end date is later than start date
+            if (startDate.HasValue && endDate.HasValue && startDate < endDate)
+            {
+                return;
+            }
+
+            throw new ImproperPeriodException("Incorrect time interval.");
         }
     }
 }

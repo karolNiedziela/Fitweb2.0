@@ -57,6 +57,8 @@ namespace Fitweb.Infrastructure.Persistence.Configurations
                 navigation.Property(x => x.Salt)
                     .HasColumnName("Salt");
             });
+
+            builder.Property(x => x.UserId).IsRequired(false);
         }
     }
 }

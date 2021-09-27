@@ -1,4 +1,5 @@
-﻿using Fitweb.Domain.Common;
+﻿using Fitweb.Domain.Athletes;
+using Fitweb.Domain.Common;
 using Fitweb.Domain.ValueObjects;
 using System;
 using System.Collections.Generic;
@@ -18,17 +19,21 @@ namespace Fitweb.Domain.FoodProducts
 
         public FoodGroup? Group { get; private set; }
 
+        public string? UserId { get; set; } = null;
+
         protected FoodProduct()
         {
 
         }
 
-        public FoodProduct(Information information, Calories calories, Nutrient nutrient, FoodGroup? foodGroup)
+        public FoodProduct(Information information, Calories calories, Nutrient nutrient, FoodGroup? foodGroup, 
+            string userId = null)
         {
             Information = information;
             Calories = calories;
             Nutrient = nutrient;
             Group = foodGroup;
+            UserId = userId;
         }
     }
 }

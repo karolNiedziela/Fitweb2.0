@@ -20,9 +20,7 @@ namespace Fitweb.Domain.ValueObjects
 
         private Information(string name, string description)
         {
-            DomainValidator.AgainstEmptyString(name, "Name");
-
-            Name = name;
+            Name = DomainValidator.AgainstEmptyString(name, "Name");         
             Description = description;
         }
 
