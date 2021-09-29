@@ -23,5 +23,9 @@ jobs:
       run: dotnet restore Backend/src/Fitweb.API
     - name: Build
       run: dotnet build --no-restore Backend/src/Fitweb.API
-    - name: Test
-      run: dotnet test --no-build --verbosity normal
+    - name: Application tests
+      run: dotnet test --no-build --verbosity normal Backend/tests/Fitweb.Application.UnitTests
+    - name: Domain tests
+      run: dotnet test --no-build --verbosity normal Backend/tests/Fitweb.Domain.UnitTests
+    - name: Infrastructure identity tests
+      run: dotnet test --no-build --verbosity normal Backend/tests/Fitweb.Infrastructure.Identity.UnitTests
