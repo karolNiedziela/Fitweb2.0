@@ -1,5 +1,6 @@
 ﻿using Fitweb.Application.Commands.Sets.Add;
 using Fitweb.Application.Commands.Sets.Delete;
+using Fitweb.Application.Commands.Sets.Update;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -27,6 +28,18 @@ namespace Fitweb.API.Controllers
 
         [HttpDelete]
         public async Task<IActionResult> Delete([FromBody] DeleteSetCommand command,
+            [FromRoute] int tId,
+            [FromRoute] int eId)
+        {
+            command.TrainingId = tId;
+            command.ExerciseId = eId;
+            await Mediator.Send(command);
+
+            return NoContent();
+        }
+
+        [HttpPut]
+        public async Task<IActionResult> Update([FromBody]UpdateSetCommand command,
             [FromRoute] int tId,
             [FromRoute] int eId)
         {

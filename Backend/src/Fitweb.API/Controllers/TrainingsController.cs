@@ -28,9 +28,9 @@ namespace Fitweb.API.Controllers
         [HttpPost]
         public async Task<IActionResult> Create([FromBody]AddTrainingCommand command)
         {
-            await Mediator.Send(command);
+            var response = await Mediator.Send(command);
 
-            return Ok();
+            return Ok(response);
         }
 
         [HttpDelete]

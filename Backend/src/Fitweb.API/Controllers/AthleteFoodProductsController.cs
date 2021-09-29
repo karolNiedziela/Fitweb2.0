@@ -1,4 +1,6 @@
 ﻿using Fitweb.Application.Commands.AthleteFoodProducts.Add;
+using Fitweb.Application.Commands.AthleteFoodProducts.Delete;
+using Fitweb.Application.Commands.AthleteFoodProducts.Update;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -14,9 +16,25 @@ namespace Fitweb.API.Controllers
         [HttpPost]
         public async Task<IActionResult> Post([FromBody]AddAthleteFoodProductCommand command)
         {
+            var response = await Mediator.Send(command);
+
+            return Ok(response);
+        }
+
+        [HttpDelete]
+        public async Task<IActionResult> Delete([FromBody]DeleteAthleteFoodProductCommand command)
+        {
             await Mediator.Send(command);
 
-            return Ok();
+            return NoContent();
+        }
+
+        [HttpPut]
+        public async Task<IActionResult> Update([FromBody]UpdateAthleteFoodProductCommand command)
+        {
+            await Mediator.Send(command);
+
+            return NoContent();
         }
     }
 }
