@@ -18,13 +18,13 @@ namespace Fitweb.Domain.ValueObjects
 
         }
 
-        private Information(string name, string description)
+        private Information(string name, string description = null)
         {
             Name = DomainValidator.AgainstEmptyString(name, "Name");         
             Description = description;
         }
 
-        public static Information Create(string name, string description)
+        public static Information Create(string name, string description = null)
             => new(name, description);
     }
 }
