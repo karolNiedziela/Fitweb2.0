@@ -10,6 +10,7 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using Fitweb.Domain.FoodProducts;
 
 namespace Fitweb.Application.Queries.FoodProduts.Get
 {
@@ -29,7 +30,7 @@ namespace Fitweb.Application.Queries.FoodProduts.Get
             var foodProduct = await _foodProductRepository.GetByIdAsync(request.Id);
             if (foodProduct is null)
             {
-                throw new NotFoundException("Food product", request.Id);
+                throw new NotFoundException(nameof(FoodProduct), request.Id);
             }
 
             var foodProductDto = _mapper.Map<FoodProductDetailsDto>(foodProduct);

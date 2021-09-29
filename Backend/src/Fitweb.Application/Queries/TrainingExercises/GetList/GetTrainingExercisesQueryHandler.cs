@@ -26,7 +26,7 @@ namespace Fitweb.Application.Queries.TrainingExercises.GetList
 
         public async Task<Response<TrainingExercisesWithSetsDto>> Handle(GetTrainingExercisesQuery request, CancellationToken cancellationToken)
         {
-            var trainingExercises = await _trainingRepository.GetExercisesWithSets(request.UserId, request.TrainingId);
+            var trainingExercises = await _trainingRepository.GetAllExercisesWithSets(request.UserId, request.TrainingId);
 
             var trainingExercisesDto = _mapper.Map<TrainingExercisesWithSetsDto>(trainingExercises);
 

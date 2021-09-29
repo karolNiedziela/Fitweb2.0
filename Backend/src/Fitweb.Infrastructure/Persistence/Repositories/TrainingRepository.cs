@@ -16,7 +16,7 @@ namespace Fitweb.Infrastructure.Persistence.Repositories
         {
         }
 
-        public async Task<Training> GetExercisesWithSets(string userId, int trainingId)
+        public async Task<Training> GetAllExercisesWithSets(string userId, int trainingId)
         {
             return await _context.Athletes
                     .AsNoTracking()
