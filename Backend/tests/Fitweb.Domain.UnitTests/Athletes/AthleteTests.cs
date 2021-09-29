@@ -140,8 +140,8 @@ namespace Fitweb.Domain.UnitTests.Athletes
         }
 
         // FROM1    FROM2   TO1     TO2
-        // (TO2 = PUSTE  LUB FROM <= TO2) AND
-        // (TO1 = PUSTE LUB TO1 >= FROM2)
+        // (TO2 = EMPTY  OR FROM <= TO2) AND
+        // (TO1 = EMPTY OR TO1 >= FROM2)
         [Theory]
         [InlineData("2019-10-12", "2020-05-10", "", "")]
         [InlineData("2019-10-12", "2019-10-15", "2019-10-15", "")]  
@@ -195,6 +195,75 @@ namespace Fitweb.Domain.UnitTests.Athletes
             var athlete = new Athlete("userId");
 
             var exception = Record.Exception(() => athlete.RemoveDietInformation(1));
+
+            exception.Should().NotBeNull();
+            exception.Should().BeOfType<NotFoundException>();
+            exception.Message.Should().Be("Diet information with id: '1' was not found.");
+        }
+
+        [Fact]
+        public void UpdateDietInformation_ShouldUpdateCurrentDietInformation_WhenDietInformationFromGivenPeriodOfTimeDoesNotExist()
+        {
+            var athlete = new Athlete("userId");
+            var dietInformation = new DietInformation(1500, 80, 100, 30, new DateTime(2020, 10, 10),
+                new DateTime(2021, 2, 10))
+            {
+                Id = 1
+            };
+            athlete.AddDietInformation(dietInformation);
+
+            athlete.UpdateDietInformation(new DietInformation(2000, 85, 150, 30, new DateTime(2020, 10, 10),
+                new DateTime(2021, 2, 10))
+            {
+                Id = 1
+            });
+
+            athlete.DietInformations.FirstOrDefault().TotalCalories.Should().Be(2000);
+            athlete.DietInformations.FirstOrDefault().TotalProteins.Should().Be(85);
+            athlete.DietInformations.FirstOrDefault().TotalCarbohydrates.Should().Be(150);
+            athlete.DietInformations.FirstOrDefault().TotalFats.Should().Be(30);
+        }
+
+        [Fact]
+        public void Update_ShouldThrowException_WhenDietInformationFromGivenPeriodTimeExists()
+        {
+            var athlete = new Athlete("userId");
+            var dietInformation = new DietInformation(1500, 80, 100, 30, new DateTime(2020, 10, 10),
+                new DateTime(2021, 2, 10))
+            {
+                Id = 1
+            };
+
+            var dietInformation2 = new DietInformation(2500, 150, 200, 50, new DateTime(2005, 5, 10),
+                new DateTime(2007, 10, 10))
+            {
+                Id = 2
+            };
+
+            athlete.AddDietInformation(dietInformation);
+            athlete.AddDietInformation(dietInformation2);
+
+            var exception = Record.Exception(() => athlete.UpdateDietInformation(new DietInformation(2000, 85, 150, 30, new DateTime(2006, 2, 10),
+            new DateTime(2006, 3, 10))
+            {
+                Id = 1
+            }));
+
+            exception.Should().NotBeNull();
+            exception.Should().BeOfType<AlreadyExistsException>();
+            exception.Message.Should().Be("Diet information already exists for the given time period.");
+        }
+
+        [Fact]
+        public void Update_ShouldThrowException_WhenDietInformationDoesNotExist()
+        {
+            var athlete = new Athlete("userId");
+
+            var exception = Record.Exception(() => athlete.UpdateDietInformation(new DietInformation(2000, 85, 150, 30, new DateTime(2006, 2, 10),
+            new DateTime(2006, 3, 10))
+            {
+                Id = 1
+            }));
 
             exception.Should().NotBeNull();
             exception.Should().BeOfType<NotFoundException>();

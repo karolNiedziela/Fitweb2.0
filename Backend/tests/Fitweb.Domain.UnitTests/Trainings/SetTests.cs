@@ -56,42 +56,6 @@ namespace Fitweb.Domain.UnitTests.Trainings
             exception.Should().NotBeNull();
             exception.Should().BeOfType<NegativeOrZeroNumberException>();
             exception.Message.Should().Be("Number of sets cannot be negative or zero.");
-        }
-
-        [Fact]
-        public void SetWeight_ShouldAssignWeight()
-        {
-            var set = new Set(100, 3);
-
-            var weightBeforeChange = set.Weight;
-            set.SetWeight(150);
-
-            weightBeforeChange.Should().Be(100);
-            set.Weight.Should().Be(150);
-        }
-
-        [Fact]
-        public void SetNumberOfReps_ShouldAssignNumberOfReps()
-        {
-            var set = new Set(25, 4);
-
-            var numberOfRepsBeforeChange = set.NumberOfReps;
-            set.SetNumberOfReps(3);
-
-            numberOfRepsBeforeChange.Should().Be(4);
-            set.NumberOfReps.Should().Be(3);
-        }
-
-        [Fact]
-        public void SetNumberOfSets_ShouldAssignNumberOfSets()
-        {
-            var set = new Set(30, 2, 4);
-
-            var numberOfSetsBeforeChange = set.NumberOfSets;
-            set.SetNumberOfSets(2);
-
-            numberOfSetsBeforeChange.Should().Be(4);
-            set.NumberOfSets.Should().Be(2);
-        }
+        }    
     }
 }
