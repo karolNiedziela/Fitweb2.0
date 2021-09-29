@@ -20,7 +20,7 @@ namespace Fitweb.Application.Commands.Sets.Delete
 
         public async Task<Unit> Handle(DeleteSetCommand request, CancellationToken cancellationToken)
         {
-            var training = await _trainingRepository.GetExercisesWithSets(request.UserId, request.TrainingId);
+            var training = await _trainingRepository.GetAllExercisesWithSets(request.UserId, request.TrainingId);
 
             var setToRemove = training.RemoveSet(request.ExerciseId, request.SetId);
 

@@ -31,5 +31,10 @@ namespace Fitweb.Domain.Athletes
             FoodProduct = foodProduct;
             Weight = DomainValidator.AgainstNegativeAndZeroNumber(weight, nameof(Weight));
         }
+
+        public void Update(double weight)
+        {
+            Weight = DomainValidator.AgainstNegativeAndZeroNumber(weight, nameof(Weight));
+        }
     }
 }

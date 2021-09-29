@@ -19,7 +19,7 @@ namespace Fitweb.Domain.FoodProducts
 
         public FoodGroup? Group { get; private set; }
 
-        public string? UserId { get; set; } = null;
+        public string UserId { get; set; } = null;
 
         protected FoodProduct()
         {

@@ -1,5 +1,6 @@
 ﻿using Fitweb.Application.DTO;
 using Fitweb.Application.Requests;
+using Fitweb.Application.Responses;
 using Fitweb.Domain.FoodProducts;
 using MediatR;
 using System;
@@ -10,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace Fitweb.Application.Commands.FoodProducts.Add
 {
-    public class AddFoodProductCommand : AuthorizeRequest, IRequest
+    public class AddFoodProductCommand : AuthorizeRequest, IRequest<Response<string>>
     {
         public string Name { get; set; }
 

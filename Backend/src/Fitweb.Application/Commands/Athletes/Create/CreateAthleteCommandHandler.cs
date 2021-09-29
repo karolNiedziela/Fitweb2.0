@@ -11,10 +11,11 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using Fitweb.Application.Responses;
 
 namespace Fitweb.Application.Commands.Athletes.Create
 {
-    public class CreateAthleteCommandHandler : IRequestHandler<CreateAthleteCommand>
+    public class CreateAthleteCommandHandler : IRequestHandler<CreateAthleteCommand, Response<string>>
     {
         private readonly IAthleteRepository _athleteRepository;
 
@@ -23,19 +24,19 @@ namespace Fitweb.Application.Commands.Athletes.Create
             _athleteRepository = athleteRepository;
         }
 
-        public async Task<Unit> Handle(CreateAthleteCommand request, CancellationToken cancellationToken)
+        public async Task<Response<string>> Handle(CreateAthleteCommand request, CancellationToken cancellationToken = default)
         {
             var athlete = await _athleteRepository.GetByUserId(request.UserId);
             if (athlete is not null)
             {
-                throw new AlreadyExistsException(nameof(Athlete), request.UserId);
+                throw new AlreadyExistsException(nameof(Athlete), $"with userId: '{request.UserId}' already exists.", true);
             }
 
             athlete = new Athlete(request.UserId, request.Height, request.Weight, request.NumberOfTrainings);
 
             await _athleteRepository.AddAsync(athlete);
 
-            return Unit.Value;
+            return Response.Added(nameof(Athlete));
         }
     }
 }

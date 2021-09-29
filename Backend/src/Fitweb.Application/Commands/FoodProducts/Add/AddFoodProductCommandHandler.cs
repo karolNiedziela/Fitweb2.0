@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Fitweb.Application.Responses;
 using Fitweb.Domain.Athletes.Repositories;
 using Fitweb.Domain.Exceptions;
 using Fitweb.Domain.FoodProducts;
@@ -13,7 +14,7 @@ using System.Threading.Tasks;
 
 namespace Fitweb.Application.Commands.FoodProducts.Add
 {
-    public class AddFoodProductCommandHandler : IRequestHandler<AddFoodProductCommand>
+    public class AddFoodProductCommandHandler : IRequestHandler<AddFoodProductCommand, Response<string>>
     {
         private readonly IFoodProductRepository _foodProductRepository;
         private readonly IMapper _mapper;
@@ -26,7 +27,7 @@ namespace Fitweb.Application.Commands.FoodProducts.Add
             _athleteRepository = athleteRepository;
         }
 
-        public async Task<Unit> Handle(AddFoodProductCommand request, CancellationToken cancellationToken)
+        public async Task<Response<string>> Handle(AddFoodProductCommand request, CancellationToken cancellationToken)
         {
             var product = await _foodProductRepository.GetByNameAsync(request.Name);
             if (product is not null)
@@ -37,7 +38,7 @@ namespace Fitweb.Application.Commands.FoodProducts.Add
             var newProduct = _mapper.Map<FoodProduct>(request);
             await _foodProductRepository.AddAsync(newProduct);
 
-            return Unit.Value;
+            return Response.Added(nameof(FoodProduct));
         }
     }
 }

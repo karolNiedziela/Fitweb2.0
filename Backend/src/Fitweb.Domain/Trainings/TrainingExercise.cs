@@ -28,5 +28,11 @@ namespace Fitweb.Domain.Trainings
             Training = training;
             TrainingId = training.Id;
         }
+
+        public void UpdateExercise(Exercise exercise)
+        {
+            Exercise = exercise;
+            ExerciseId = exercise.Id;
+        }
     }
 }

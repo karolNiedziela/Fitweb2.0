@@ -9,7 +9,7 @@ namespace Fitweb.Domain.Trainings.Repositories
 {
     public interface ITrainingRepository : IBaseRepository<Training>
     {
-        Task<Training> GetExercisesWithSets(string userId, int trainingId);
+        Task<Training> GetAllExercisesWithSets(string userId, int trainingId);
 
         Task<Training> GetExerciseWithSets(string userId, int trainingId, int exerciseId);
 

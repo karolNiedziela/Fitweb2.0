@@ -1,4 +1,5 @@
-﻿using Fitweb.Domain.Athletes;
+﻿using Fitweb.Application.Responses;
+using Fitweb.Domain.Athletes;
 using Fitweb.Domain.Athletes.Repositories;
 using Fitweb.Domain.Common;
 using Fitweb.Domain.Exceptions;
@@ -14,26 +15,22 @@ using System.Threading.Tasks;
 
 namespace Fitweb.Application.Commands.AthleteFoodProducts.Add
 {
-    public class AddAthleteFoodProductCommandHandler : IRequestHandler<AddAthleteFoodProductCommand>
+    public class AddAthleteFoodProductCommandHandler : IRequestHandler<AddAthleteFoodProductCommand, Response<string>>
     {
         private readonly IAthleteRepository _athleteRepository;
         private readonly IFoodProductRepository _foodProductRepository;
-        private readonly IBaseRepository<AthleteFoodProduct> _athleteFoodProductRepository;
 
-        public AddAthleteFoodProductCommandHandler(IAthleteRepository athleteRepository, IFoodProductRepository foodProductRepository, 
-            IBaseRepository<AthleteFoodProduct> athleteFoodProductRepository)
+        public AddAthleteFoodProductCommandHandler(IAthleteRepository athleteRepository, IFoodProductRepository foodProductRepository)
         {
             _athleteRepository = athleteRepository;
             _foodProductRepository = foodProductRepository;
-            _athleteFoodProductRepository = athleteFoodProductRepository;
         }
 
-        public async Task<Unit> Handle(AddAthleteFoodProductCommand request, CancellationToken cancellationToken)
+        public async Task<Response<string>> Handle(AddAthleteFoodProductCommand request, CancellationToken cancellationToken = default)
         {
             var athlete = await _athleteRepository.GetFoodProducts(request.UserId);
 
             var foodProduct = await _foodProductRepository.GetByIdAsync(request.FoodProductId);
-            // 1 != 2
             if (foodProduct is null)
             {
                 throw new NotFoundException(nameof(FoodProduct), request.FoodProductId);
@@ -43,8 +40,7 @@ namespace Fitweb.Application.Commands.AthleteFoodProducts.Add
 
             await _athleteRepository.UpdateAsync(athlete);
 
-
-            return Unit.Value;
+            return Response.Added(nameof(AthleteFoodProduct));
         }
     }
 }

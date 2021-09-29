@@ -1,4 +1,5 @@
-﻿using Fitweb.Domain.Exceptions;
+﻿using Fitweb.Application.Responses;
+using Fitweb.Domain.Exceptions;
 using Fitweb.Domain.FoodProducts;
 using Fitweb.Domain.FoodProducts.Repositories;
 using MediatR;
@@ -11,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace Fitweb.Application.Commands.FoodProducts.Delete
 {
-    public class DeleteFoodProductCommandHandler : IRequestHandler<DeleteFoodProductCommand>
+    public class DeleteFoodProductCommandHandler : IRequestHandler<DeleteFoodProductCommand, Response<string>>
     {
         private readonly IFoodProductRepository _foodProductRepository;
 
@@ -20,7 +21,7 @@ namespace Fitweb.Application.Commands.FoodProducts.Delete
             _foodProductRepository = foodProductRepository;
         }
 
-        public async Task<Unit> Handle(DeleteFoodProductCommand request, CancellationToken cancellationToken)
+        public async Task<Response<string>> Handle(DeleteFoodProductCommand request, CancellationToken cancellationToken)
         {
             var foodProduct = await _foodProductRepository.GetByIdAsync(request.FoodProductId);
             if (foodProduct is null)
@@ -30,7 +31,7 @@ namespace Fitweb.Application.Commands.FoodProducts.Delete
 
             await _foodProductRepository.RemoveAsync(foodProduct);
 
-            return Unit.Value;
+            return Response.Deleted(nameof(FoodProduct));
         }
     }
 }

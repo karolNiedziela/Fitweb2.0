@@ -41,6 +41,13 @@ namespace Fitweb.Domain.Athletes
             NumberOfTrainings = DomainValidator.AgainstNegativeNumber(numberOfTrainings, "Number of trainings");
         }
 
+        public void Update(int? height = null, int? weight = null, int? numberOfTrainings = null)
+        {
+            Height = DomainValidator.AgainstNegativeNumber(height, nameof(Height));
+            Weight = DomainValidator.AgainstNegativeNumber(weight, nameof(Weight));
+            NumberOfTrainings = DomainValidator.AgainstNegativeNumber(numberOfTrainings, "Number of trainings");
+        }
+
         public void AddTraining(Training training)
         {
             Trainings.Add(training);
@@ -68,7 +75,7 @@ namespace Fitweb.Domain.Athletes
 
             if (existsDietInformation)
             {
-                throw new AlreadyExistsException("Diet information already exists for the given time period.");
+                throw new AlreadyExistsException(nameof(DietInformation), "already exists for the given time period.", true);
             }
 
             DietInformations.Add(dietInformation);
@@ -79,7 +86,7 @@ namespace Fitweb.Domain.Athletes
             var existingDietInformation = DietInformations.FirstOrDefault(x => x.Id == dietInformationId);
             if (existingDietInformation is null)
             {
-                throw new NotFoundException("Diet information", dietInformationId);
+                throw new NotFoundException(nameof(DietInformation), dietInformationId);
             }
 
             DietInformations.Remove(existingDietInformation);
@@ -89,19 +96,20 @@ namespace Fitweb.Domain.Athletes
 
         public void UpdateDietInformation(DietInformation dietInformation)
         {
-            var existsDietInformation = DietInformations.Where(x => x.Id != dietInformation.Id).Any(x =>
-               (!dietInformation.EndDate.HasValue || x.StartDate.Value <= dietInformation.EndDate.Value) &&
-               (!x.EndDate.HasValue || x.EndDate.Value >= dietInformation.StartDate.Value));
+            var existingDietInformation = DietInformations.FirstOrDefault(x => x.Id == dietInformation.Id);
+            if (existingDietInformation is null)
+            {
+                throw new NotFoundException(nameof(DietInformation), dietInformation.Id);
+            }
+
+            var existsDietInformation = DietInformations.Where(x => x.Id != dietInformation.Id)
+                .Any(x =>
+                (!dietInformation.EndDate.HasValue || x.StartDate.Value <= dietInformation.EndDate.Value) &&
+                (!x.EndDate.HasValue || x.EndDate.Value >= dietInformation.StartDate.Value));
 
             if (existsDietInformation)
             {
-                throw new AlreadyExistsException("Diet information already exists for the given time period.");
-            }
-
-            var existingDietInformation = DietInformations.FirstOrDefault(x => x.Id == dietInformation.Id);
-            if (dietInformation is null)
-            {
-                throw new NotFoundException("Diet information", dietInformation.Id);
+                throw new AlreadyExistsException(nameof(DietInformation), "already exists for the given time period.", true);
             }
 
             existingDietInformation.Update(dietInformation.TotalCalories, dietInformation.TotalProteins,
@@ -117,6 +125,28 @@ namespace Fitweb.Domain.Athletes
             }
 
             FoodProducts.Add(new AthleteFoodProduct(this, foodProduct, weight));
+        }
+
+        public void RemoveFoodProduct(int athleteFoodProductId)
+        {
+            var foodProduct = FoodProducts.FirstOrDefault(x => x.Id == athleteFoodProductId);
+            if (foodProduct is null)
+            {
+                throw new NotFoundException(nameof(AthleteFoodProduct), athleteFoodProductId);
+            }
+
+            FoodProducts.Remove(foodProduct);
+        }
+
+        public void UpdateFoodProduct(int athleteFoodProductId, double weight)
+        {
+            var foodProduct = FoodProducts.FirstOrDefault(x => x.Id == athleteFoodProductId);
+            if (foodProduct is null)
+            {
+                throw new NotFoundException(nameof(AthleteFoodProduct), athleteFoodProductId);
+            }
+
+            foodProduct.Update(weight);
         }
     }
 }

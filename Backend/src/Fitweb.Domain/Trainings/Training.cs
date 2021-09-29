@@ -58,6 +58,17 @@ namespace Fitweb.Domain.Trainings
             return existingExercise;
         }
 
+        public void UpdateExercise(int exerciseId, Exercise newExercise)
+        {
+            var existingExercise = Exercises.SingleOrDefault(x => x.ExerciseId == exerciseId);
+            if (existingExercise is null)
+            {
+                throw new NotFoundException(nameof(Exercise), exerciseId);
+            }
+
+            existingExercise.UpdateExercise(newExercise);
+        }
+
         //TODO: Maybe object instead of properties
         public void AddSet(int exerciseId, Set set)
         {
@@ -87,6 +98,23 @@ namespace Fitweb.Domain.Trainings
             exercise.Sets.Remove(set);
 
             return set;
+        }
+
+        public void UpdateSet(int exerciseId, int setId, double weight, int numberOfReps, int numberOfSets)
+        {
+            var exercise = Exercises.SingleOrDefault(x => x.ExerciseId == exerciseId);
+            if (exercise is null)
+            {
+                throw new NotFoundException(nameof(Exercise), exerciseId);
+            }
+
+            var set = exercise.Sets.SingleOrDefault(x => x.Id == setId);
+            if (set is null)
+            {
+                throw new NotFoundException(nameof(Set), setId);
+            }
+
+            set.Update(weight, numberOfReps, numberOfSets);
         }
     }
 }

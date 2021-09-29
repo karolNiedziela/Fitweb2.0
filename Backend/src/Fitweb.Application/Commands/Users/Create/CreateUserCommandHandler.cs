@@ -1,4 +1,5 @@
 ﻿using Fitweb.Application.Interfaces.Identity;
+using Fitweb.Application.Responses;
 using MediatR;
 using System;
 using System.Collections.Generic;
@@ -9,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Fitweb.Application.Commands.Users.Create
 {
-    public class CreateUserCommandHandler : IRequestHandler<CreateUserCommand>
+    public class CreateUserCommandHandler : IRequestHandler<CreateUserCommand, Response<string>>
     {
         private readonly IIdentityService _identityService;
 
@@ -18,11 +19,11 @@ namespace Fitweb.Application.Commands.Users.Create
             _identityService = identityService;
         }
 
-        public async Task<Unit> Handle(CreateUserCommand request, CancellationToken cancellationToken)
+        public async Task<Response<string>> Handle(CreateUserCommand request, CancellationToken cancellationToken)
         {
             await _identityService.CreateUserAsync(request.Username, request.Email, request.Password);
 
-            return Unit.Value;
+            return Response.Added("User");
         }
     }
 }

@@ -11,6 +11,7 @@ namespace Fitweb.Domain.Exceptions
         Id = 1,
         Name = 2,
         Username = 3,
-        Email = 4
+        Email = 4,
+        UserId = 5
     }
 }

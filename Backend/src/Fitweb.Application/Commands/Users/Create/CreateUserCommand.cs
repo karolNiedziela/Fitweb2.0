@@ -1,4 +1,5 @@
-﻿using MediatR;
+﻿using Fitweb.Application.Responses;
+using MediatR;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Fitweb.Application.Commands.Users.Create
 {
-    public class CreateUserCommand : IRequest
+    public class CreateUserCommand : IRequest<Response<string>>
     {
         public string Username { get; set; }
 

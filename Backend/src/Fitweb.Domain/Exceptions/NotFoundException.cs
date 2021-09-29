@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Fitweb.Domain.Extensions;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,9 +13,9 @@ namespace Fitweb.Domain.Exceptions
 
         public string ErrorCode => string.IsNullOrEmpty(Entity) 
             ? "not_found"
-            : $"{Entity.ToLower()}_not_found";
+            : $"{Entity.SplitByUpperCase().WhiteSpacesToUnderScore().ToLower()}_not_found";
 
-        public NotFoundException(string entity, int key) : base($"{entity} with id: '{key}' was not found.")
+        public NotFoundException(string entity, int key) : base(GetMessage(entity, key.ToString(), KeyType.Id))
         {
             Entity = entity;
         }
@@ -24,18 +25,24 @@ namespace Fitweb.Domain.Exceptions
             Entity = entity;
         }
 
-        private static string GetMessage(string entity, string key, KeyType keyType) =>
-            keyType switch
+        private static string GetMessage(string entity, string key, KeyType keyType)
+        {
+            entity = entity.SplitByUpperCase();
+
+            return keyType switch
             {
-                KeyType.Id => $"{entity} with id: '{key}' was not found.",
+                KeyType.Id =>               $"{entity} with id: '{key}' was not found.",
 
-                KeyType.Name => $"{entity} with name: '{key}' was not found.",
+                KeyType.Name =>             $"{entity} with name: '{key}' was not found.",
 
-                KeyType.Username => $"{entity} with username: '{key}' was not found.",
+                KeyType.Username =>         $"{entity} with username: '{key}' was not found.",
 
-                KeyType.Email => $"{entity} with email: '{key}' was not found.",
+                KeyType.Email =>            $"{entity} with email: '{key}' was not found.",
 
-                _ => $"There was an error."
+                KeyType.UserId =>           $"{entity} with user id: '{key}' was not found.",
+
+                _ =>                        $"There was an error.",
             };
+        }
     }
 }

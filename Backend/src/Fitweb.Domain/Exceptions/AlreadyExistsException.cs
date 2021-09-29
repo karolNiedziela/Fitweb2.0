@@ -1,4 +1,5 @@
 ﻿using Fitweb.Domain.Exceptions;
+using Fitweb.Domain.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,18 +12,26 @@ namespace Fitweb.Domain.Exceptions
     {
         public override string ErrorCode => string.IsNullOrEmpty(Entity)
             ? "already_exists"
-            : $"{Entity.ToLower()}_already_exists";
+            : $"{Entity.SplitByUpperCase().WhiteSpacesToUnderScore().ToLower()}_already_exists";
 
         public string Entity { get; set; }
 
-        public AlreadyExistsException(string message) : base(message)
-        {
-
-        }
-
-        public AlreadyExistsException(string entity, string name) : base($"{entity} with name: '{name}' already exists.")
+        public AlreadyExistsException(string entity, string value, bool isDefaultMessage = false) 
+            : base(GetMessage(entity, value, isDefaultMessage))
         {
             Entity = entity;
+        }
+
+        private static string GetMessage(string entity, string value, bool isDefaultMessage = false)
+        {
+            entity = entity.SplitByUpperCase();
+
+            if (!isDefaultMessage) 
+            {
+                return $"{entity} with name: '{value}' already exists.";
+            }
+
+            return $"{entity} {value}";
         }
     }
 }

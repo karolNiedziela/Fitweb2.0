@@ -7,11 +7,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Fitweb.Application.Commands.AthleteFoodProducts.Add
+namespace Fitweb.Application.Commands.AthleteFoodProducts.Update
 {
-    public class AddAthleteFoodProductCommand : AuthorizeRequest, IRequest<Response<string>>
+    public class UpdateAthleteFoodProductCommand : AuthorizeRequest, IRequest<Response<string>>
     {
-        public int FoodProductId { get; set; }
+        public int AthleteFoodProductId { get; set; }
 
         public double Weight { get; set; }
     }

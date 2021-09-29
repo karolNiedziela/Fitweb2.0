@@ -6,10 +6,11 @@ using Fitweb.Domain.Trainings;
 using MediatR;
 using System.Threading;
 using System.Threading.Tasks;
+using Fitweb.Application.Responses;
 
 namespace Fitweb.Application.Commands.Trainings.Add
 {
-    public class AddTrainingCommandHandler : IRequestHandler<AddTrainingCommand>
+    public class AddTrainingCommandHandler : IRequestHandler<AddTrainingCommand, Response<string>>
     {
         private readonly IAthleteRepository _athleteRepository;
         private readonly IMapper _mapper;
@@ -20,12 +21,12 @@ namespace Fitweb.Application.Commands.Trainings.Add
             _mapper = mapper;
         }
 
-        public async Task<Unit> Handle(AddTrainingCommand request, CancellationToken cancellationToken)
+        public async Task<Response<string>> Handle(AddTrainingCommand request, CancellationToken cancellationToken = default)
         {
             var athlete = await _athleteRepository.GetByUserId(request.UserId);
             if (athlete is null)
             {
-                throw new NotFoundException(nameof(Athlete), request.UserId);
+                throw new NotFoundException(nameof(Athlete), request.UserId, KeyType.UserId);
             }
 
             var training = _mapper.Map<Training>(request);
@@ -33,7 +34,7 @@ namespace Fitweb.Application.Commands.Trainings.Add
             athlete.AddTraining(training);
             await _athleteRepository.UpdateAsync(athlete);
 
-            return Unit.Value;
+            return Response.Added(nameof(Training));
         }
     }
 }

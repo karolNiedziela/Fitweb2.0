@@ -1,4 +1,5 @@
 ﻿using Fitweb.Application.Requests;
+using Fitweb.Application.Responses;
 using Fitweb.Domain.Trainings;
 using MediatR;
 using Newtonsoft.Json;
@@ -10,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace Fitweb.Application.Commands.Trainings.Add
 {
-    public class AddTrainingCommand : AuthorizeRequest, IRequest
+    public class AddTrainingCommand : AuthorizeRequest, IRequest<Response<string>>
     {
         public string Name { get; set; }
 
