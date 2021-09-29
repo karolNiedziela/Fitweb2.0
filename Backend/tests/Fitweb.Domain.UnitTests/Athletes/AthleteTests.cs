@@ -1,5 +1,6 @@
 ﻿using Fitweb.Domain.Athletes;
 using Fitweb.Domain.Exceptions;
+using Fitweb.Domain.FoodProducts;
 using Fitweb.Domain.Trainings;
 using Fitweb.Domain.ValueObjects;
 using FluentAssertions;
@@ -225,7 +226,7 @@ namespace Fitweb.Domain.UnitTests.Athletes
         }
 
         [Fact]
-        public void Update_ShouldThrowException_WhenDietInformationFromGivenPeriodTimeExists()
+        public void UpdateDietInformation_ShouldThrowException_WhenDietInformationFromGivenPeriodTimeExists()
         {
             var athlete = new Athlete("userId");
             var dietInformation = new DietInformation(1500, 80, 100, 30, new DateTime(2020, 10, 10),
@@ -255,7 +256,7 @@ namespace Fitweb.Domain.UnitTests.Athletes
         }
 
         [Fact]
-        public void Update_ShouldThrowException_WhenDietInformationDoesNotExist()
+        public void UpdateDietInformation_ShouldThrowException_WhenDietInformationDoesNotExist()
         {
             var athlete = new Athlete("userId");
 
@@ -270,5 +271,102 @@ namespace Fitweb.Domain.UnitTests.Athletes
             exception.Message.Should().Be("Diet information with id: '1' was not found.");
         }
 
+        [Fact]
+        public void AddFoodProduct_ShouldAthleteAddFood_WhenFoodProductUserIdIsNullOrUserIdIsEqualToCurrentUserId()
+        {
+            var athlete = new Athlete("first_user_id");
+            var foodProduct = new FoodProduct(Information.Create("test_product_1"), Calories.Create(200),
+                Nutrient.Create(10, 10, 10), FoodGroup.Dairy, "first_user_id")
+            {
+                Id = 1
+            };
+            var foodProduct2 = new FoodProduct(Information.Create("test_product_2"), Calories.Create(420),
+                Nutrient.Create(15, 20, 5), FoodGroup.MeatFishEggs)
+            {
+                Id = 2
+            };
+
+            athlete.AddFoodProduct(foodProduct, 100);
+            athlete.AddFoodProduct(foodProduct2, 50);
+
+
+            athlete.FoodProducts.Count.Should().Be(2);
+            athlete.FoodProducts[0].Weight.Should().Be(100);
+            athlete.FoodProducts[1].Weight.Should().Be(50);
+        }
+
+        [Fact]
+        public void AddFoodProduct_ShouldThrowException_WhenAthleteFoodProductHasUserIdAndIsNotEqualToCurrentUserId()
+        {
+            var athlete = new Athlete("first_user_id");
+            var foodProduct = new FoodProduct(Information.Create("test_product_1"), Calories.Create(200),
+                Nutrient.Create(10, 10, 10), FoodGroup.Dairy, "second_user_id")
+            {
+                Id = 1
+            };
+
+            var exception = Record.Exception(() => athlete.AddFoodProduct(foodProduct, 20));
+
+            exception.Should().NotBeNull();
+            exception.Should().BeOfType<NotFoundException>();
+            exception.Message.Should().Be("Food product with id: '1' was not found.");
+        }
+
+        [Fact]
+        public void RemoveFoodProduct_ShouldRemoveAthleteFoodProduct_WhenFoodProductWithGivenAthleleFoodProductIdExists()
+        {
+            var athlete = new Athlete("user_id");
+            var foodProduct = new FoodProduct(Information.Create("test_product_1"), Calories.Create(200),
+                Nutrient.Create(10, 10, 10), FoodGroup.Dairy);
+
+            athlete.AddFoodProduct(foodProduct, 100);
+            athlete.FoodProducts[0].Id = 1;
+
+            var countBeforeRemoving = athlete.FoodProducts.Count;
+
+            athlete.RemoveFoodProduct(1);
+
+            countBeforeRemoving.Should().Be(1);
+            athlete.FoodProducts.Count.Should().Be(0);
+        }
+
+        [Fact]
+        public void RemoveFoodProduct_ShouldThrowException_WhenAthleteFoodProductDoesNotExist()
+        {
+            var athlete = new Athlete("user_id");
+
+            var exception = Record.Exception(() => athlete.RemoveFoodProduct(1));
+
+            exception.Should().NotBeNull();
+            exception.Should().BeOfType<NotFoundException>();
+            exception.Message.Should().Be("Athlete food product with id: '1' was not found.");
+        }
+
+        [Fact]
+        public void UpdateFoodProduct_ShouldUpdateAthleteFoodProduct_WhenAthleteFoodProductExists()
+        {
+            var athlete = new Athlete("user_id");
+            var foodProduct = new FoodProduct(Information.Create("test_product_1"), Calories.Create(200),
+                Nutrient.Create(10, 10, 10), FoodGroup.Dairy);
+
+            athlete.AddFoodProduct(foodProduct, 100);
+            athlete.FoodProducts[0].Id = 1;
+
+            athlete.UpdateFoodProduct(1, 50);
+
+            athlete.FoodProducts[0].Weight.Should().Be(50);
+        }
+
+        [Fact]
+        public void UpdateFoodProduct_ShouldThrowException_WhenAthleteFoodProductDoesNotExist()
+        {
+            var athlete = new Athlete("user_id");
+
+            var exception = Record.Exception(() => athlete.UpdateFoodProduct(5, 100));
+
+            exception.Should().NotBeNull();
+            exception.Should().BeOfType<NotFoundException>();
+            exception.Message.Should().Be("Athlete food product with id: '5' was not found.");
+        }
     }
 }
