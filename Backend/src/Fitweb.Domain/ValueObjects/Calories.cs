@@ -21,6 +21,11 @@ namespace Fitweb.Domain.ValueObjects
             Value = DomainValidator.AgainstNegativeNumber(value, "Calories");
         }
 
+        public static Calories Update(Calories calories)
+        {
+            return calories with { Value = calories.Value };
+        }
+
         public static Calories Create(double value)
             => new(value);
     }

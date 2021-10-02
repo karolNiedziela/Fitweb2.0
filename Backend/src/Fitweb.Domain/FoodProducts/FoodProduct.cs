@@ -35,5 +35,13 @@ namespace Fitweb.Domain.FoodProducts
             Group = foodGroup;
             UserId = userId;
         }
+
+        public void Update(FoodProduct foodProduct)
+        {
+            Information = Information.Update(foodProduct.Information);
+            Calories = Calories.Update(foodProduct.Calories);
+            Nutrient = Nutrient.Update(foodProduct.Nutrient);
+            Group = foodProduct.Group;
+        }
     }
 }

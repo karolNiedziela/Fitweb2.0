@@ -24,6 +24,11 @@ namespace Fitweb.Domain.ValueObjects
             Description = description;
         }
 
+        public static Information Update(Information information)
+        {
+            return information with { Name = information.Name, Description = information.Description };
+        }
+
         public static Information Create(string name, string description = null)
             => new(name, description);
     }

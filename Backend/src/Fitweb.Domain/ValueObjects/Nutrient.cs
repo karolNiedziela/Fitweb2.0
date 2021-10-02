@@ -40,6 +40,20 @@ namespace Fitweb.Domain.ValueObjects
             Salt = DomainValidator.AgainstNegativeNumber(salt, "Salt");
         }
 
+        public static Nutrient Update(Nutrient nutrient)
+        {
+            return nutrient with
+            {
+                Protein = nutrient.Protein,
+                Carbohydrate = nutrient.Carbohydrate,
+                Fat = nutrient.Fat,
+                SaturatedFat = nutrient.SaturatedFat,
+                Sugar = nutrient.Sugar,
+                Fiber = nutrient.Fiber,
+                Salt = nutrient.Salt
+            };
+        }
+
         public static Nutrient Create(double protein, double carbohydrate, double fat, double? saturatedFat = null,
             double? sugar = null, double? fiber = null, double? salt = null)
             => new(protein, carbohydrate, fat, saturatedFat, sugar, fiber, salt);
