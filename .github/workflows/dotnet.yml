@@ -22,6 +22,10 @@ jobs:
     - name: Restore dependencies
       run: dotnet restore Backend/src/Fitweb.API
     - name: Build
-      run: dotnet build --no-restore Backend/src/Fitweb.API
-    - name: Test
-      run: dotnet test --no-build --verbosity normal
+      run: dotnet build --configuration Release Backend/src/Fitweb.API
+    - name: Application tests
+      run: dotnet test --configuration Release Backend/tests/Fitweb.Application.UnitTests
+    - name: Domain tests
+      run: dotnet test --configuration Release Backend/tests/Fitweb.Domain.UnitTests
+    - name: Infrastructure identity tests
+      run: dotnet test --configuration Release Backend/tests/Fitweb.Infrastructure.Identity.UnitTests
