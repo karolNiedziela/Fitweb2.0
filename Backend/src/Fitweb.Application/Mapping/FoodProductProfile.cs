@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Fitweb.Application.Commands.FoodProducts.Add;
+using Fitweb.Application.Commands.FoodProducts.Update;
 using Fitweb.Application.DTO;
 using Fitweb.Application.Mapping.Resolvers;
 using Fitweb.Domain.Extensions;
@@ -15,7 +16,7 @@ namespace Fitweb.Application.Mapping
             CreateMap<AddFoodProductCommand, FoodProduct>()
                 .ForMember(dest => dest.Information,
                 opt => opt.MapFrom<InformationResolver<AddFoodProductCommand, FoodProduct>>())
-                .ForMember(dest => dest.Nutrient, opt => opt.MapFrom<NutrientResolver>())
+                .ForMember(dest => dest.Nutrient, opt => opt.MapFrom<NutrientResolver<AddFoodProductCommand, FoodProduct>>())
                 .ForMember(dest => dest.Group, opt => opt.MapFrom(src => Enum.GetName(typeof(FoodGroup), src.FoodGroupId)))
                 .ForMember(dest => dest.UserId, opt => opt.MapFrom(src => src.UserId));
 
@@ -34,6 +35,12 @@ namespace Fitweb.Application.Mapping
                 .ForMember(dest => dest.SaturatedFat, opt => opt.MapFrom(src => src.Nutrient.SaturatedFat))
                 .ForMember(dest => dest.Description, opt => opt.MapFrom(src => src.Information.Description))
                .IncludeBase<FoodProduct, FoodProductDto>();
+
+            CreateMap<UpdateFoodProductCommand, FoodProduct>()
+              .ForMember(dest => dest.Information,
+              opt => opt.MapFrom<InformationResolver<UpdateFoodProductCommand, FoodProduct>>())
+              .ForMember(dest => dest.Nutrient, opt => opt.MapFrom<NutrientResolver<UpdateFoodProductCommand, FoodProduct>>())
+              .ForMember(dest => dest.Group, opt => opt.MapFrom(src => Enum.GetName(typeof(FoodGroup), src.FoodGroupId)));
         }
     }
 }

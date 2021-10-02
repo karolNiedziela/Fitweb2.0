@@ -17,9 +17,9 @@ namespace Fitweb.Application.Mapping.Resolvers
         public Information Resolve(TCommand source, TEntity destination, Information destMember, ResolutionContext context)
         {
             var name = source.GetType().GetProperty("Name").GetValue(source, null).ToString();
-            var description = source.GetType().GetProperty("Description").GetValue(source, null) == null ? null : ToString();
+            var description = source.GetType().GetProperty("Description")?.GetValue(source, null);
 
-            return Information.Create(name, description);
+            return Information.Create(name, description?.ToString());
         }
     }
 }

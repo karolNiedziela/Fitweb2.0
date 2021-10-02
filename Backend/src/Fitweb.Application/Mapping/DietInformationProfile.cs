@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Fitweb.Application.Commands.DietInformations.Add;
 using Fitweb.Application.Commands.DietInformations.Update;
 using Fitweb.Domain.Athletes;
 using System;
@@ -13,6 +14,10 @@ namespace Fitweb.Application.Mapping
     {
         public DietInformationProfile()
         {
+            CreateMap<AddDietInformationCommand, DietInformation>()
+                .ConstructUsing(src => new DietInformation(src.TotalCalories, src.TotalProteins, src.TotalCarbohydrates,
+                src.TotalFats, src.StartDate, src.EndDate));
+
             CreateMap<UpdateDietInformationCommand, DietInformation>()
                 .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.DietInformationId));
         }
