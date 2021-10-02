@@ -47,20 +47,5 @@ namespace Fitweb.Application.UnitTests.Commands.Athletes.Update
             result.Message.Should().Be("Athlete updated successfully.");
             await _athleteRepository.Received(1).UpdateAsync(Arg.Is(athlete));
         }
-
-        [Fact]
-        public async Task Handle_ShouldThrowException_WhenAthleteDoestNotExist()
-        {
-            _athleteRepository.GetByUserId(Arg.Any<string>()).ReturnsNull();
-
-            var exception = await Record.ExceptionAsync(() =>  _sut.Handle(new UpdateAthleteCommand
-            {
-                UserId = "test",
-            }));
-
-            exception.Should().NotBeNull();
-            exception.Should().BeOfType<NotFoundException>();
-            exception.Message.Should().Be("Athlete with user id: 'test' was not found.");
-        }
     }
 }

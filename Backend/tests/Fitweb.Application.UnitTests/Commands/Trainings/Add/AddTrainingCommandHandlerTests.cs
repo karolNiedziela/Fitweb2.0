@@ -61,20 +61,5 @@ namespace Fitweb.Application.UnitTests.Commands.Trainings.Add
             x.Trainings.FirstOrDefault().Information.Description == null));
             athlete.Trainings.Count.Should().Be(1);
         }
-
-        [Fact]
-        public async Task Handle_ShouldThrowException_WhenAthleteDoesNotExist()
-        {
-            _athleteRepository.GetByUserId(Arg.Any<string>()).ReturnsNull();
-
-            var exception = await Record.ExceptionAsync(() => _sut.Handle(new AddTrainingCommand
-            {
-                UserId = "testUserId"
-            }));
-
-            exception.Should().NotBeNull();
-            exception.Should().BeOfType<NotFoundException>();
-            exception.Message.Should().Be("Athlete with user id: 'testUserId' was not found.");
-        }
     }
 }
