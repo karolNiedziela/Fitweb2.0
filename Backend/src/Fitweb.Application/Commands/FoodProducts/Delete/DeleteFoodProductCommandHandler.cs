@@ -21,7 +21,7 @@ namespace Fitweb.Application.Commands.FoodProducts.Delete
             _foodProductRepository = foodProductRepository;
         }
 
-        public async Task<Response<string>> Handle(DeleteFoodProductCommand request, CancellationToken cancellationToken)
+        public async Task<Response<string>> Handle(DeleteFoodProductCommand request, CancellationToken cancellationToken = default)
         {
             var foodProduct = await _foodProductRepository.GetByIdAsync(request.FoodProductId);
             if (foodProduct is null)

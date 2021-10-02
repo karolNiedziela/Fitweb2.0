@@ -24,10 +24,6 @@ namespace Fitweb.Application.Commands.Trainings.Add
         public async Task<Response<string>> Handle(AddTrainingCommand request, CancellationToken cancellationToken = default)
         {
             var athlete = await _athleteRepository.GetByUserId(request.UserId);
-            if (athlete is null)
-            {
-                throw new NotFoundException(nameof(Athlete), request.UserId, KeyType.UserId);
-            }
 
             var training = _mapper.Map<Training>(request);
 

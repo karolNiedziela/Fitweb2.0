@@ -1,4 +1,6 @@
-﻿using Fitweb.Domain.Athletes.Repositories;
+﻿using Fitweb.Application.Responses;
+using Fitweb.Domain.Athletes;
+using Fitweb.Domain.Athletes.Repositories;
 using MediatR;
 using System;
 using System.Collections.Generic;
@@ -9,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace Fitweb.Application.Commands.DietInformations.Delete
 {
-    public class DeleteDietInformationCommandHandler : IRequestHandler<DeleteDietInformationCommand>
+    public class DeleteDietInformationCommandHandler : IRequestHandler<DeleteDietInformationCommand, Response<string>>
     {
         private readonly IAthleteRepository _athleteRepository;
 
@@ -18,7 +20,7 @@ namespace Fitweb.Application.Commands.DietInformations.Delete
             _athleteRepository = athleteRepository;
         }
 
-        public async Task<Unit> Handle(DeleteDietInformationCommand request, CancellationToken cancellationToken)
+        public async Task<Response<string>> Handle(DeleteDietInformationCommand request, CancellationToken cancellationToken = default)
         {
             var athlete = await _athleteRepository.GetDietInformations(request.UserId);
 
@@ -26,7 +28,7 @@ namespace Fitweb.Application.Commands.DietInformations.Delete
 
             await _athleteRepository.RemoveDietInformation(toRemove);
 
-            return Unit.Value;
+            return Response.Deleted(nameof(DietInformation));
         }
     }
 }

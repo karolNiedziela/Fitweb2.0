@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Fitweb.Application.Responses;
 using Fitweb.Domain.Athletes;
 using Fitweb.Domain.Athletes.Repositories;
 using MediatR;
@@ -11,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace Fitweb.Application.Commands.DietInformations.Update
 {
-    public class UpdateDietInformationCommandHandler : IRequestHandler<UpdateDietInformationCommand>
+    public class UpdateDietInformationCommandHandler : IRequestHandler<UpdateDietInformationCommand, Response<string>>
     {
         private readonly IAthleteRepository _athleteRepository;
         private readonly IMapper _mapper;
@@ -22,7 +23,7 @@ namespace Fitweb.Application.Commands.DietInformations.Update
             _mapper = mapper;
         }
 
-        public async Task<Unit> Handle(UpdateDietInformationCommand request, CancellationToken cancellationToken)
+        public async Task<Response<string>> Handle(UpdateDietInformationCommand request, CancellationToken cancellationToken = default)
         {
             var athlete = await _athleteRepository.GetDietInformations(request.UserId);
 
@@ -31,7 +32,7 @@ namespace Fitweb.Application.Commands.DietInformations.Update
 
             await _athleteRepository.UpdateAsync(athlete);
 
-            return Unit.Value;
+            return Response.Updated(nameof(DietInformation));
         }
     }
 }

@@ -18,16 +18,14 @@ namespace Fitweb.Application.Commands.FoodProducts.Add
     {
         private readonly IFoodProductRepository _foodProductRepository;
         private readonly IMapper _mapper;
-        private readonly IAthleteRepository _athleteRepository;
 
-        public AddFoodProductCommandHandler(IFoodProductRepository foodProductRepository, IMapper mapper, IAthleteRepository athleteRepository)
+        public AddFoodProductCommandHandler(IFoodProductRepository foodProductRepository, IMapper mapper)
         {
             _foodProductRepository = foodProductRepository;
             _mapper = mapper;
-            _athleteRepository = athleteRepository;
         }
 
-        public async Task<Response<string>> Handle(AddFoodProductCommand request, CancellationToken cancellationToken)
+        public async Task<Response<string>> Handle(AddFoodProductCommand request, CancellationToken cancellationToken = default)
         {
             var product = await _foodProductRepository.GetByNameAsync(request.Name);
             if (product is not null)

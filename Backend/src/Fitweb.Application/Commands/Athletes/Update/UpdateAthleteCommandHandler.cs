@@ -24,10 +24,6 @@ namespace Fitweb.Application.Commands.Athletes.Update
         public async Task<Response<string>> Handle(UpdateAthleteCommand request, CancellationToken cancellationToken = default)
         {
             var athlete = await _athleteRepository.GetByUserId(request.UserId);
-            if (athlete is null)
-            {
-                throw new NotFoundException(nameof(Athlete), request.UserId, KeyType.UserId);
-            }
 
             athlete.Update(request.Height, request.Weight, request.NumberOfTrainings);
 

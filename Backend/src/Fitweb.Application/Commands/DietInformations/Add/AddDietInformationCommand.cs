@@ -1,4 +1,5 @@
 ﻿using Fitweb.Application.Requests;
+using Fitweb.Application.Responses;
 using MediatR;
 using System;
 using System.Collections.Generic;
@@ -9,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Fitweb.Application.Commands.DietInformations.Add
 {
-    public class AddDietInformationCommand : AuthorizeRequest, IRequest
+    public class AddDietInformationCommand : AuthorizeRequest, IRequest<Response<string>>
     {
         public double TotalCalories { get; set; }
 
