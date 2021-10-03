@@ -32,7 +32,6 @@ namespace Fitweb.Infrastructure.Persistence
                 options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString));
                 options.EnableSensitiveDataLogging(); // TODO: PRODUCTION: TO REMOVE
                 options.EnableDetailedErrors(); // TODO: PRODUCTION: TO REMOVE
-                options.UseLoggerFactory(LoggerFactory.Create(builder => builder.AddConsole())); // TODO: PRODUCTION: TO REMOVE
             });
 
             // Data initializers
