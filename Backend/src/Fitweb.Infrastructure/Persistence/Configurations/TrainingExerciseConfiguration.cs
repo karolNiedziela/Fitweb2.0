@@ -12,7 +12,7 @@ namespace Fitweb.Infrastructure.Persistence.Configurations
 
             builder.HasMany(x => x.Sets)
                    .WithOne(x => x.TrainingExercise)
-                   .HasForeignKey(x => new { x.TrainingId, x.ExerciseId });
+                   .HasForeignKey(x => new { x.ExerciseId, x.TrainingId });
         }
     }
 }

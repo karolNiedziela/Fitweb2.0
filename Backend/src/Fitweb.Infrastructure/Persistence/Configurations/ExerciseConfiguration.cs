@@ -21,6 +21,10 @@ namespace Fitweb.Infrastructure.Persistence.Configurations
 
                 navigation.Property(x => x.Description).HasColumnName("Description");
             });
+
+            builder.Property(x => x.PartOfBody)
+                   .HasConversion<string>();
+                        
         }
     }
 }

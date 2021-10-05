@@ -58,6 +58,8 @@ namespace Fitweb.Infrastructure.Persistence.Configurations
                     .HasColumnName("Salt");
             });
 
+            builder.Property(x => x.FoodGroup)
+                   .HasConversion<string>();
             builder.Property(x => x.UserId).IsRequired(false);
         }
     }
