@@ -16,7 +16,7 @@ namespace Fitweb.Infrastructure.Utilities.Csv.Maps
             Map(p => p.Nutrient.Protein).Name("Protein").Index(2).Default(0);
             Map(p => p.Nutrient.Fat).Name("Fat").Index(3).Default(0);
             Map(p => p.Nutrient.Carbohydrate).Name("Carbohydrate").Index(4).Default(0);
-            Map(p => p.Group).Name("Group").Index(5).TypeConverter<IntToEnumConverter<FoodGroup>>();
+            Map(p => p.FoodGroup).Name("Group").Index(5).TypeConverter<IntToEnumConverter<FoodGroup>>();
 
             Map(p => p.Id).Ignore();
             Map(p => p.CreatedDate).Ignore();
