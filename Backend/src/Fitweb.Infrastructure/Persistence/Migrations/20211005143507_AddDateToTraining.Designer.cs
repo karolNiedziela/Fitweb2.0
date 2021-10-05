@@ -3,14 +3,16 @@ using System;
 using Fitweb.Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Fitweb.Infrastructure.Persistence.Migrations
 {
     [DbContext(typeof(FitwebDbContext))]
-    partial class FitwebDbContextModelSnapshot : ModelSnapshot
+    [Migration("20211005143507_AddDateToTraining")]
+    partial class AddDateToTraining
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

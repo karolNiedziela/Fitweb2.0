@@ -3,14 +3,16 @@ using System;
 using Fitweb.Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Fitweb.Infrastructure.Persistence.Migrations
 {
     [DbContext(typeof(FitwebDbContext))]
-    partial class FitwebDbContextModelSnapshot : ModelSnapshot
+    [Migration("20211005123946_FixTrainingIdAndExerciseIdInSet")]
+    partial class FixTrainingIdAndExerciseIdInSet
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -128,8 +130,8 @@ namespace Fitweb.Infrastructure.Persistence.Migrations
                     b.Property<DateTime>("ModifiedDate")
                         .HasColumnType("datetime(6)");
 
-                    b.Property<string>("PartOfBody")
-                        .HasColumnType("longtext");
+                    b.Property<int?>("PartOfBody")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
@@ -145,8 +147,8 @@ namespace Fitweb.Infrastructure.Persistence.Migrations
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime(6)");
 
-                    b.Property<string>("FoodGroup")
-                        .HasColumnType("longtext");
+                    b.Property<int?>("Group")
+                        .HasColumnType("int");
 
                     b.Property<DateTime>("ModifiedDate")
                         .HasColumnType("datetime(6)");
@@ -205,12 +207,8 @@ namespace Fitweb.Infrastructure.Persistence.Migrations
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime(6)");
 
-                    b.Property<DateTime>("Date")
-                        .HasColumnType("datetime(6)");
-
-                    b.Property<string>("Day")
-                        .IsRequired()
-                        .HasColumnType("longtext");
+                    b.Property<int>("Day")
+                        .HasColumnType("int");
 
                     b.Property<DateTime>("ModifiedDate")
                         .HasColumnType("datetime(6)");
@@ -328,15 +326,15 @@ namespace Fitweb.Infrastructure.Persistence.Migrations
                         {
                             Id = "ff48a62e-0e06-47a2-aacb-c88af07993ed",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "0072fd91-09e9-44df-853b-8d2c6175b64d",
+                            ConcurrencyStamp = "7786c8f6-95e4-44d4-a0b9-ac3d8ed01adf",
                             Email = "admin@admin.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@ADMIN.COM",
                             NormalizedUserName = "ADMINISTRATOR",
-                            PasswordHash = "AQAAAAEAACcQAAAAEAltVqoDyjyH5wHXs7zkXZ0lCqAMLpSPTw2lB0NmBw0EN5l+IMLeCcw7LkjiK+UF8A==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEOit4l9prQY+H/gjhj0sWnjDFWNEeEOvC9A4qesM9uSiyz6pvAT5WHcFVmpmiF1WPQ==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "e3abf403-f82e-4f2f-a38a-9e3f6fd9981f",
+                            SecurityStamp = "3c66b23e-35dd-4acc-92b5-a6149d2b5d08",
                             TwoFactorEnabled = false,
                             UserName = "administrator"
                         });
@@ -371,14 +369,14 @@ namespace Fitweb.Infrastructure.Persistence.Migrations
                         new
                         {
                             Id = "a792b6cb-8230-4a37-9353-1a05d642ffe2",
-                            ConcurrencyStamp = "2de686e9-2853-43b3-95c7-e27541d02b0c",
+                            ConcurrencyStamp = "6fc6dbf4-4668-46dc-a9c1-5bf1ed80655b",
                             Name = "Administrator",
                             NormalizedName = "ADMINISTRATOR"
                         },
                         new
                         {
                             Id = "9dd36f65-1fc5-4383-b7af-626d5bd60728",
-                            ConcurrencyStamp = "dc9f93ff-f32c-464c-a2a4-67d869842f5e",
+                            ConcurrencyStamp = "e8e89346-7f0b-4010-8bf0-3887bc1d0bad",
                             Name = "Athlete",
                             NormalizedName = "ATHLETE"
                         });
