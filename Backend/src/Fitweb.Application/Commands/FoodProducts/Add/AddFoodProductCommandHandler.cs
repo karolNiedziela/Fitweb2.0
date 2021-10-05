@@ -4,6 +4,7 @@ using Fitweb.Domain.Athletes.Repositories;
 using Fitweb.Domain.Exceptions;
 using Fitweb.Domain.FoodProducts;
 using Fitweb.Domain.FoodProducts.Repositories;
+using Fitweb.Domain.ValueObjects;
 using MediatR;
 using System;
 using System.Collections.Generic;
@@ -17,12 +18,10 @@ namespace Fitweb.Application.Commands.FoodProducts.Add
     public class AddFoodProductCommandHandler : IRequestHandler<AddFoodProductCommand, Response<string>>
     {
         private readonly IFoodProductRepository _foodProductRepository;
-        private readonly IMapper _mapper;
 
-        public AddFoodProductCommandHandler(IFoodProductRepository foodProductRepository, IMapper mapper)
+        public AddFoodProductCommandHandler(IFoodProductRepository foodProductRepository)
         {
             _foodProductRepository = foodProductRepository;
-            _mapper = mapper;
         }
 
         public async Task<Response<string>> Handle(AddFoodProductCommand request, CancellationToken cancellationToken = default)
@@ -33,8 +32,9 @@ namespace Fitweb.Application.Commands.FoodProducts.Add
                 throw new AlreadyExistsException(nameof(FoodProduct), request.Name);
             }
 
-            var newProduct = _mapper.Map<FoodProduct>(request);
-            await _foodProductRepository.AddAsync(newProduct);
+            await _foodProductRepository.AddAsync(new FoodProduct(Information.Create(request.Name, request.Description), 
+                Calories.Create(request.Calories), Nutrient.Create(request.Protein, request.Carbohydrate, request.Fat, request.SaturatedFat, request.Sugar,
+                request.Fiber, request.Salt), request.FoodGroup, request.UserId));
 
             return Response.Added(nameof(FoodProduct));
         }

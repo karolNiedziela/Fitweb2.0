@@ -18,6 +18,7 @@ namespace Fitweb.Application.Mapping
                 .ConstructUsing(src => new DietInformation(src.TotalCalories, src.TotalProteins, src.TotalCarbohydrates,
                 src.TotalFats, src.StartDate, src.EndDate));
 
+            // TODO: Rethink it (remove this map)
             CreateMap<UpdateDietInformationCommand, DietInformation>()
                 .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.DietInformationId));
         }

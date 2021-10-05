@@ -1,18 +1,18 @@
-﻿using Fitweb.Application.Requests;
-using Fitweb.Application.Responses;
+﻿using Fitweb.Application.Responses;
 using Fitweb.Domain.Trainings;
 using MediatR;
-using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Fitweb.Application.Commands.Trainings.Add
+namespace Fitweb.Application.Commands.Trainings.Update
 {
-    public class AddTrainingCommand : AuthorizeRequest, IRequest<Response<string>>
+    public class UpdateTrainingCommand : IRequest<Response<string>>
     {
+        public int TrainingId { get; set; }
+
         public string Name { get; set; }
 
         public string Description { get; set; }

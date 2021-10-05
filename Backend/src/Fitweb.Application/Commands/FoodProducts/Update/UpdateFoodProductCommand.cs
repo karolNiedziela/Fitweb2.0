@@ -1,4 +1,5 @@
 ﻿using Fitweb.Application.Responses;
+using Fitweb.Domain.FoodProducts;
 using MediatR;
 using System;
 using System.Collections.Generic;
@@ -32,6 +33,6 @@ namespace Fitweb.Application.Commands.FoodProducts.Update
 
         public double? Salt { get; set; }
 
-        public int FoodGroupId { get; set; }
+        public FoodGroup? FoodGroup { get; set; }
     }
 }

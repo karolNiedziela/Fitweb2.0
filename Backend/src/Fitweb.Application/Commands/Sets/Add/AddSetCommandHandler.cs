@@ -1,4 +1,6 @@
-﻿using Fitweb.Domain.Trainings;
+﻿using AutoMapper;
+using Fitweb.Domain.Common;
+using Fitweb.Domain.Trainings;
 using Fitweb.Domain.Trainings.Repositories;
 using MediatR;
 using System;
@@ -13,10 +15,12 @@ namespace Fitweb.Application.Commands.Sets.Add
     public class AddSetCommandHandler : IRequestHandler<AddSetCommand>
     {
         private readonly ITrainingRepository _trainingRepository;
+        private readonly IMapper _mapper;
 
-        public AddSetCommandHandler(ITrainingRepository trainingRepository)
+        public AddSetCommandHandler(ITrainingRepository trainingRepository, IMapper mapper)
         {
             _trainingRepository = trainingRepository;
+            _mapper = mapper;
         }
 
         public async Task<Unit> Handle(AddSetCommand request, CancellationToken cancellationToken)
@@ -24,7 +28,9 @@ namespace Fitweb.Application.Commands.Sets.Add
             var trainingWithSets = await _trainingRepository
                 .GetExerciseWithSets(request.UserId, request.TrainingId, request.ExerciseId);
 
-            trainingWithSets.AddSet(request.ExerciseId, new Set(request.Weight, request.NumberOfReps, request.NumberOfSets));
+            var set = _mapper.Map<Set>(request);
+
+            trainingWithSets.AddSet(request.ExerciseId, set);
 
             await _trainingRepository.UpdateAsync(trainingWithSets);
 

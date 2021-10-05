@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Fitweb.Application.Commands.Trainings.Add;
+using Fitweb.Application.Commands.Trainings.Update;
 using Fitweb.Application.DTO;
 using Fitweb.Application.Mapping.Converters;
 using Fitweb.Application.Mapping.Resolvers;
@@ -18,12 +19,8 @@ namespace Fitweb.Application.Mapping
     {
         public TrainingProfile()
         {
-            CreateMap<AddTrainingCommand, Training>()
-                .ForMember(dest => dest.Information, 
-                opt => opt.MapFrom<InformationResolver<AddTrainingCommand, Training>>())
-                .ForMember(dest => dest.Day, opt => opt.MapFrom(source => Enum.GetName(typeof(Day), source.DayId)));
-
             CreateMap<Training, TrainingDto>()
+                .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Information.Name))
                 .ForMember(dest => dest.Day, opt => opt.MapFrom(src => src.Day.GetDisplayName()));
 
             CreateMap<TrainingExercise, ExerciseDto>()
@@ -34,8 +31,6 @@ namespace Fitweb.Application.Mapping
                 .ForMember(dest => dest.TrainingId, opt => opt.MapFrom(src => src.Id))
                 .ForMember(dest => dest.Exercises, opt => opt.MapFrom(src => src.Exercises));
 
-            CreateMap<Set, SetDto>()
-                .ForMember(dest => dest.SetId, opt => opt.MapFrom(src => src.Id));
             CreateMap<TrainingExercise, TrainingExerciseWithSetsDto>()
                 .ForMember(dest => dest.ExerciseId, opt => opt.MapFrom(src => src.ExerciseId))
                 .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Exercise.Information.Name))
@@ -43,6 +38,7 @@ namespace Fitweb.Application.Mapping
             CreateMap<Training, TrainingExercisesWithSetsDto>()
                 .ForMember(dest => dest.Exercises, opt => opt.MapFrom(src => src.Exercises))
                 .ForMember(dest => dest.TrainingId, opt => opt.MapFrom(src => src.Id));
+
 
         }
     }

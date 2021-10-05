@@ -3,6 +3,7 @@ using Fitweb.Application.Responses;
 using Fitweb.Domain.Exceptions;
 using Fitweb.Domain.FoodProducts;
 using Fitweb.Domain.FoodProducts.Repositories;
+using Fitweb.Domain.ValueObjects;
 using MediatR;
 using System;
 using System.Collections.Generic;
@@ -16,12 +17,10 @@ namespace Fitweb.Application.Commands.FoodProducts.Update
     public class UpdateFoodProductCommandHandler : IRequestHandler<UpdateFoodProductCommand, Response<string>>
     {
         private readonly IFoodProductRepository _foodProductRepository;
-        private readonly IMapper _mapper;
 
-        public UpdateFoodProductCommandHandler(IFoodProductRepository foodProductRepository, IMapper mapper)
+        public UpdateFoodProductCommandHandler(IFoodProductRepository foodProductRepository)
         {
             _foodProductRepository = foodProductRepository;
-            _mapper = mapper;
         }
 
         public async Task<Response<string>> Handle(UpdateFoodProductCommand request, CancellationToken cancellationToken = default)
@@ -32,8 +31,9 @@ namespace Fitweb.Application.Commands.FoodProducts.Update
                 throw new NotFoundException(nameof(FoodProduct), request.Id);
             }
 
-            var updatedFoodProduct = _mapper.Map<FoodProduct>(request);
-            foodProduct.Update(updatedFoodProduct);
+            foodProduct.Update(new FoodProduct(Information.Create(request.Name, request.Description),
+                Calories.Create(request.Calories), Nutrient.Create(request.Protein, request.Carbohydrate, request.Fat, request.SaturatedFat, request.Sugar,
+                request.Fiber, request.Salt), request.FoodGroup));
 
             await _foodProductRepository.UpdateAsync(foodProduct);
 

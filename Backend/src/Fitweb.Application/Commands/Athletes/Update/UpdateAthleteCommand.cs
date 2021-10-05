@@ -13,8 +13,8 @@ namespace Fitweb.Application.Commands.Athletes.Update
     {
         public int? Height { get; set; }
 
-        public int Weight { get; set; }
+        public int? Weight { get; set; }
 
-        public int NumberOfTrainings { get; set; }
+        public int? NumberOfTrainings { get; set; }
     }
 }

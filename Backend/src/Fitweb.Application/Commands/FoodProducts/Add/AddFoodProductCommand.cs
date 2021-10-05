@@ -33,6 +33,6 @@ namespace Fitweb.Application.Commands.FoodProducts.Add
 
         public double? Salt { get; set; }
 
-        public int FoodGroupId { get; set; }
+        public FoodGroup? FoodGroup { get; set; }
     }
 }
