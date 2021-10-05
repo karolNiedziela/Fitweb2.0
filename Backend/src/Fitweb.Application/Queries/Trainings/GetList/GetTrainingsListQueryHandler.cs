@@ -4,11 +4,9 @@ using Fitweb.Application.Helpers;
 using Fitweb.Application.Responses;
 using Fitweb.Domain.Athletes.Repositories;
 using Fitweb.Domain.Filters;
+using Fitweb.Domain.Trainings.Repositories;
 using MediatR;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -16,12 +14,12 @@ namespace Fitweb.Application.Queries.Trainings.GetList
 {
     public class GetTrainingsListQueryHandler : IRequestHandler<GetTrainingsListQuery, PagedResponse<TrainingDto>>
     {
-        private readonly IAthleteRepository _athleteRepository;
+        private readonly ITrainingRepository _trainingRepository;
         private readonly IMapper _mapper;
 
-        public GetTrainingsListQueryHandler(IAthleteRepository athleteRepository, IMapper mapper)
+        public GetTrainingsListQueryHandler(ITrainingRepository trainingRepository, IMapper mapper)
         {
-            _athleteRepository = athleteRepository;
+            _trainingRepository = trainingRepository;
             _mapper = mapper;
         }
 
@@ -29,7 +27,8 @@ namespace Fitweb.Application.Queries.Trainings.GetList
         {
             var paginationFilter = _mapper.Map<PaginationFilter>(request.Pagination);
 
-            var (trainings, totalItems) = await _athleteRepository.GetPagedTrainings(request.UserId, paginationFilter);
+            var (trainings, totalItems) = await _trainingRepository.GetPagedTrainings(request.UserId, paginationFilter,
+                request.Date);
 
             var trainingsDto = _mapper.Map<List<TrainingDto>>(trainings);
 

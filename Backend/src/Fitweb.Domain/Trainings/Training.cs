@@ -19,6 +19,8 @@ namespace Fitweb.Domain.Trainings
 
         public Information Information { get; private set; }
 
+        public DateTime Date { get; private set; }
+
         public Day Day { get; private set; }
 
         public List<TrainingExercise> Exercises { get; private set; } = new();
@@ -28,10 +30,17 @@ namespace Fitweb.Domain.Trainings
 
         }
    
-        public Training(Information information, Day day)
+        public Training(Information information, Day day, DateTime? date = null)
         {
             Information = information;
             Day = day;
+            Date = date ?? DateTime.UtcNow.Date;
+        }
+
+        public void Update(Training training)
+        {
+            Information = Information.Update(training.Information);
+            Day = training.Day;
         }
 
         public void AddExercise(Exercise exercise)

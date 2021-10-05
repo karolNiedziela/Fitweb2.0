@@ -14,5 +14,7 @@ namespace Fitweb.Application.Queries.Trainings.GetList
     public class GetTrainingsListQuery : AuthorizeRequest, IRequest<PagedResponse<TrainingDto>>
     {
         public PaginationQuery Pagination { get; set; }
+
+        public DateTime? Date { get; set; }
     }
 }
