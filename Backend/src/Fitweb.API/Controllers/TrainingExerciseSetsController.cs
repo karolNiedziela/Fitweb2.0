@@ -39,7 +39,7 @@ namespace Fitweb.API.Controllers
         }
 
         [HttpPut]
-        public async Task<IActionResult> Update([FromBody]UpdateSetCommand command,
+        public async Task<IActionResult> Put([FromBody]UpdateSetCommand command,
             [FromRoute] int tId,
             [FromRoute] int eId)
         {

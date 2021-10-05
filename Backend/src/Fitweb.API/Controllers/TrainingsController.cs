@@ -1,5 +1,6 @@
 ﻿using Fitweb.Application.Commands.Trainings.Add;
 using Fitweb.Application.Commands.Trainings.Delete;
+using Fitweb.Application.Commands.Trainings.Update;
 using Fitweb.Application.Queries.Trainings.GetList;
 using Fitweb.Application.Requests;
 using Microsoft.AspNetCore.Authorization;
@@ -15,18 +16,19 @@ namespace Fitweb.API.Controllers
     public class TrainingsController : BaseApiController
     {
         [HttpGet]
-        public async Task<IActionResult> Trainings([FromQuery]PaginationQuery pagination)
+        public async Task<IActionResult> GetAll([FromQuery]PaginationQuery pagination, [FromQuery]DateTime? date = null)
         {
             var response = await Mediator.Send(new GetTrainingsListQuery
             {
-                Pagination = pagination
+                Pagination = pagination,
+                Date = date
             });
 
             return Ok(response);
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create([FromBody]AddTrainingCommand command)
+        public async Task<IActionResult> Post([FromBody]AddTrainingCommand command)
         {
             var response = await Mediator.Send(command);
 
@@ -35,6 +37,14 @@ namespace Fitweb.API.Controllers
 
         [HttpDelete]
         public async Task<IActionResult> Delete([FromBody]DeleteTrainingCommand command)
+        {
+            await Mediator.Send(command);
+
+            return NoContent();
+        }
+
+        [HttpPut]
+        public async Task<IActionResult> Put([FromBody]UpdateTrainingCommand command)
         {
             await Mediator.Send(command);
 

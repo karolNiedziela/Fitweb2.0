@@ -1,6 +1,5 @@
 ﻿using Fitweb.Application.Commands.TrainingExercises.Add;
 using Fitweb.Application.Commands.TrainingExercises.Delete;
-using Fitweb.Application.Commands.TrainingExercises.Update;
 using Fitweb.Application.Queries.TrainingExercises.GetList;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -18,7 +17,7 @@ namespace Fitweb.API.Controllers
     {
 
         [HttpGet]
-        public async Task<IActionResult> Get([FromRoute] int tId)
+        public async Task<IActionResult> GetAll([FromRoute] int tId)
         {
             var response = await Mediator.Send(new GetTrainingExercisesQuery
             {
@@ -29,7 +28,7 @@ namespace Fitweb.API.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Add([FromRoute]int tId, [FromBody] AddTrainingExerciseCommand command)
+        public async Task<IActionResult> Post([FromRoute]int tId, [FromBody] AddTrainingExerciseCommand command)
         {
             command.TrainingId = tId;
             await Mediator.Send(command);
@@ -39,15 +38,6 @@ namespace Fitweb.API.Controllers
 
         [HttpDelete]
         public async Task<IActionResult> Delete([FromRoute] int tId, [FromBody] DeleteTrainingExerciseCommand command)
-        {
-            command.TrainingId = tId;
-            await Mediator.Send(command);
-
-            return NoContent();
-        }
-
-        [HttpPut]
-        public async Task<IActionResult> Update([FromBody]UpdateTrainingExerciseCommand command, [FromRoute] int tId) 
         {
             command.TrainingId = tId;
             await Mediator.Send(command);

@@ -30,7 +30,7 @@ namespace Fitweb.API.Controllers
         }
 
         [HttpPut]
-        public async Task<IActionResult> Update([FromBody]UpdateDietInformationCommand command)
+        public async Task<IActionResult> Put([FromBody]UpdateDietInformationCommand command)
         {
             await Mediator.Send(command);
 

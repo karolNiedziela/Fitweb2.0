@@ -1,6 +1,7 @@
 ﻿using Fitweb.Application.Commands.AthleteFoodProducts.Add;
 using Fitweb.Application.Commands.AthleteFoodProducts.Delete;
 using Fitweb.Application.Commands.AthleteFoodProducts.Update;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -10,6 +11,7 @@ using System.Threading.Tasks;
 namespace Fitweb.API.Controllers
 {
 
+    [Authorize]
     [Route("api/myfoodproducts")]
     public class AthleteFoodProductsController : BaseApiController
     {
@@ -30,7 +32,7 @@ namespace Fitweb.API.Controllers
         }
 
         [HttpPut]
-        public async Task<IActionResult> Update([FromBody]UpdateAthleteFoodProductCommand command)
+        public async Task<IActionResult> Put([FromBody]UpdateAthleteFoodProductCommand command)
         {
             await Mediator.Send(command);
 

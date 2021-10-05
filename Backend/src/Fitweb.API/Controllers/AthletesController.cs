@@ -14,7 +14,7 @@ namespace Fitweb.API.Controllers
     public class AthletesController : BaseApiController
     {
         [HttpPost]
-        public async Task<IActionResult> Create([FromBody]CreateAthleteCommand command)
+        public async Task<IActionResult> Post([FromBody]CreateAthleteCommand command)
         {
             await Mediator.Send(command);
 
@@ -22,7 +22,7 @@ namespace Fitweb.API.Controllers
         }
 
         [HttpPut]
-        public async Task<IActionResult> Update([FromBody]UpdateAthleteCommand command)
+        public async Task<IActionResult> Put([FromBody]UpdateAthleteCommand command)
         {
             await Mediator.Send(command);
 
