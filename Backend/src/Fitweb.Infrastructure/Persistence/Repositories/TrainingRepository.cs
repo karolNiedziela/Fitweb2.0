@@ -40,8 +40,18 @@ namespace Fitweb.Infrastructure.Persistence.Repositories
             return (data, totalItems);
         }
 
-        public async Task<Training> GetAllExercisesWithSets(string userId, int trainingId)
+        public async Task<Training> GetExercisesWithSets(string userId, int trainingId, int? exerciseId = null)
         {
+            if (exerciseId.HasValue)
+            {
+                return await _context.Trainings
+                        .Include(x => x.Athlete)
+                        .Include(x => x.Exercises.Where(x => x.ExerciseId == exerciseId.Value))
+                            .ThenInclude(x => x.Sets)
+                        .Where(x => x.Id == trainingId && x.Athlete.UserId == userId)
+                        .FirstOrDefaultAsync();
+            }
+
             return await _context.Trainings
                         .Include(x => x.Athlete)
                         .Include(x => x.Exercises)
@@ -52,15 +62,6 @@ namespace Fitweb.Infrastructure.Persistence.Repositories
                         .FirstOrDefaultAsync();     
         }
 
-        public async Task<Training> GetExerciseWithSets(string userId, int trainingId, int exerciseId)
-        {
-            return await _context.Trainings
-                        .Include(x => x.Athlete)
-                        .Include(x => x.Exercises.Where(x => x.ExerciseId == exerciseId))
-                            .ThenInclude(x => x.Sets)
-                        .Where(x => x.Id == trainingId && x.Athlete.UserId == userId)
-                        .FirstOrDefaultAsync();  
-        }
         public async Task RemoveTrainingExercise(TrainingExercise trainingExercise)
         {
             _context.TrainingExercises.Remove(trainingExercise);

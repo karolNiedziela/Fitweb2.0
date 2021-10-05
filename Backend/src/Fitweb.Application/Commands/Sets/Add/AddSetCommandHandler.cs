@@ -26,7 +26,7 @@ namespace Fitweb.Application.Commands.Sets.Add
         public async Task<Unit> Handle(AddSetCommand request, CancellationToken cancellationToken)
         {
             var trainingWithSets = await _trainingRepository
-                .GetExerciseWithSets(request.UserId, request.TrainingId, request.ExerciseId);
+                .GetExercisesWithSets(request.UserId, request.TrainingId, request.ExerciseId);
 
             var set = _mapper.Map<Set>(request);
 

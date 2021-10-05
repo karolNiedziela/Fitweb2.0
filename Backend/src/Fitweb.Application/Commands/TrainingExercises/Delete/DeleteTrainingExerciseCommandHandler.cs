@@ -19,7 +19,7 @@ namespace Fitweb.Application.Commands.TrainingExercises.Delete
 
         public async Task<Response<string>> Handle(DeleteTrainingExerciseCommand request, CancellationToken cancellationToken = default)
         {
-            var training = await _trainingRepository.GetAllExercisesWithSets(request.UserId, request.TrainingId);
+            var training = await _trainingRepository.GetExercisesWithSets(request.UserId, request.TrainingId);
 
             var exerciseToRemove = training.RemoveExercise(request.ExerciseId);
 

@@ -13,9 +13,7 @@ namespace Fitweb.Domain.Trainings.Repositories
         Task<(IEnumerable<Training>, int TotalItems)> GetPagedTrainings(string userId, PaginationFilter pagination, 
             DateTime? date = null);
 
-        Task<Training> GetAllExercisesWithSets(string userId, int trainingId);
-
-        Task<Training> GetExerciseWithSets(string userId, int trainingId, int exerciseId);
+        Task<Training> GetExercisesWithSets(string userId, int trainingId, int? exerciseId = null);
 
         Task RemoveTrainingExercise(TrainingExercise trainingExercise);
 

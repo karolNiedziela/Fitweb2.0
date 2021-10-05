@@ -28,7 +28,7 @@ namespace Fitweb.Application.Commands.TrainingExercises.Add
 
         public async Task<Response<string>> Handle(AddTrainingExerciseCommand request, CancellationToken cancellationToken = default)
         {
-            var training = await _trainingRepository.GetAllExercisesWithSets(request.UserId, request.TrainingId);
+            var training = await _trainingRepository.GetExercisesWithSets(request.UserId, request.TrainingId);
             if (training is null)
             {
                 throw new NotFoundException(nameof(Training), request.TrainingId);

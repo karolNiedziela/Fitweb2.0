@@ -40,7 +40,7 @@ namespace Fitweb.Application.UnitTests.Commands.TrainingExercises.Add
                 Id = 1
             };
 
-            _trainingRepository.GetAllExercisesWithSets(Arg.Any<string>(), Arg.Any<int>()).Returns(training);
+            _trainingRepository.GetExercisesWithSets(Arg.Any<string>(), Arg.Any<int>()).Returns(training);
 
             var exercise = new Exercise(Information.Create("Test exercise", null), null)
             {
@@ -68,7 +68,7 @@ namespace Fitweb.Application.UnitTests.Commands.TrainingExercises.Add
         [Fact]
         public async Task Handle_ShouldThrowException_WhenTrainingDoesNotExist()
         {
-            _trainingRepository.GetAllExercisesWithSets(Arg.Any<string>(), Arg.Any<int>()).ReturnsNull();
+            _trainingRepository.GetExercisesWithSets(Arg.Any<string>(), Arg.Any<int>()).ReturnsNull();
 
             var exception = await Record.ExceptionAsync(() => _sut.Handle(new AddTrainingExerciseCommand
             {
@@ -87,7 +87,7 @@ namespace Fitweb.Application.UnitTests.Commands.TrainingExercises.Add
         {
             var training = new Training(Information.Create("Test training", null), Day.Sunday);
 
-            _trainingRepository.GetAllExercisesWithSets(Arg.Any<string>(), Arg.Any<int>()).Returns(training);
+            _trainingRepository.GetExercisesWithSets(Arg.Any<string>(), Arg.Any<int>()).Returns(training);
 
             _exerciseRepository.GetByIdAsync(Arg.Any<int>()).ReturnsNull();
 

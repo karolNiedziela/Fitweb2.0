@@ -21,7 +21,7 @@ namespace Fitweb.Application.Commands.Sets.Update
         public async Task<Response<string>> Handle(UpdateSetCommand request, CancellationToken cancellationToken)
         {
             var training = await _trainingRepository
-                .GetExerciseWithSets(request.UserId, request.TrainingId, request.ExerciseId);
+                .GetExercisesWithSets(request.UserId, request.TrainingId, request.ExerciseId);
             if (training is null)
             {
                 throw new NotFoundException(nameof(Training), request.TrainingId);
