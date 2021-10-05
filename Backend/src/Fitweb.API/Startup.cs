@@ -15,6 +15,8 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using Newtonsoft.Json.Serialization;
 using System;
+using System.IO;
+using System.Reflection;
 
 namespace Fitweb.API
 {
@@ -58,7 +60,7 @@ namespace Fitweb.API
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Fitweb.API", Version = "v1" });
                 c.DescribeAllParametersInCamelCase();
-
+ 
                 c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme()
                 {
                     Name = "Authorization",
@@ -86,8 +88,11 @@ namespace Fitweb.API
                 });
 
                 c.SchemaFilter<DefaultValueSchemaFilter>();
+                c.SchemaFilter<EnumSchemFilter>();
+                var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+                var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
+                c.IncludeXmlComments(xmlPath);
             });
-
             services.AddSwaggerGenNewtonsoftSupport();
 
             services.AddRouting(options =>

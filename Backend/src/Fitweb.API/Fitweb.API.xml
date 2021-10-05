@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Fitweb.API</name>
+    </assembly>
+    <members>
+        <member name="M:Fitweb.API.Controllers.ExercisesController.GetAll(Fitweb.Application.Requests.PaginationQuery,System.String,System.Nullable{Fitweb.Domain.Exercises.PartOfBody})">
+            <summary>
+            Get exercises
+            </summary>
+            <param name="pagination">Pagination</param>
+            <param name="searchName">Exercise name</param>
+            <param name="partOfBody">Part of body</param>
+            <returns>A list of exercises</returns>
+            <remarks>
+            Sample request
+            GET /api/exercises
+            
+            </remarks>
+            <response code="200"> Returns a list of exercises</response>
+        </member>
+    </members>
+</doc>
