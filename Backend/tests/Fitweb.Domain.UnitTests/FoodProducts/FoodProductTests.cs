@@ -24,7 +24,7 @@ namespace Fitweb.Domain.UnitTests.FoodProducts
             foodProduct.Information.Should().Equals(information);
             foodProduct.Nutrient.Should().Equals(nutrient);
             foodProduct.Calories.Should().Equals(calories);
-            foodProduct.Group.Should().Be(FoodGroup.Fruit);
+            foodProduct.FoodGroup.Should().Be(FoodGroup.Fruit);
         }
     }
 }

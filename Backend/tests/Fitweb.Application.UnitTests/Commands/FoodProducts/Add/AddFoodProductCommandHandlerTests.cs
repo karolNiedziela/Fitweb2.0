@@ -17,18 +17,12 @@ namespace Fitweb.Application.UnitTests.Commands.FoodProducts.Add
     public class AddFoodProductCommandHandlerTests
     {
         private readonly IFoodProductRepository _foodProductRepository;
-        private readonly IMapper _mapper;
         private readonly AddFoodProductCommandHandler _sut;
 
         public AddFoodProductCommandHandlerTests()
         {
             _foodProductRepository = Substitute.For<IFoodProductRepository>();
-            var configurationProvider = new MapperConfiguration(configuration =>
-            {
-                configuration.AddMaps(typeof(FoodProductProfile).Assembly);
-            });
-            _mapper = configurationProvider.CreateMapper();
-            _sut = new AddFoodProductCommandHandler(_foodProductRepository, _mapper);
+            _sut = new AddFoodProductCommandHandler(_foodProductRepository);
         }
 
         [Theory]

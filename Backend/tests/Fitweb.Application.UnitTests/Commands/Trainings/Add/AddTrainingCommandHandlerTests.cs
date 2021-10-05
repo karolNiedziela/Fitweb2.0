@@ -22,19 +22,13 @@ namespace Fitweb.Application.UnitTests.Commands.Trainings.Add
     public class AddTrainingCommandHandlerTests
     {
         private readonly IAthleteRepository _athleteRepository;
-        private readonly IMapper _mapper;
         private readonly AddTrainingCommandHandler _sut;
 
         public AddTrainingCommandHandlerTests()
         {
             _athleteRepository = Substitute.For<IAthleteRepository>();
-            var configurationProvider = new MapperConfiguration(configuration =>
-            {
-                configuration.AddMaps(typeof(TrainingProfile).Assembly);
-            });
-            _mapper = configurationProvider.CreateMapper();
 
-            _sut = new AddTrainingCommandHandler(_athleteRepository, _mapper);
+            _sut = new AddTrainingCommandHandler(_athleteRepository);
         }
 
         [Fact]
@@ -48,9 +42,8 @@ namespace Fitweb.Application.UnitTests.Commands.Trainings.Add
             {
                 UserId = "testUserId",
                 Name = "Test training",
-                DayId = (int)Day.Sunday
+                Day = Day.Saturday
             };
-
             var result = await _sut.Handle(command);
 
             result.Should().BeOfType<Response<string>>();
