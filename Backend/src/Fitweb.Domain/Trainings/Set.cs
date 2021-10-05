@@ -17,7 +17,7 @@ namespace Fitweb.Domain.Trainings
 
         public int ExerciseId { get; private set; }
 
-        public int TrainingId { get; set; }
+        public int TrainingId { get; private set; }
 
         protected Set()
         {

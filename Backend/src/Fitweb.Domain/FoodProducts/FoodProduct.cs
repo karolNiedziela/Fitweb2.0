@@ -17,7 +17,7 @@ namespace Fitweb.Domain.FoodProducts
 
         public Nutrient Nutrient { get; private set; }
 
-        public FoodGroup? Group { get; private set; }
+        public FoodGroup? FoodGroup { get; private set; }
 
         public string UserId { get; set; } = null;
 
@@ -32,7 +32,7 @@ namespace Fitweb.Domain.FoodProducts
             Information = information;
             Calories = calories;
             Nutrient = nutrient;
-            Group = foodGroup;
+            FoodGroup = foodGroup;
             UserId = userId;
         }
 
@@ -41,7 +41,7 @@ namespace Fitweb.Domain.FoodProducts
             Information = Information.Update(foodProduct.Information);
             Calories = Calories.Update(foodProduct.Calories);
             Nutrient = Nutrient.Update(foodProduct.Nutrient);
-            Group = foodProduct.Group;
+            FoodGroup = foodProduct.FoodGroup;
         }
     }
 }

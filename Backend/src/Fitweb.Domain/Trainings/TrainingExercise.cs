@@ -1,4 +1,5 @@
 ﻿using Fitweb.Domain.Common;
+using Fitweb.Domain.Exceptions;
 using Fitweb.Domain.Exercises;
 using System.Collections.Generic;
 
