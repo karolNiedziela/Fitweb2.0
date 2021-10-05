@@ -1,4 +1,5 @@
 ﻿using Fitweb.Domain.Common;
+using Fitweb.Domain.Filters;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,6 +10,9 @@ namespace Fitweb.Domain.Trainings.Repositories
 {
     public interface ITrainingRepository : IBaseRepository<Training>
     {
+        Task<(IEnumerable<Training>, int TotalItems)> GetPagedTrainings(string userId, PaginationFilter pagination, 
+            DateTime? date = null);
+
         Task<Training> GetAllExercisesWithSets(string userId, int trainingId);
 
         Task<Training> GetExerciseWithSets(string userId, int trainingId, int exerciseId);

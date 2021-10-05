@@ -44,23 +44,6 @@ namespace Fitweb.Infrastructure.Persistence.Repositories
                 .AsNoTracking()
                 .SingleOrDefaultAsync(x => x.UserId == userId);
 
-        public async Task<(IEnumerable<Training>, int TotalItems)> GetPagedTrainings(string userId,
-            PaginationFilter pagination)
-        {
-            var queryable = _context.Trainings
-                .Include(x => x.Athlete)
-                .Where(x => x.Athlete.UserId == userId)
-                .AsNoTracking();
-
-            queryable = queryable.ApplyOrderBy("Day", true);
-
-            var totalItems = await queryable.CountAsync();
-
-            var data = await queryable.ApplyPaging(pagination.PageSize, pagination.PageNumber);
-
-            return (data, totalItems);
-        }
-
         public async Task RemoveDietInformation(DietInformation dietInformation)
         {
             _context.DietInformations.Remove(dietInformation);

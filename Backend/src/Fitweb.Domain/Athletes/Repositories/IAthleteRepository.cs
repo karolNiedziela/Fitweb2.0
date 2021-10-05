@@ -21,8 +21,6 @@ namespace Fitweb.Domain.Athletes.Repositories
 
         Task<Athlete> GetFoodProducts(string userId);
 
-        Task<(IEnumerable<Training>, int TotalItems)> GetPagedTrainings(string userId, PaginationFilter pagination);
-
         Task RemoveDietInformation(DietInformation dietInformation);
     }
 }

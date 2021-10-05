@@ -1,6 +1,8 @@
 ﻿using Fitweb.Application.Interfaces;
+using Fitweb.Domain.Filters;
 using Fitweb.Domain.Trainings;
 using Fitweb.Domain.Trainings.Repositories;
+using Fitweb.Infrastructure.Persistence.Extensions;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -16,30 +18,48 @@ namespace Fitweb.Infrastructure.Persistence.Repositories
         {
         }
 
+        public async Task<(IEnumerable<Training>, int TotalItems)> GetPagedTrainings(string userId,
+            PaginationFilter pagination, DateTime? date = null)
+        {
+            var queryable = _context.Trainings
+                .Include(x => x.Athlete)
+                .Where(x => x.Athlete.UserId == userId)
+                .AsNoTracking();
+
+            if (date.HasValue)
+            {
+                queryable = queryable.Where(x => x.Date == date.Value.Date);
+            }
+
+            queryable = queryable.ApplyOrderBy("Day", true);
+
+            var totalItems = await queryable.CountAsync();
+
+            var data = await queryable.ApplyPaging(pagination.PageSize, pagination.PageNumber);
+
+            return (data, totalItems);
+        }
+
         public async Task<Training> GetAllExercisesWithSets(string userId, int trainingId)
         {
-            return await _context.Athletes
-                    .AsNoTracking()
-                    .Include(x => x.Trainings.Where(x => x.Id == trainingId))
-                        .ThenInclude(x => x.Exercises)
+            return await _context.Trainings
+                        .Include(x => x.Athlete)
+                        .Include(x => x.Exercises)
                             .ThenInclude(x => x.Sets)
-                    .Include(x => x.Trainings)
-                        .ThenInclude(x => x.Exercises)
+                        .Include(x => x.Exercises)
                             .ThenInclude(x => x.Exercise)
-                    .Where(x => x.UserId == userId)
-                    .Select(x => x.Trainings.FirstOrDefault())
-                    .FirstOrDefaultAsync();
+                        .Where(x => x.Id == trainingId && x.Athlete.UserId == userId)
+                        .FirstOrDefaultAsync();     
         }
 
         public async Task<Training> GetExerciseWithSets(string userId, int trainingId, int exerciseId)
         {
-            return await _context.Athletes
-                            .AsNoTracking()
-                            .Include(x => x.Trainings.Where(x => x.Id == trainingId))
-                                .ThenInclude(x => x.Exercises.Where(x => x.ExerciseId == exerciseId))
-                                    .ThenInclude(x => x.Sets)
-                            .Select(x => x.Trainings.FirstOrDefault())
-                            .FirstOrDefaultAsync();
+            return await _context.Trainings
+                        .Include(x => x.Athlete)
+                        .Include(x => x.Exercises.Where(x => x.ExerciseId == exerciseId))
+                            .ThenInclude(x => x.Sets)
+                        .Where(x => x.Id == trainingId && x.Athlete.UserId == userId)
+                        .FirstOrDefaultAsync();  
         }
         public async Task RemoveTrainingExercise(TrainingExercise trainingExercise)
         {
