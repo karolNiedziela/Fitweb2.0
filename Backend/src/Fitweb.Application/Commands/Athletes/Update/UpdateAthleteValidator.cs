@@ -5,11 +5,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Fitweb.Application.Commands.Athletes.Create
+namespace Fitweb.Application.Commands.Athletes.Update
 {
-    public class CreateAthleteValidator : AbstractValidator<CreateAthleteCommand>
+    public class UpdateAthleteValidator : AbstractValidator<UpdateAthleteCommand>
     {
-        public CreateAthleteValidator()
+        public UpdateAthleteValidator()
         {
             RuleFor(x => x.Weight)
                 .GreaterThanOrEqualTo(0)

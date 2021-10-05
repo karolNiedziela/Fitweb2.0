@@ -5,12 +5,15 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Fitweb.Application.Commands.Trainings.Add
+namespace Fitweb.Application.Commands.Trainings.Update
 {
-    public class AddTrainingValidator : AbstractValidator<AddTrainingCommand>
+    public class UpdateTrainingValidator : AbstractValidator<UpdateTrainingCommand>
     {
-        public AddTrainingValidator()
+        public UpdateTrainingValidator()
         {
+            RuleFor(x => x.TrainingId)
+                .NotNull();
+
             RuleFor(x => x.Name)
                 .NotEmpty();
 

@@ -1,19 +1,21 @@
-﻿using Fitweb.Domain.FoodProducts;
-using FluentValidation;
+﻿using FluentValidation;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Fitweb.Application.Commands.FoodProducts.Add
+namespace Fitweb.Application.Commands.FoodProducts.Update
 {
-    public class AddFoodProductValidator : AbstractValidator<AddFoodProductCommand>
+    public class UpdateFoodProductValidator : AbstractValidator<UpdateFoodProductCommand>
     {
-        public AddFoodProductValidator()
+        public UpdateFoodProductValidator()
         {
+            RuleFor(x => x.Id)
+                .NotNull();
+
             RuleFor(x => x.Name)
-                .NotEmpty();
+               .NotEmpty();
 
             RuleFor(x => x.Calories)
                 .NotNull()
