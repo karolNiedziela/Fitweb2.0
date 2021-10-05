@@ -19,12 +19,23 @@ namespace Fitweb.Infrastructure.Persistence.Repositories
         public async Task<FoodProduct> GetByNameAsync(string name)
             => await _context.FoodProducts.SingleOrDefaultAsync(x => x.Information.Name == name);
 
-        public async Task<(IEnumerable<FoodProduct>, int TotalItems)> GetAllAsync(PaginationFilter pagination, OrderFilter order, string userId = null)
+        public async Task<(IEnumerable<FoodProduct>, int TotalItems)> GetAllAsync(PaginationFilter pagination, 
+            string searchName = null, string userId = null, FoodGroup? foodGroup = null)
         {
             var queryable = _context.FoodProducts.Where(x => x.UserId == null || x.UserId == userId)
                 .AsNoTracking();
 
-            queryable = queryable.ApplyOrderBy(MapColumnName(order.ColumnName), order.IsAscending);
+            if (!string.IsNullOrEmpty(searchName))
+            {
+                queryable = queryable.Where(x => x.Information.Name.Contains(searchName));
+            }
+
+            if (foodGroup.HasValue)
+            {
+                queryable = queryable.Where(x => x.FoodGroup == foodGroup);
+            }
+
+            queryable = queryable.OrderBy(x => x.Information.Name);          
 
             var totalItems = await queryable.CountAsync();
 
@@ -42,14 +53,5 @@ namespace Fitweb.Infrastructure.Persistence.Repositories
 
         public async Task<bool> AnyAsync()
             => await _context.FoodProducts.AnyAsync();
-
-        private static string MapColumnName(string columnName)
-            => columnName switch
-            {
-                "protein"               => "Nutrient.Protein",
-                "carbohydrate"          => "Nutrient.Carbohydrate",
-                "fat"                   => "Nutrient.Fat",
-                _                       => "Information.Name"
-            };
     }
 }

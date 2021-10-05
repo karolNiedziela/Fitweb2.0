@@ -10,7 +10,8 @@ namespace Fitweb.Domain.Exercises.Repositories
 {
     public interface IExerciseRepository : IBaseRepository<Exercise>
     {
-        Task<(IEnumerable<Exercise>, int TotalItems)> GetAll(PaginationFilter pagination);
+        Task<(IEnumerable<Exercise>, int TotalItems)> GetAll(PaginationFilter pagination, string searchName = null, 
+            PartOfBody? partOfBody = null);
 
         Task AddRangeAsync(List<Exercise> exercises);
 

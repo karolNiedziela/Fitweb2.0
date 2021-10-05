@@ -19,11 +19,22 @@ namespace Fitweb.Infrastructure.Persistence.Repositories
 
         }
 
-        public async Task<(IEnumerable<Exercise>, int TotalItems)> GetAll(PaginationFilter pagination)
+        public async Task<(IEnumerable<Exercise>, int TotalItems)> GetAll(PaginationFilter pagination, 
+            string searchName = null, PartOfBody? partOfBody = null)
         {
             var queryable = _context.Exercises.AsNoTracking();
 
-            queryable = queryable.ApplyOrderBy("Information.Name", true);
+            if (!string.IsNullOrEmpty(searchName))
+            {
+                queryable = queryable.Where(x => x.Information.Name.Contains(searchName));
+            }
+
+            if (partOfBody.HasValue)
+            {
+                queryable = queryable.Where(x => x.PartOfBody == partOfBody.Value);
+            }
+
+            queryable = queryable.OrderBy(x => x.Information.Name);
 
             var totalItems = await queryable.CountAsync();
 
