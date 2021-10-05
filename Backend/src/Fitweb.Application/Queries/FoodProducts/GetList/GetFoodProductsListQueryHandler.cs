@@ -5,7 +5,6 @@ using Fitweb.Application.Responses;
 using Fitweb.Domain.Filters;
 using Fitweb.Domain.FoodProducts;
 using Fitweb.Domain.FoodProducts.Repositories;
-using Fitweb.Domain.Helpers;
 using MediatR;
 using System;
 using System.Collections.Generic;

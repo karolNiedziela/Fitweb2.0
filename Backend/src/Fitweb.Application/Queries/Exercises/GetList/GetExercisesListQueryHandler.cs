@@ -5,7 +5,6 @@ using Fitweb.Application.Responses;
 using Fitweb.Domain.Exercises;
 using Fitweb.Domain.Exercises.Repositories;
 using Fitweb.Domain.Filters;
-using Fitweb.Domain.Helpers;
 using MediatR;
 using System.Collections.Generic;
 using System.Threading;
