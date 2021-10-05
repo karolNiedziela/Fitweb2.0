@@ -3,7 +3,9 @@ using Fitweb.Application.DTO;
 using Fitweb.Application.Helpers;
 using Fitweb.Application.Responses;
 using Fitweb.Domain.Filters;
+using Fitweb.Domain.FoodProducts;
 using Fitweb.Domain.FoodProducts.Repositories;
+using Fitweb.Domain.Helpers;
 using MediatR;
 using System;
 using System.Collections.Generic;
@@ -30,9 +32,9 @@ namespace Fitweb.Application.Queries.FoodProduts.GetList
             CancellationToken cancellationToken)
         {
             var paginationFilter = _mapper.Map<PaginationFilter>(request.Pagination);
-            var orderFilter = _mapper.Map<OrderFilter>(request.Order);
 
-            var (foodProducts, totalItems) = await _foodProductRepository.GetAllAsync(paginationFilter, orderFilter, request.UserId);
+            var (foodProducts, totalItems) = await _foodProductRepository.GetAllAsync(paginationFilter, 
+                request.SearchName, request.UserId, request.FoodGroup.Value);
             var foodProductDto = _mapper.Map<List<FoodProductDto>>(foodProducts);
 
             return PaginationHelper.CreatePagedResponse(foodProductDto, paginationFilter, totalItems);

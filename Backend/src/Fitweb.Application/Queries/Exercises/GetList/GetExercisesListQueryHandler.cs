@@ -2,13 +2,12 @@
 using Fitweb.Application.DTO;
 using Fitweb.Application.Helpers;
 using Fitweb.Application.Responses;
+using Fitweb.Domain.Exercises;
 using Fitweb.Domain.Exercises.Repositories;
 using Fitweb.Domain.Filters;
+using Fitweb.Domain.Helpers;
 using MediatR;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -29,7 +28,7 @@ namespace Fitweb.Application.Queries.Exercises.GetList
         {
             var paginationFilter = _mapper.Map<PaginationFilter>(request.Pagination);
 
-            var (exercises, totalItems) = await _exerciseRepository.GetAll(paginationFilter);
+            var (exercises, totalItems) = await _exerciseRepository.GetAll(paginationFilter, request.SearchName, request.PartOfBody.Value); ;
 
             var exercisesDto = _mapper.Map<List<ExerciseDto>>(exercises);
 
