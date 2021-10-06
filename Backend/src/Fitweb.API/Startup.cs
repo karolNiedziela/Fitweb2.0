@@ -8,6 +8,7 @@ using Fitweb.Infrastructure;
 using Fitweb.Infrastructure.Persistence;
 using Fitweb.Infrastructure.Persistence.Initializers;
 using FluentValidation.AspNetCore;
+using Microsoft.AspNetCore.Authentication.Certificate;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -118,6 +119,10 @@ namespace Fitweb.API
                     .AllowAnyHeader();
                 });
             });
+
+            services.AddAuthentication(
+                CertificateAuthenticationDefaults.AuthenticationScheme)
+                .AddCertificate();
 
             services.AddTransient<GlobalErrorHandlerMiddleware>();
         }
