@@ -78,7 +78,7 @@ namespace Fitweb.Infrastructure.Utilities.Email
             var message = new MailMessage(_emailSettings.Address, "imniedziel@gmail.com");
             try
             {
-                client.SendAsync(message, null);
+                client.Send(message);
             }
             catch (Exception exception)
             {
