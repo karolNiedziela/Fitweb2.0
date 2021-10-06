@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Net;
+using System.Net.Mail;
 using MailKit.Net.Smtp;
 using System.Threading.Tasks;
 using Fitweb.Application.Interfaces.Utilities.Email;
@@ -63,23 +65,39 @@ namespace Fitweb.Infrastructure.Utilities.Email
 
         private async Task SendAsync(MimeMessage mailMessage)
         {
-            using var smtp = new SmtpClient();
+            var testSmtp = new System.Net.Mail.SmtpClient("smtp.gmail.com", 587);
+            testSmtp.EnableSsl = true;
+            System.Net.NetworkCredential credentials = new
+                System.Net.NetworkCredential(_emailSettings.Address, _emailSettings.Password);
+            testSmtp.UseDefaultCredentials = false;
+            testSmtp.Credentials = credentials;
+            var message = new MailMessage(_emailSettings.Address, "imniedziel@gmail.com");
             try
             {
-                await smtp.ConnectAsync(_emailSettings.Host, _emailSettings.Port, MailKit.Security.SecureSocketOptions.StartTls);
-                await smtp.AuthenticateAsync(_emailSettings.Address, _emailSettings.Password);
+                testSmtp.Send(message);
+            }
+            catch (Exception exception)
+            {
+                throw exception;
+            }
 
-                await smtp.SendAsync(mailMessage);
-            }
-            catch(Exception ex)
-            {
-                throw new EmailSendingException(ex.Message);
-            }
-            finally
-            {
-                await smtp.DisconnectAsync(true);
-                smtp.Dispose();
-            }
+            //using var smtp = new SmtpClient();
+            //try
+            //{
+            //    await smtp.ConnectAsync(_emailSettings.Host, _emailSettings.Port, MailKit.Security.SecureSocketOptions.StartTls);
+            //    await smtp.AuthenticateAsync(_emailSettings.Address, _emailSettings.Password);
+
+            //    await smtp.SendAsync(mailMessage);
+            //}
+            //catch(Exception ex)
+            //{
+            //    throw new EmailSendingException(ex.Message);
+            //}
+            //finally
+            //{
+            //    await smtp.DisconnectAsync(true);
+            //    smtp.Dispose();
+            //}
         }
     }
 }

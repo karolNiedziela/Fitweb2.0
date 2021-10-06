@@ -120,10 +120,6 @@ namespace Fitweb.API
                 });
             });
 
-            services.AddAuthentication(
-                CertificateAuthenticationDefaults.AuthenticationScheme)
-                .AddCertificate();
-
             services.AddTransient<GlobalErrorHandlerMiddleware>();
         }
 
