@@ -27,7 +27,7 @@ namespace Fitweb.Application.Queries.Exercises.GetList
         {
             var paginationFilter = _mapper.Map<PaginationFilter>(request.Pagination);
 
-            var (exercises, totalItems) = await _exerciseRepository.GetAll(paginationFilter, request.SearchName, request.PartOfBody.Value); ;
+            var (exercises, totalItems) = await _exerciseRepository.GetAll(paginationFilter, request.SearchName, request.PartOfBody); ;
 
             var exercisesDto = _mapper.Map<List<ExerciseDto>>(exercises);
 
