@@ -65,11 +65,12 @@ namespace Fitweb.Infrastructure.Utilities.Email
 
         private async Task SendAsync(MimeMessage mailMessage)
         {
-            var testSmtp = new System.Net.Mail.SmtpClient("smtp.gmail.com", 587);
+            var testSmtp = new System.Net.Mail.SmtpClient(_emailSettings.Host, _emailSettings.Port);
             testSmtp.EnableSsl = true;
             System.Net.NetworkCredential credentials = new
                 System.Net.NetworkCredential(_emailSettings.Address, _emailSettings.Password);
             testSmtp.UseDefaultCredentials = false;
+            testSmtp.DeliveryMethod = SmtpDeliveryMethod.Network;
             testSmtp.Credentials = credentials;
             var message = new MailMessage(_emailSettings.Address, "imniedziel@gmail.com");
             try
