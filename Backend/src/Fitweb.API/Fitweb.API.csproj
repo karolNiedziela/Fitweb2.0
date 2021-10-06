@@ -7,7 +7,7 @@
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <NoWarn>1701;1702;1591</NoWarn>
-    <DocumentationFile>C:\Users\niedz\Desktop\Fitweb2.0\Backend\src\Fitweb.API\Fitweb.API.xml</DocumentationFile>
+    <DocumentationFile>\Fitweb2.0\Backend\src\Fitweb.API\Fitweb.API.xml</DocumentationFile>
   </PropertyGroup>
 
   <ItemGroup>
