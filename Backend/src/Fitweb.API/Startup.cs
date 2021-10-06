@@ -5,10 +5,12 @@ using Fitweb.Application;
 using Fitweb.Application.Interfaces;
 using Fitweb.Application.Settings;
 using Fitweb.Infrastructure;
+using Fitweb.Infrastructure.Persistence;
 using Fitweb.Infrastructure.Persistence.Initializers;
 using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -123,6 +125,10 @@ namespace Fitweb.API
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            using var serviceScope = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>().CreateScope();
+            var context = serviceScope.ServiceProvider.GetService<FitwebDbContext>();
+            context.Database.Migrate();
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
