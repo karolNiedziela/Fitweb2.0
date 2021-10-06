@@ -65,17 +65,20 @@ namespace Fitweb.Infrastructure.Utilities.Email
 
         private async Task SendAsync(MimeMessage mailMessage)
         {
-            var testSmtp = new System.Net.Mail.SmtpClient(_emailSettings.Host, _emailSettings.Port);
-            testSmtp.EnableSsl = true;
-            System.Net.NetworkCredential credentials = new
-                System.Net.NetworkCredential(_emailSettings.Address, _emailSettings.Password);
-            testSmtp.UseDefaultCredentials = false;
-            testSmtp.DeliveryMethod = SmtpDeliveryMethod.Network;
-            testSmtp.Credentials = credentials;
+            using System.Net.Mail.SmtpClient client = new System.Net.Mail.SmtpClient
+            {
+                DeliveryMethod = SmtpDeliveryMethod.Network,
+                UseDefaultCredentials = false,
+                EnableSsl = true,
+                Host = _emailSettings.Host,
+                Port = _emailSettings.Port,
+                Credentials = new NetworkCredential(_emailSettings.Address, _emailSettings.Password)
+            };
+
             var message = new MailMessage(_emailSettings.Address, "imniedziel@gmail.com");
             try
             {
-                testSmtp.Send(message);
+                client.SendAsync(message, null);
             }
             catch (Exception exception)
             {

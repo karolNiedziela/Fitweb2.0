@@ -23,7 +23,7 @@ namespace Fitweb.Infrastructure.Utilities.Email
 
             services.AddSingleton(emailSmtpSettings);
 
-            services.AddScoped<IEmailSender, EmailSender>();
+            services.AddTransient<IEmailSender, EmailSender>();
 
             return services;
         }
