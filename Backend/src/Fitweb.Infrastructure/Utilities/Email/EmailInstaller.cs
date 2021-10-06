@@ -24,7 +24,6 @@ namespace Fitweb.Infrastructure.Utilities.Email
             services.AddSingleton(emailSmtpSettings);
 
             services.AddTransient<IEmailSender, EmailSender>();
-
             return services;
         }
     }
