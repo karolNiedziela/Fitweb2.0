@@ -10,16 +10,19 @@ using System.Text;
 using System.Threading.Tasks;
 using Fitweb.Infrastructure.Identity.Settings;
 using Fitweb.Domain.Athletes.Repositories;
+using Fitweb.Application.Interfaces;
 
 namespace Fitweb.Infrastructure.Identity.Services
 {
     public class JwtHandler : IJwtHandler
     {
         private readonly JwtSettings _jwtSettings;
+        private readonly IDateTimeProvider _dateTimeProvider;
 
-        public JwtHandler(JwtSettings jwtSettings)
+        public JwtHandler(JwtSettings jwtSettings, IDateTimeProvider dateTimeProvider)
         {
             _jwtSettings = jwtSettings;
+            _dateTimeProvider = dateTimeProvider;
         }
 
         public AuthDto Create(string userId, string username, IList<string> roles)
@@ -42,9 +45,9 @@ namespace Fitweb.Infrastructure.Identity.Services
             {
                 Subject = new ClaimsIdentity(claims.ToArray()),
                 Issuer = _jwtSettings.Issuer,
-                Expires = DateTime.UtcNow.AddMinutes(_jwtSettings.ExpiryMinutes),
+                Expires = _dateTimeProvider.Now.AddMinutes(_jwtSettings.ExpiryMinutes),
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(keyBytes), SecurityAlgorithms.HmacSha256),
-                NotBefore = DateTime.UtcNow,
+                NotBefore = _dateTimeProvider.Now,
             };
 
             var securityToken = tokenHandler.CreateToken(tokenDescriptor);

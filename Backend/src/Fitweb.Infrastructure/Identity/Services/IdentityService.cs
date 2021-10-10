@@ -40,7 +40,7 @@ namespace Fitweb.Infrastructure.Identity.Services
             _facebookAuthService = facebookAuthService;
         }
 
-        public async Task CreateUserAsync(string username, string email, string password)
+        public async Task<string> CreateUserAsync(string username, string email, string password)
         {
             var user = new User
             {
@@ -74,6 +74,8 @@ namespace Fitweb.Infrastructure.Identity.Services
 
                 await _emailSender.SendIdentityEmailAsync(emailMessage);
             }
+
+            return user.Id;
         }
 
         public async Task<AuthDto> LoginAsync(string username, string password)

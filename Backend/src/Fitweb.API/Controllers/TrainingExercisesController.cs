@@ -1,6 +1,7 @@
 ﻿using Fitweb.Application.Commands.TrainingExercises.Add;
 using Fitweb.Application.Commands.TrainingExercises.Delete;
 using Fitweb.Application.Queries.TrainingExercises.GetList;
+using Fitweb.Infrastructure.Identity.Constants;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -11,7 +12,7 @@ using System.Web;
 
 namespace Fitweb.API.Controllers
 {
-    [Authorize]
+    [Authorize(Policy = PolicyConstants.IsAthlete)]
     [Route("trainings/{tId:int}/exercises")]
     public class TrainingExercisesController : BaseApiController
     {

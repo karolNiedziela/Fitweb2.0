@@ -1,6 +1,7 @@
 ﻿using Fitweb.Application.Commands.AthleteFoodProducts.Add;
 using Fitweb.Application.Commands.AthleteFoodProducts.Delete;
 using Fitweb.Application.Commands.AthleteFoodProducts.Update;
+using Fitweb.Infrastructure.Identity.Constants;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -11,7 +12,7 @@ using System.Threading.Tasks;
 namespace Fitweb.API.Controllers
 {
 
-    [Authorize]
+    [Authorize(Policy = PolicyConstants.IsAthlete)]
     [Route("api/myfoodproducts")]
     public class AthleteFoodProductsController : BaseApiController
     {

@@ -1,3 +1,4 @@
+using Fitweb.API.Authorization;
 using Fitweb.API.Filters;
 using Fitweb.API.Middlewares;
 using Fitweb.API.Services;
@@ -5,10 +6,11 @@ using Fitweb.Application;
 using Fitweb.Application.Interfaces;
 using Fitweb.Application.Settings;
 using Fitweb.Infrastructure;
+using Fitweb.Infrastructure.Identity.Constants;
 using Fitweb.Infrastructure.Persistence;
 using Fitweb.Infrastructure.Persistence.Initializers;
 using FluentValidation.AspNetCore;
-using Microsoft.AspNetCore.Authentication.Certificate;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -44,6 +46,8 @@ namespace Fitweb.API
                 options.SerializerSettings.Formatting = Newtonsoft.Json.Formatting.Indented;
                 options.SerializerSettings.Converters.Add(new Newtonsoft.Json.Converters.StringEnumConverter());
                 options.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
+                options.SerializerSettings.DateTimeZoneHandling = Newtonsoft.Json.DateTimeZoneHandling.Local;
+                options.SerializerSettings.DateFormatString = "yyyy'-'MM'-'dd'T'HH':'mm':'ssZ";
 
             })
             // To catch FluentValidaiton.ValidationException, it is necessary to set SuppressModelStateInvalidFilter,
@@ -56,8 +60,29 @@ namespace Fitweb.API
             })
             .AddFluentValidation(configuration => 
                 configuration.RegisterValidatorsFromAssembly(typeof(ApplicationInstaller).Assembly));
-            
 
+            services.AddAuthorization(options =>
+            {
+                options.AddPolicy(PolicyConstants.IsAthlete, policy =>
+                {
+                    policy.RequireAuthenticatedUser();
+                    policy.RequireRole(Roles.Athlete);
+                });
+
+                options.AddPolicy(PolicyConstants.IsAdministrator, policy =>
+                {
+                    policy.RequireAuthenticatedUser();
+                    policy.RequireRole(Roles.Administrator);
+                });
+
+                options.AddPolicy(PolicyConstants.IsAdministratorOrIsAthlete, policy =>
+                {
+                    policy.RequireAuthenticatedUser();
+                    policy.AddRequirements(new AthleteOrAdministratorRequirement());
+                });
+            });
+
+            services.AddScoped<IAuthorizationHandler, AthleteOrAdministratorRequirementHandler>();
 
             services.AddSwaggerGen(c =>
             {

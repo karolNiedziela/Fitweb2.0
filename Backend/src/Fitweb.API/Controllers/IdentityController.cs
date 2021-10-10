@@ -19,7 +19,7 @@ namespace Fitweb.API.Controllers
     {
 
         [HttpPost("register")]
-        public async Task<IActionResult> Register([FromBody]CreateUserCommand command)
+        public async Task<IActionResult> Register([FromBody]RegisterUserCommand command)
         {
             await Mediator.Send(command);
 

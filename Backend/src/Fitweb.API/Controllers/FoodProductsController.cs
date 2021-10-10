@@ -5,6 +5,8 @@ using Fitweb.Application.Queries.FoodProduts.Get;
 using Fitweb.Application.Queries.FoodProduts.GetList;
 using Fitweb.Application.Requests;
 using Fitweb.Domain.FoodProducts;
+using Fitweb.Infrastructure.Identity.Constants;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -42,6 +44,7 @@ namespace Fitweb.API.Controllers
         }
 
         [HttpPost]
+        [Authorize(Policy = PolicyConstants.IsAdministratorOrIsAthlete)]
         public async Task<IActionResult> Create([FromBody] AddFoodProductCommand command)
         {
             var response = await Mediator.Send(command);
@@ -50,6 +53,7 @@ namespace Fitweb.API.Controllers
         }
 
         [HttpDelete]
+        [Authorize(Policy = PolicyConstants.IsAdministratorOrIsAthlete)]
         public async Task<IActionResult> Delete([FromBody] DeleteFoodProductCommand command)
         {
             await Mediator.Send(command);
@@ -58,6 +62,7 @@ namespace Fitweb.API.Controllers
         }
 
         [HttpPut]
+        [Authorize(Policy = PolicyConstants.IsAdministratorOrIsAthlete)]
         public async Task<IActionResult> Put([FromBody] UpdateFoodProductCommand command)
         {
             await Mediator.Send(command);

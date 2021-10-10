@@ -1,6 +1,7 @@
 ﻿using Fitweb.Application.Commands.DietInformations.Add;
 using Fitweb.Application.Commands.DietInformations.Delete;
 using Fitweb.Application.Commands.DietInformations.Update;
+using Fitweb.Infrastructure.Identity.Constants;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -10,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace Fitweb.API.Controllers
 {
-    [Authorize]
+    [Authorize(Policy = PolicyConstants.IsAthlete)]
     public class DietInformationsController : BaseApiController
     {
         [HttpPost]

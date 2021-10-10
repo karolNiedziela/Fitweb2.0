@@ -3,6 +3,7 @@ using Fitweb.Application.Commands.Trainings.Delete;
 using Fitweb.Application.Commands.Trainings.Update;
 using Fitweb.Application.Queries.Trainings.GetList;
 using Fitweb.Application.Requests;
+using Fitweb.Infrastructure.Identity.Constants;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -12,7 +13,7 @@ using System.Threading.Tasks;
 
 namespace Fitweb.API.Controllers
 {
-    [Authorize]
+    [Authorize(Policy = PolicyConstants.IsAthlete)]
     public class TrainingsController : BaseApiController
     {
         [HttpGet]
