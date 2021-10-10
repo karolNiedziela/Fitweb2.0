@@ -37,9 +37,6 @@ namespace Fitweb.Infrastructure.Persistence.Configurations
             admin.PasswordHash = GeneratePassword(admin);
 
             builder.HasData(admin);
-
-            _userManager.AddToRoleAsync(admin, Roles.Administrator);
-            _userManager.AddToRoleAsync(admin, Roles.Administrator);
         }
 
         private static string GeneratePassword(User user)
