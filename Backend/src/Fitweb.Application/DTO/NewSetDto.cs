@@ -6,10 +6,8 @@ using System.Threading.Tasks;
 
 namespace Fitweb.Application.DTO
 {
-    public class SetDto
+    public class NewSetDto
     {
-        public int Id { get; set; }
-
         public double Weight { get; set; }
 
         public int NumberOfReps { get; set; }

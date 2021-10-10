@@ -9,15 +9,15 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Fitweb.Application.Commands.TrainingExercises.Add
+namespace Fitweb.Application.Commands.TrainingExercises.Update
 {
-    public class AddTrainingExerciseCommand : AuthorizeRequest, IRequest<Response<string>>
+    public class UpdateTrainingExerciseCommand : AuthorizeRequest, IRequest<Response<string>>
     {
         [JsonIgnore]
         public int TrainingId { get; set; }
 
         public int ExerciseId { get; set; }
 
-        public List<NewSetDto> Sets { get; set; } = new();
+        public List<SetDto> Sets { get; set; } = new();
     }
 }

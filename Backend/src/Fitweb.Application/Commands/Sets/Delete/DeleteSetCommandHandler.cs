@@ -18,7 +18,7 @@ namespace Fitweb.Application.Commands.Sets.Delete
             _trainingRepository = trainingRepository;
         }
 
-        public async Task<Unit> Handle(DeleteSetCommand request, CancellationToken cancellationToken)
+        public async Task<Unit> Handle(DeleteSetCommand request, CancellationToken cancellationToken = default)
         {
             var training = await _trainingRepository.GetExercisesWithSets(request.UserId, request.TrainingId);
 

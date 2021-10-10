@@ -12,6 +12,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Fitweb.Domain.Exercises.Repositories;
 using Fitweb.Application.Responses;
+using AutoMapper;
 
 namespace Fitweb.Application.Commands.TrainingExercises.Add
 {
@@ -19,11 +20,14 @@ namespace Fitweb.Application.Commands.TrainingExercises.Add
     {
         private readonly ITrainingRepository _trainingRepository;
         private readonly IExerciseRepository _exerciseRepository;
+        private readonly IMapper _mapper;
 
-        public AddTrainingExerciseCommandHandler(ITrainingRepository trainingRepository, IExerciseRepository exerciseRepository)
+        public AddTrainingExerciseCommandHandler(ITrainingRepository trainingRepository, IExerciseRepository exerciseRepository, 
+            IMapper mapper)
         {
             _trainingRepository = trainingRepository;
             _exerciseRepository = exerciseRepository;
+            _mapper = mapper;
         }
 
         public async Task<Response<string>> Handle(AddTrainingExerciseCommand request, CancellationToken cancellationToken = default)
@@ -40,7 +44,13 @@ namespace Fitweb.Application.Commands.TrainingExercises.Add
                 throw new NotFoundException(nameof(Exercise), request.ExerciseId);
             }
 
-            training.AddExercise(exercise);
+            var sets = new List<Set>();
+            foreach (var set in request.Sets)
+            {
+                sets.Add(new Set(set.Weight, set.NumberOfReps, set.NumberOfSets));
+            }
+
+            training.AddExercise(exercise, sets);
 
             await _trainingRepository.UpdateAsync(training);
 
