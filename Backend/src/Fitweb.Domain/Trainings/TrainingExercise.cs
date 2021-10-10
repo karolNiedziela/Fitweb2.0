@@ -22,18 +22,13 @@ namespace Fitweb.Domain.Trainings
 
         }
 
-        public TrainingExercise(Exercise exercise, Training training)
+        public TrainingExercise(Exercise exercise, Training training, List<Set> sets)
         {
             Exercise = exercise;
             ExerciseId = exercise.Id;
             Training = training;
             TrainingId = training.Id;
-        }
-
-        public void UpdateExercise(Exercise exercise)
-        {
-            Exercise = exercise;
-            ExerciseId = exercise.Id;
+            Sets = sets;
         }
     }
 }

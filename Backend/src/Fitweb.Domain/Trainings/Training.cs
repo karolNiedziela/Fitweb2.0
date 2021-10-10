@@ -43,7 +43,7 @@ namespace Fitweb.Domain.Trainings
             Day = training.Day;
         }
 
-        public void AddExercise(Exercise exercise)
+        public void AddExercise(Exercise exercise, List<Set> sets)
         {
             var existingExercise = Exercises.SingleOrDefault(x => x.ExerciseId == exercise.Id);
             if (existingExercise is not null)
@@ -51,7 +51,7 @@ namespace Fitweb.Domain.Trainings
                 throw new AlreadyExistsException(nameof(Exercise), exercise.Information.Name);
             }
 
-            Exercises.Add(new TrainingExercise(exercise, this));
+            Exercises.Add(new TrainingExercise(exercise, this, sets));
         }
 
         public TrainingExercise RemoveExercise(int exerciseId)
@@ -67,7 +67,7 @@ namespace Fitweb.Domain.Trainings
             return existingExercise;
         }
 
-        public void UpdateExercise(int exerciseId, Exercise newExercise)
+        public void UpdateExercise(int exerciseId, List<Set> sets)
         {
             var existingExercise = Exercises.SingleOrDefault(x => x.ExerciseId == exerciseId);
             if (existingExercise is null)
@@ -75,19 +75,8 @@ namespace Fitweb.Domain.Trainings
                 throw new NotFoundException(nameof(Exercise), exerciseId);
             }
 
-            existingExercise.UpdateExercise(newExercise);
-        }
-
-        //TODO: Maybe object instead of properties
-        public void AddSet(int exerciseId, Set set)
-        {
-            var exercise = Exercises.SingleOrDefault(x => x.ExerciseId == exerciseId);
-            if (exercise is null)
-            {
-                throw new NotFoundException(nameof(Exercise), exerciseId);
-            }
-
-            exercise.Sets.Add(set);
+            existingExercise.Sets.Clear();
+            existingExercise.Sets.AddRange(sets);
         }
 
         public Set RemoveSet(int exerciseId, int setId)
@@ -107,23 +96,6 @@ namespace Fitweb.Domain.Trainings
             exercise.Sets.Remove(set);
 
             return set;
-        }
-
-        public void UpdateSet(int exerciseId, int setId, double weight, int numberOfReps, int numberOfSets)
-        {
-            var exercise = Exercises.SingleOrDefault(x => x.ExerciseId == exerciseId);
-            if (exercise is null)
-            {
-                throw new NotFoundException(nameof(Exercise), exerciseId);
-            }
-
-            var set = exercise.Sets.SingleOrDefault(x => x.Id == setId);
-            if (set is null)
-            {
-                throw new NotFoundException(nameof(Set), setId);
-            }
-
-            set.Update(weight, numberOfReps, numberOfSets);
         }
     }
 }
