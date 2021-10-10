@@ -1,4 +1,5 @@
-﻿using Fitweb.Infrastructure.Identity.Entities;
+﻿using Fitweb.Infrastructure.Identity.Constants;
+using Fitweb.Infrastructure.Identity.Entities;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
@@ -13,6 +14,13 @@ namespace Fitweb.Infrastructure.Persistence.Configurations
     public class AdministratorConfiguration : IEntityTypeConfiguration<User>
     {
         private const string adminId = "ff48a62e-0e06-47a2-aacb-c88af07993ed";
+
+        private readonly UserManager<User> _userManager;
+
+        public AdministratorConfiguration(UserManager<User> userManager)
+        {
+            _userManager = userManager;
+        }
 
         public void Configure(EntityTypeBuilder<User> builder)
         {
@@ -29,6 +37,9 @@ namespace Fitweb.Infrastructure.Persistence.Configurations
             admin.PasswordHash = GeneratePassword(admin);
 
             builder.HasData(admin);
+
+            _userManager.AddToRoleAsync(admin, Roles.Administrator);
+            _userManager.AddToRoleAsync(admin, Roles.Administrator);
         }
 
         private static string GeneratePassword(User user)
