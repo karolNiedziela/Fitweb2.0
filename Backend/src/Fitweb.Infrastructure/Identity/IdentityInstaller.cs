@@ -14,6 +14,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace Fitweb.Infrastructure.Identity
 {
@@ -84,6 +85,19 @@ namespace Fitweb.Infrastructure.Identity
                 options.SaveToken = true;
 
                 options.TokenValidationParameters = tokenValidationParameters;
+
+                options.Events = new JwtBearerEvents
+                {
+                    OnAuthenticationFailed = context =>
+                    {
+                        if (context.Exception.GetType() == typeof(SecurityTokenExpiredException))
+                        {
+                            context.Response.Headers.Add("Token-Expired", "true");
+                        }
+
+                        return Task.CompletedTask;
+                    }
+                };
             })
             .AddFacebook(options =>
             {
