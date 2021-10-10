@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Fitweb.Application.Commands.Users.Create
 {
-    public class CreateUserCommand : IRequest<Response<string>>
+    public class RegisterUserCommand : IRequest<Response<string>>
     {
         public string Username { get; set; }
 

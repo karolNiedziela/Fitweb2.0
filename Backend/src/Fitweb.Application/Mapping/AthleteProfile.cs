@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using Fitweb.Application.Commands.Athletes.Create;
 using Fitweb.Application.Interfaces;
 using Fitweb.Domain.Athletes;
 using System;

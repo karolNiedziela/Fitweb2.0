@@ -14,5 +14,7 @@ namespace Fitweb.Application.DTO
         public string Name { get; set; }
 
         public string Day { get; set; }
+
+        public DateTime Date { get; set; }
     }
 }
