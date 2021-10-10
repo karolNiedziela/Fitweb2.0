@@ -11,7 +11,7 @@ namespace Fitweb.Application.Commands.Trainings.Delete
     {
         public DeleteTrainingValidator()
         {
-            RuleFor(x => x.TrainingId)
+            RuleFor(x => x.Id)
                 .NotNull();
         }
     }

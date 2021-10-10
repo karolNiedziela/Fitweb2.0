@@ -5,6 +5,6 @@ namespace Fitweb.Application.Commands.Trainings.Delete
 {
     public class DeleteTrainingCommand : AuthorizeRequest, IRequest
     {
-        public int TrainingId { get; set; }
+        public int Id { get; set; }
     }
 }

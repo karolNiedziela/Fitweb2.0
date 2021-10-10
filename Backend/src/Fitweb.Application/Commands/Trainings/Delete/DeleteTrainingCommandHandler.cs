@@ -22,7 +22,7 @@ namespace Fitweb.Application.Commands.Trainings.Delete
         {
             var athlete = await _athleteRepository.GetTrainings(request.UserId);
 
-            var toRemove = athlete.RemoveTraining(request.TrainingId);
+            var toRemove = athlete.RemoveTraining(request.Id);
 
             await _trainingRepository.RemoveAsync(toRemove);
 
