@@ -56,7 +56,8 @@ namespace Fitweb.Infrastructure.Identity.Services
 
             var result = await _userManager.CreateAsync(user, password);
 
-            //await _userManager.AddToRoleAsync(user, Roles.Athlete);
+            var createdUser = await _userManager.FindByEmailAsync(user.Email);
+            await _userManager.AddToRoleAsync(createdUser, Roles.Athlete);
 
             if (!result.Succeeded)
             {
