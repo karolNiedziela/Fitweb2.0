@@ -30,6 +30,7 @@ namespace Fitweb.Infrastructure.Persistence.Configurations
             };
 
             builder.HasData(userRole);
+            builder.HasData(userRole2);
         }
     }
 }

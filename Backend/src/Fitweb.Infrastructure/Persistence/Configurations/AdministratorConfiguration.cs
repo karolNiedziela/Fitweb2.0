@@ -15,13 +15,6 @@ namespace Fitweb.Infrastructure.Persistence.Configurations
     {
         private const string adminId = "ff48a62e-0e06-47a2-aacb-c88af07993ed";
 
-        private readonly UserManager<User> _userManager;
-
-        public AdministratorConfiguration(UserManager<User> userManager)
-        {
-            _userManager = userManager;
-        }
-
         public void Configure(EntityTypeBuilder<User> builder)
         {
             var admin = new User
