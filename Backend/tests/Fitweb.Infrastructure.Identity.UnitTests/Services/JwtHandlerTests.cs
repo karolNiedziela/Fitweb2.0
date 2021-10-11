@@ -1,4 +1,5 @@
 ﻿using Fitweb.Application.DTO;
+using Fitweb.Application.Interfaces;
 using Fitweb.Application.Interfaces.Identity;
 using Fitweb.Infrastructure.Identity.Constants;
 using Fitweb.Infrastructure.Identity.Services;
@@ -18,6 +19,7 @@ namespace Fitweb.Infrastructure.Identity.UnitTests.cs.Services
     {
         private readonly JwtSettings _jwtSettings;
         private readonly IJwtHandler _sut;
+        private readonly IDateTimeProvider _dateTimeProvider;
 
         public JwtHandlerTests() 
         {
@@ -31,7 +33,9 @@ namespace Fitweb.Infrastructure.Identity.UnitTests.cs.Services
                 Secret = "unitTestJwtSecretKey1234567"
             };
 
-            _sut = new JwtHandler(_jwtSettings);
+            _dateTimeProvider = Substitute.For<IDateTimeProvider>();
+
+            _sut = new JwtHandler(_jwtSettings,_dateTimeProvider);
         }
 
         [Fact]
@@ -44,12 +48,15 @@ namespace Fitweb.Infrastructure.Identity.UnitTests.cs.Services
                 Roles.Athlete
             };
 
+            _dateTimeProvider.Now.Returns(new DateTime(2020, 10, 10, 10, 10, 10, DateTimeKind.Utc));
+
             var authDto = _sut.Create(userId, username, roles);
 
             authDto.Should().BeOfType<AuthDto>();
             authDto.Issuer.Should().Be(_jwtSettings.Issuer);
             authDto.Subject.Should().Be(username);
-            authDto.ValidTo.Should().BeCloseTo(DateTime.UtcNow.AddMinutes(10), TimeSpan.FromSeconds(30));
+            authDto.ValidTo.Should().BeCloseTo(new DateTime(2020, 10, 10, 10, 10, 10, DateTimeKind.Utc).AddMinutes(_jwtSettings.ExpiryMinutes),
+                TimeSpan.FromSeconds(30));
         }
     }
 }
