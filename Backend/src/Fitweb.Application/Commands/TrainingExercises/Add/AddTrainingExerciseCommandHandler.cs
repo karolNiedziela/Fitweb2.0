@@ -20,14 +20,11 @@ namespace Fitweb.Application.Commands.TrainingExercises.Add
     {
         private readonly ITrainingRepository _trainingRepository;
         private readonly IExerciseRepository _exerciseRepository;
-        private readonly IMapper _mapper;
 
-        public AddTrainingExerciseCommandHandler(ITrainingRepository trainingRepository, IExerciseRepository exerciseRepository, 
-            IMapper mapper)
+        public AddTrainingExerciseCommandHandler(ITrainingRepository trainingRepository, IExerciseRepository exerciseRepository)
         {
             _trainingRepository = trainingRepository;
             _exerciseRepository = exerciseRepository;
-            _mapper = mapper;
         }
 
         public async Task<Response<string>> Handle(AddTrainingExerciseCommand request, CancellationToken cancellationToken = default)

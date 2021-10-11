@@ -13,14 +13,28 @@ namespace Fitweb.Domain.UnitTests.Builders
         public static Training Build(string name = "test_training", string description = "test_description",
             Day day = Day.Monday)
         {
-            return new Training(Information.Create(name, description), day);
+            return new Training(Information.Create(name, description), day)
+            {
+                Id = 1
+            };
         }
 
-        public static Training BuildWithExercises()
+        public static Training BuildWithExercisesAndSets()
         {
             var training = Build();
             var exercise = ExerciseBuilder.Build();
-            training.AddExercise(exercise);
+            var sets = new List<Set>
+            {
+                new Set(50, 10) 
+                {
+                    Id = 1
+                },
+                new Set(60, 8)
+                {
+                    Id = 2
+                }
+            };
+            training.AddExercise(exercise, sets);
 
             return training;
         }

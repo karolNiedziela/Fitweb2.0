@@ -1,6 +1,7 @@
 ﻿using Fitweb.Domain.Exceptions;
 using Fitweb.Domain.Exercises;
 using Fitweb.Domain.Trainings;
+using Fitweb.Domain.UnitTests.Builders;
 using Fitweb.Domain.ValueObjects;
 using FluentAssertions;
 using System;
@@ -26,14 +27,27 @@ namespace Fitweb.Domain.UnitTests.Trainings
         }
 
         [Fact]
+        public void Update_ShouldUpdateTraining()
+        {
+            var training = new Training(Information.Create("test_training"), Day.Wednesday, new DateTime(2019, 8, 20, 10, 10, 10));
+
+            var updatedTraining = new Training(Information.Create("updated_name"), Day.Monday, new DateTime(2019, 2, 20, 10, 10, 10));
+
+            training.Update(updatedTraining);
+
+            training.Should().BeEquivalentTo(updatedTraining);
+        }
+
+        [Fact]
         public void AddExercise_ShouldAddExerciseToTraining_WhenExerciseWasNotAdded()
         {
             var exercise = new Exercise(Information.Create("testExercise", null), PartOfBody.Biceps);
             var training = new Training(Information.Create("Test", "Test"), Day.Tuesday);
-
-            training.AddExercise(exercise);
+            var sets = new List<Set>() { new Set(40, 5) };
+            training.AddExercise(exercise, sets);
 
             training.Exercises.Count.Should().Be(1);
+            training.Exercises.First().Sets.Count.Should().Be(1);
             training.Exercises.FirstOrDefault().Exercise.Should().BeEquivalentTo(exercise);
         }
 
@@ -42,9 +56,10 @@ namespace Fitweb.Domain.UnitTests.Trainings
         {
             var exercise = new Exercise(Information.Create("testExercise", null), PartOfBody.Biceps);
             var training = new Training(Information.Create("Test", "Test"), Day.Tuesday);
-            training.AddExercise(exercise);
+            var sets = new List<Set>() { new Set(40, 5) };
+            training.AddExercise(exercise, sets);
 
-            var exception = Record.Exception(() => training.AddExercise(exercise));
+            var exception = Record.Exception(() => training.AddExercise(exercise, sets));
 
             exception.Should().NotBeNull();
             exception.Should().BeOfType<AlreadyExistsException>();
@@ -60,7 +75,8 @@ namespace Fitweb.Domain.UnitTests.Trainings
                 Id = 1
             };
             var training = new Training(Information.Create("Test", "Test"), Day.Tuesday);
-            training.AddExercise(exercise);
+            var sets = new List<Set>() { new Set(40, 5) };
+            training.AddExercise(exercise, sets);
 
             var countBeforeRemoving = training.Exercises.Count;
 
@@ -90,24 +106,23 @@ namespace Fitweb.Domain.UnitTests.Trainings
             {
                 Id = 1
             };
-            training.AddExercise(exercise);
+            var sets = new List<Set>() { new Set(40, 5) };
+            training.AddExercise(exercise, sets);
 
-            training.UpdateExercise(1, new Exercise(Information.Create("new name", null), PartOfBody.Legs)
-            {
-                Id = 1
-            });
+            var updatedSets = new List<Set>() { new Set(50, 6) };
+            training.UpdateExercise(1, updatedSets);
 
-            training.Exercises[0].Exercise.Information.Name.Should().Be("new name");
-            training.Exercises[0].Exercise.PartOfBody.Should().Be(PartOfBody.Legs);
+            training.Exercises.FirstOrDefault().Sets.FirstOrDefault().Weight.Should().Be(50);
+            training.Exercises.FirstOrDefault().Sets.FirstOrDefault().NumberOfReps.Should().Be(6);
         }
 
         [Fact]
         public void UpdateExercise_ShouldThrowException_WhenExerciseDoesNotExist()
         {
             var training = new Training(Information.Create("Test", "Test"), Day.Tuesday);
-
-            var exception = Record.Exception(() => 
-                training.UpdateExercise(8, new Exercise(Information.Create("test"), null)));
+            var sets = new List<Set>() { new Set(40, 5) };
+            var exception = Record.Exception(() =>
+                training.UpdateExercise(8, sets));
 
             exception.Should().NotBeNull();
             exception.Should().BeOfType<NotFoundException>();
@@ -115,56 +130,16 @@ namespace Fitweb.Domain.UnitTests.Trainings
         }
 
         [Fact]
-        public void AddSet_ShouldAddSetToExercise_WhenExerciseExists()
-        {
-            var training = new Training(Information.Create("Test", "Test"), Day.Tuesday);
-            var exercise = new Exercise(Information.Create("testExercise", null), PartOfBody.Biceps)
-            {
-                Id = 1
-            };
-
-            training.AddExercise(exercise);
-            var set = new Set(20, 3);
-
-            training.AddSet(exercise.Id, set);
-
-            training.Exercises.FirstOrDefault().Sets.Count.Should().Be(1);
-        }
-
-        [Fact]
-        public void AddSet_ShouldThrowException_WhenExerciseDoesNotExist()
-        {
-            var training = new Training(Information.Create("Test", "Test"), Day.Tuesday);
-            var set = new Set(20, 3);
-
-            var exception = Record.Exception(() => training.AddSet(5, set));
-
-            exception.Should().NotBeNull();
-            exception.Should().BeOfType<NotFoundException>();
-            exception.Message.Should().Be($"Exercise with id: '{5}' was not found.");
-        }
-
-        [Fact]
         public void RemoveSet_ShouldRemoveSetFromExercise_WhenExerciseExists()
         {
-            var training = new Training(Information.Create("Test", "Test"), Day.Tuesday);
-            var exercise = new Exercise(Information.Create("testExercise", null), PartOfBody.Biceps)
-            {
-                Id = 1
-            };
-            training.AddExercise(exercise);
-            var set = new Set(20, 3)
-            {
-                Id = 1
-            };
-            training.AddSet(exercise.Id, set);
+            var training = TrainingBuilder.BuildWithExercisesAndSets();
 
             var countBeforeRemoving = training.Exercises.FirstOrDefault().Sets.Count;
 
-            training.RemoveSet(exercise.Id, set.Id);
+            training.RemoveSet(1, 1);
 
-            countBeforeRemoving.Should().Be(1);
-            training.Exercises.FirstOrDefault().Sets.Count.Should().Be(0);
+            countBeforeRemoving.Should().Be(2);
+            training.Exercises.FirstOrDefault().Sets.Count.Should().Be(1);
         }
 
         [Fact]
@@ -182,66 +157,21 @@ namespace Fitweb.Domain.UnitTests.Trainings
         [Fact]
         public void RemoveSet_ShouldThrowException_WhenSetDoesNotExist()
         {
-            var training = new Training(Information.Create("Test", "Test"), Day.Tuesday);
-            var exercise = new Exercise(Information.Create("testExercise", null), PartOfBody.Biceps)
+            var training = new Training(Information.Create("training"), Day.Monday);
+            training.AddExercise(new Exercise(Information.Create("exercise"), PartOfBody.Chest)
             {
                 Id = 1
-            };
-            training.AddExercise(exercise);
+            }, 
+            new List<Set>
+            {
+                new Set(25, 5)
+            });
 
-            var exception = Record.Exception(() => training.RemoveSet(exercise.Id, 1));
+            var exception = Record.Exception(() => training.RemoveSet(1, 5));
 
             exception.Should().NotBeNull();
             exception.Should().BeOfType<NotFoundException>();
-            exception.Message.Should().Be($"Set with id: '{1}' was not found.");
-        }
-
-        [Fact]
-        public void UpdateSet_ShouldUpdateSet_WhenExerciseAndSetExists()
-        {
-            var training = new Training(Information.Create("test training"), Day.Thursday);
-            training.AddExercise(new Exercise(Information.Create("test exercise"), PartOfBody.Chest)
-            {
-                Id = 1
-            });
-            training.AddSet(1, new Set(25, 4)
-            {
-                Id = 1
-            });
-
-            training.UpdateSet(1, 1, 50, 3 , 1);
-
-            training.Exercises[0].Sets[0].Weight.Should().Be(50);
-            training.Exercises[0].Sets[0].NumberOfReps.Should().Be(3);
-            training.Exercises[0].Sets[0].NumberOfSets.Should().Be(1);
-        }
-
-        [Fact]
-        public void UpdateSet_ShouldThrowException_WhenExerciseDoesNotExist()
-        {
-            var training = new Training(Information.Create("test training"), Day.Thursday);
-
-            var exception = Record.Exception(() => training.UpdateSet(5, 10, 150, 2, 1));
-
-            exception.Should().NotBeNull();
-            exception.Should().BeOfType<NotFoundException>();
-            exception.Message.Should().Be($"Exercise with id: '{5}' was not found.");
-        }
-
-        [Fact]
-        public void UpdateSet_ShouldThrowException_WhenExerciseExistsButSetDoesNotExist()
-        {
-            var training = new Training(Information.Create("test training"), Day.Thursday);
-            training.AddExercise(new Exercise(Information.Create("test exercise"), PartOfBody.Chest)
-            {
-                Id = 1
-            });
-
-            var exception = Record.Exception(() => training.UpdateSet(1, 7, 150, 2, 1));
-
-            exception.Should().NotBeNull();
-            exception.Should().BeOfType<NotFoundException>();
-            exception.Message.Should().Be($"Set with id: '{7}' was not found.");
+            exception.Message.Should().Be($"Set with id: '{5}' was not found.");
         }
     }
 }

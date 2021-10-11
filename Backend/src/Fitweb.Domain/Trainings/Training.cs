@@ -34,13 +34,14 @@ namespace Fitweb.Domain.Trainings
         {
             Information = information;
             Day = day;
-            Date = date ?? DateTime.UtcNow.Date;
+            Date = date ?? DateTime.UtcNow;
         }
 
         public void Update(Training training)
         {
             Information = Information.Update(training.Information);
             Day = training.Day;
+            Date = training.Date;
         }
 
         public void AddExercise(Exercise exercise, List<Set> sets)

@@ -13,7 +13,10 @@ namespace Fitweb.Domain.UnitTests.Builders
         public static Exercise Build(string name = "test_exercise", string description = "test_description",
             PartOfBody partOfBody = PartOfBody.Biceps)
         {
-            return new Exercise(Information.Create(name, description), partOfBody);
+            return new Exercise(Information.Create(name, description), partOfBody)
+            {
+                Id = 1
+            };
         }
     }
 }
