@@ -1,4 +1,5 @@
-﻿using Fitweb.Application.DTO;
+﻿using Fitweb.Application.Constants;
+using Fitweb.Application.DTO;
 using Fitweb.Application.Exceptions;
 using Fitweb.Application.Interfaces.Identity;
 using Fitweb.Application.Interfaces.Utilities.Email;
@@ -6,7 +7,6 @@ using Fitweb.Application.Models;
 using Fitweb.Application.Settings;
 using Fitweb.Application.UnitTests.Fakes;
 using Fitweb.Domain.Exceptions;
-using Fitweb.Infrastructure.Identity.Constants;
 using Fitweb.Infrastructure.Identity.Entities;
 using Fitweb.Infrastructure.Identity.Exceptions;
 using Fitweb.Infrastructure.Identity.Extensions;

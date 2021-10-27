@@ -3,7 +3,6 @@ using Fitweb.Domain.Exceptions;
 using Fitweb.Application.Interfaces;
 using Fitweb.Application.Interfaces.Identity;
 using Fitweb.Application.UnitTests.Fakes;
-using Fitweb.Infrastructure.Identity.Constants;
 using Fitweb.Infrastructure.Identity.Entities;
 using Fitweb.Infrastructure.Identity.Exceptions;
 using Fitweb.Infrastructure.Identity.Factories;
@@ -17,6 +16,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Xunit;
+using Fitweb.Application.Constants;
 
 namespace Fitweb.Infrastructure.Identity.UnitTests.cs.Services
 {

@@ -1,4 +1,5 @@
 ﻿using Fitweb.Application.Commands.TrainingExercises.Add;
+using Fitweb.Application.DTO;
 using Fitweb.Application.Responses;
 using Fitweb.Domain.Exceptions;
 using Fitweb.Domain.Exercises;
@@ -54,7 +55,22 @@ namespace Fitweb.Application.UnitTests.Commands.TrainingExercises.Add
                 UserId = "testUserId",
                 TrainingId = 1,
                 ExerciseId = 1,
-            });
+                Sets = new List<NewSetDto>
+                {
+                    new NewSetDto
+                    {
+                        Weight = 45,
+                        NumberOfReps = 8,
+                        NumberOfSets = 2
+                    },
+                    new NewSetDto
+                    {
+                        Weight = 55,
+                        NumberOfReps = 10,
+                        NumberOfSets = 1
+                    },
+                }
+            });;
 
             result.Should().BeOfType<Response<string>>();
             result.Message.Should().Be("Training exercise added successfully.");

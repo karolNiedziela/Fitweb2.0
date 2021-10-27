@@ -1,7 +1,7 @@
-﻿using Fitweb.Application.DTO;
+﻿using Fitweb.Application.Constants;
+using Fitweb.Application.DTO;
 using Fitweb.Application.Interfaces;
 using Fitweb.Application.Interfaces.Identity;
-using Fitweb.Infrastructure.Identity.Constants;
 using Fitweb.Infrastructure.Identity.Services;
 using Fitweb.Infrastructure.Identity.Settings;
 using FluentAssertions;
