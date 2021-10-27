@@ -16,12 +16,10 @@ namespace Fitweb.Application.Commands.TrainingExercises.Update
     public class UpdateTrainingExerciseCommandHandler : IRequestHandler<UpdateTrainingExerciseCommand, Response<string>>
     {
         private readonly ITrainingRepository _trainingRepository;
-        private readonly IMapper _mapper;
 
-        public UpdateTrainingExerciseCommandHandler(ITrainingRepository trainingRepository, IMapper mapper)
+        public UpdateTrainingExerciseCommandHandler(ITrainingRepository trainingRepository)
         {
             _trainingRepository = trainingRepository;
-            _mapper = mapper;
         }
 
         public async Task<Response<string>> Handle(UpdateTrainingExerciseCommand request, CancellationToken cancellationToken = default)

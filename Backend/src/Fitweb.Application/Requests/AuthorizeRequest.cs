@@ -13,5 +13,7 @@ namespace Fitweb.Application.Requests
     {
         internal string UserId { get; set; }
 
+        internal bool IsAdmin { get; set; } = false;
+
     }
 }

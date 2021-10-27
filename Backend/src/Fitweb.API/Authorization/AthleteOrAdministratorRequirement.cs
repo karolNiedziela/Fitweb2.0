@@ -1,4 +1,4 @@
-﻿using Fitweb.Infrastructure.Identity.Constants;
+﻿using Fitweb.Application.Constants;
 using Microsoft.AspNetCore.Authorization;
 using System;
 using System.Collections.Generic;

@@ -1,7 +1,7 @@
 ﻿using Fitweb.Application.Commands.AthleteFoodProducts.Add;
 using Fitweb.Application.Commands.AthleteFoodProducts.Delete;
 using Fitweb.Application.Commands.AthleteFoodProducts.Update;
-using Fitweb.Infrastructure.Identity.Constants;
+using Fitweb.Application.Constants;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;

@@ -1,11 +1,11 @@
 ﻿using Fitweb.Application.Commands.FoodProducts.Add;
 using Fitweb.Application.Commands.FoodProducts.Delete;
 using Fitweb.Application.Commands.FoodProducts.Update;
+using Fitweb.Application.Constants;
 using Fitweb.Application.Queries.FoodProduts.Get;
 using Fitweb.Application.Queries.FoodProduts.GetList;
 using Fitweb.Application.Requests;
 using Fitweb.Domain.FoodProducts;
-using Fitweb.Infrastructure.Identity.Constants;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;

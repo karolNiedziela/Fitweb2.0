@@ -1,5 +1,4 @@
-﻿using Fitweb.Infrastructure.Identity.Constants;
-using Fitweb.Infrastructure.Identity.Entities;
+﻿using Fitweb.Infrastructure.Identity.Entities;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;

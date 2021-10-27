@@ -1,8 +1,8 @@
 ﻿using Fitweb.Application.Commands.TrainingExercises.Add;
 using Fitweb.Application.Commands.TrainingExercises.Delete;
 using Fitweb.Application.Commands.TrainingExercises.Update;
+using Fitweb.Application.Constants;
 using Fitweb.Application.Queries.TrainingExercises.GetList;
-using Fitweb.Infrastructure.Identity.Constants;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;

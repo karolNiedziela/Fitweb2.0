@@ -23,7 +23,7 @@ namespace Fitweb.Application.Commands.Trainings.Update
             _trainingRepository = trainingRepository;
         }
 
-        public async Task<Response<string>> Handle(UpdateTrainingCommand request, CancellationToken cancellationToken)
+        public async Task<Response<string>> Handle(UpdateTrainingCommand request, CancellationToken cancellationToken = default)
         {
             var training = await _trainingRepository.GetByIdAsync(request.TrainingId);
             if (training is null) 

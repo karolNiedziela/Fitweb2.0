@@ -1,6 +1,6 @@
 ﻿using Fitweb.Application.Commands.Athletes.Update;
+using Fitweb.Application.Constants;
 using Fitweb.Application.Interfaces;
-using Fitweb.Infrastructure.Identity.Constants;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;

@@ -3,7 +3,6 @@ using Fitweb.Application.Interfaces.Utilities.Email;
 using Fitweb.Application.Interfaces.Identity;
 using Fitweb.Application.Models;
 using Fitweb.Application.Settings;
-using Fitweb.Infrastructure.Identity.Constants;
 using Fitweb.Infrastructure.Identity.Entities;
 using Fitweb.Infrastructure.Identity.Exceptions;
 using Fitweb.Infrastructure.Identity.Extensions;
@@ -15,6 +14,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
+using Fitweb.Application.Constants;
 
 namespace Fitweb.Infrastructure.Identity.Services
 {

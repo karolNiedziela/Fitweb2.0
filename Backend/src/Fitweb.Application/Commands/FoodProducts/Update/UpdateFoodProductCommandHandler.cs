@@ -18,6 +18,7 @@ namespace Fitweb.Application.Commands.FoodProducts.Update
     {
         private readonly IFoodProductRepository _foodProductRepository;
 
+
         public UpdateFoodProductCommandHandler(IFoodProductRepository foodProductRepository)
         {
             _foodProductRepository = foodProductRepository;
@@ -29,6 +30,11 @@ namespace Fitweb.Application.Commands.FoodProducts.Update
             if (foodProduct is null)
             {
                 throw new NotFoundException(nameof(FoodProduct), request.Id);
+            }
+
+            if (!string.IsNullOrEmpty(foodProduct.UserId) && foodProduct.UserId != request.UserId && request.IsAdmin == false)
+            {
+                throw new ForbiddenOperationException();
             }
 
             foodProduct.Update(new FoodProduct(Information.Create(request.Name, request.Description),

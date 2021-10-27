@@ -1,5 +1,5 @@
 ﻿using Fitweb.Application.Commands.Sets.Delete;
-using Fitweb.Infrastructure.Identity.Constants;
+using Fitweb.Application.Constants;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;

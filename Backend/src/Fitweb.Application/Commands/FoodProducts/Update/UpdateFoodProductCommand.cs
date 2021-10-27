@@ -1,4 +1,5 @@
-﻿using Fitweb.Application.Responses;
+﻿using Fitweb.Application.Requests;
+using Fitweb.Application.Responses;
 using Fitweb.Domain.FoodProducts;
 using MediatR;
 using System;
@@ -9,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Fitweb.Application.Commands.FoodProducts.Update
 {
-    public class UpdateFoodProductCommand : IRequest<Response<string>>
+    public class UpdateFoodProductCommand : AuthorizeRequest, IRequest<Response<string>>
     {
         public int Id { get; set; }
 

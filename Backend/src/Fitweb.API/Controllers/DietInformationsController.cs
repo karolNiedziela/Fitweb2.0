@@ -1,7 +1,7 @@
 ﻿using Fitweb.Application.Commands.DietInformations.Add;
 using Fitweb.Application.Commands.DietInformations.Delete;
 using Fitweb.Application.Commands.DietInformations.Update;
-using Fitweb.Infrastructure.Identity.Constants;
+using Fitweb.Application.Constants;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
